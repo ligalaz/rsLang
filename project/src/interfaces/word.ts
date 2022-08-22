@@ -14,3 +14,9 @@ export interface IWord {
   textMeaningTranslate: string;
   textExampleTranslate: string;
 }
+
+export interface GetWordsRequest {
+  group?: number;
+  page?: number;
+  limit?: number;
+}

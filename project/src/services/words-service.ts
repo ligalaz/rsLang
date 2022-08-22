@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IWord } from "../interfaces/word";
+import { GetWordsRequest, IWord } from "../interfaces/word";
 import { API_BASE_URL } from "../config";
 import { ServerRoutes } from "../enums/server-routes";
+import { HTTPMethods } from "../enums/http-methods";
 
 export const wordsService = createApi({
   reducerPath: "words",
@@ -9,13 +10,11 @@ export const wordsService = createApi({
     baseUrl: API_BASE_URL,
   }),
   endpoints: (build) => ({
-    getWords: build.query<IWord[], number[]>({
-      query: ([group, page]: number[]) => ({
+    getWords: build.mutation<IWord[], GetWordsRequest>({
+      query: (params: GetWordsRequest) => ({
         url: ServerRoutes.words,
-        params: {
-          group,
-          page,
-        },
+        method: HTTPMethods.GET,
+        params,
       }),
     }),
     getWordById: build.query<IWord, string>({
@@ -24,4 +23,4 @@ export const wordsService = createApi({
   }),
 });
 
-export const { useGetWordsQuery, useGetWordByIdQuery } = wordsService;
+export const { useGetWordsMutation, useGetWordByIdQuery } = wordsService;
