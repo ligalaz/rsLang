@@ -1,0 +1,38 @@
+.greetings {
+
+  &__figure1 {
+    position: absolute;
+    width: 409px;
+    height: 409px;
+    left: 443px;
+    top: 74px;
+
+    background: #FEC246;
+    border-radius: 204.5px 0px;
+  }
+
+  &__figure2 {
+    position: absolute;
+    width: 205px;
+    height: 205px;
+    left: 853px;
+    top: 75px;
+
+    background: #C4C4C4;
+    border-radius: 198px;
+  }
+
+  &__figure3 {
+  
+    position: absolute;
+    width: 206px;
+    height: 206px;
+    left: 1265px;
+    top: 280px;
+
+    background: #F56748;
+    border-radius: 103px 103px 103px 0px;
+    transform: matrix(0, -1, -1, 0, 0, 0);
+  }
+}
+

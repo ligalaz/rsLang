@@ -1,0 +1,10 @@
+.main {
+  
+   display: flex;
+   height: 100%;
+
+  &__middle {
+    flex: 0 1 59%;
+
+  }
+}

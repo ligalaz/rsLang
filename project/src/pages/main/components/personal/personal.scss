@@ -1,0 +1,55 @@
+.personal {
+  background: #FAFAFA;
+  flex: 0 1 23%;
+
+  &__wrapper {
+    padding: 70px 54px;
+  }
+
+  &__img {
+    width:171px;
+    height:171px;
+    background-color: orange;
+    border-radius: 50%;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  &__city {
+    font-size: 1.1rem;
+    color: #b2b2b2;
+  }
+
+  &__descr {
+    color: #b2b2b2;
+    font-size: 1.1rem
+  }
+
+  &__progress {
+    border-top: 1px solid #b2b2b2;
+    border-bottom: 1px solid #b2b2b2;
+  }
+
+  &__counter {
+    font-weight: 700;
+    font-size: 1.8rem
+  }
+
+  &__success{
+    color: #7d7d7d;
+    font-size: 1.4rem
+  }
+
+
+  &__words-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__counter {
+    text-align: center;
+  }
+  
+}
