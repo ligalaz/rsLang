@@ -1,20 +1,20 @@
 import React from "react";
 import "./greetings.scss";
+import Icon from "../../../../components/icon/icon";
+import { RootState, useAppSelector } from "../../../../store/store";
 
 function Greetings() {
+  const name: string = useAppSelector(
+    (state: RootState) => state.authState.auth?.name
+  );
+
   return (
     <div className="greetings">
       <div className="greetings__container">
-        <div className="greeting__figure1"></div>
-        <div className="greeting__figure2"></div>
-        <div className="greeting__figure3"></div>
-        <div className="greeting__figure4"></div>
-        <div className="greeting__figure5"></div>
-        <div className="greeting__figure6"></div>
-        <div className="greeting__figure7"></div>
+        <Icon type="greetings" />
       </div>
-      <div className="greetings__text">HELLO, Elena!</div>
-      <p>Let’s play!</p>
+      <div className="greetings__text">HELLO, {name ?? "Student1"}!</div>
+      <p className="greetings__descr">Let’s play!</p>
     </div>
   );
 }

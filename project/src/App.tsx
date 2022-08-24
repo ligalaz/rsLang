@@ -1,23 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import LoginPage from "./pages/auth/login/login";
 import RegistrationPage from "./pages/auth/registration/registration";
 import MainPage from "./pages/main/main";
-import { useGetWordsMutation } from "./services/words-service";
 import "./App.scss";
+import Textbook from "./pages/main/components/textbook/textbook";
+import AboutUs from "./pages/main/components/about-us/about-us";
+import Home from "./pages/main/components/Home/home";
+import Promo from "./pages/main/components/Promo/promo";
 
 function App() {
-  const [getWords, { data, isLoading }] = useGetWordsMutation();
-
   return (
     <BrowserRouter>
       <div className="app">
-        {data ? data.map((word) => <div key={word.id}>{word.word}</div>) : null}
         <Routes>
-          <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/main" element={<MainPage />} />
-          <Route path="*" element={<Navigate to="/main" />} />
+          <Route path="registration" element={<RegistrationPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="main/*" element={<MainPage />}>
+            <Route index element={<Home />} />
+            <Route path="promo" element={<Promo />} />
+            <Route path="textbook" element={<Textbook />} />
+            <Route path="about-us" element={<AboutUs />} />
+          </Route>
+          <Route path="*" element={<Navigate to="main" />} />
         </Routes>
       </div>
     </BrowserRouter>

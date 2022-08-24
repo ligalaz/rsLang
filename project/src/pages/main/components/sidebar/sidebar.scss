@@ -1,7 +1,6 @@
 .sidebar {
   background-color: #F3F3F3;
-  flex: 0 1 18%;
-
+  flex-shrink: 0;
 
   &__flex {
     padding: 60px;
@@ -25,16 +24,37 @@
   }
 
   &__link {
+    font-weight: 700;
     color: #7d7d7d;
     font-size: 1.1rem;
     text-align: center;
-    padding: 10px 0px;
+    text-decoration: none;
+
+    &:not(:last-child) {
+      margin-bottom: 60px;
+    }
+
+    &:hover {
+      color: black;
+    }
+
+    &_active {
+      color: black;
+    }
+  }
+
+
+  &__link-text {
+    margin-left: 30px;
   }
 
   &__footer-flex {
-    width: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    &:not(:last-child) {
+
+      margin-bottom: 16px;
+    }
   }
 }

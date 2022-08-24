@@ -4,7 +4,10 @@
    height: 100%;
 
   &__middle {
-    flex: 0 1 59%;
-
+    flex-grow: 1;
+    padding: 74px 120px;
   }
+
+
+ 
 }

@@ -10,7 +10,7 @@ export const wordsService = createApi({
     baseUrl: API_BASE_URL,
   }),
   endpoints: (build) => ({
-    getWords: build.mutation<IWord[], GetWordsRequest>({
+    getWords: build.query<IWord[], GetWordsRequest>({
       query: (params: GetWordsRequest) => ({
         url: ServerRoutes.words,
         method: HTTPMethods.GET,
@@ -23,4 +23,4 @@ export const wordsService = createApi({
   }),
 });
 
-export const { useGetWordsMutation, useGetWordByIdQuery } = wordsService;
+export const { useGetWordsQuery, useGetWordByIdQuery } = wordsService;
