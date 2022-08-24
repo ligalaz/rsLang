@@ -13,7 +13,7 @@ export const userWordsService = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token: string = (getState() as RootState).authState.auth?.token;
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },

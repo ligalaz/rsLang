@@ -1,28 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import "./App.css";
+import { IAuth } from "./interfaces/auth";
 import LoginPage from "./pages/auth/login/login";
 import RegistrationPage from "./pages/auth/registration/registration";
-import { useGetWordsMutation } from "./services/words-service";
+import { authService } from "./services/auth-service";
+import { AppDispatch, RootState, useAppSelector } from "./store/store";
 
 function App() {
-  const [getWords, { data, isLoading }] = useGetWordsMutation();
+  const dispatch: AppDispatch = useDispatch();
+
+  const auth: IAuth = useAppSelector(
+    (state: RootState) => state.authState.auth
+  );
+  useEffect(() => {
+    if (auth) {
+      dispatch(authService.endpoints.token.initiate(auth.userId));
+    }
+  }, []);
 
   return (
     <BrowserRouter>
       <div>
-        <div className="App">Hello React!</div>
-        {isLoading ? null : (
-          <button onClick={() => getWords({ group: 0, page: 0 })}>
-            Получить все слова
-          </button>
-        )}
-
-        {data ? data.map((word) => <div key={word.id}>{word.word}</div>) : null}
         <Routes>
-          <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route
+            path="/registration"
+            element={
+              !auth ? <RegistrationPage /> : <Navigate to="/main" replace />
+            }
+          />
+          <Route
+            path="/login"
+            element={!auth ? <LoginPage /> : <Navigate to="/main" replace />}
+          />
+          <Route path="*" element={<Navigate to="/registration" />} />
+          <Route path="/main" element={<div>main</div>} />
         </Routes>
       </div>
     </BrowserRouter>

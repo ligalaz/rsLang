@@ -1,0 +1,98 @@
+.main__container {
+  min-height: calc(100vh - 60px);
+  padding: 18.4rem 9.6rem 0;
+  background-image: url("../../../assets/img/start-page-bg.jpg.png");
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.authorization-page {
+  width: 39%;
+}
+
+.authorization-page__text {
+  margin-bottom: 0.9rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+.authorization-page__title {
+  margin-bottom: 5.35rem;
+
+  font-weight: 700;
+  font-size: 2.97rem;
+  line-height: 3.5rem;
+  text-transform: uppercase;
+}
+
+.authorization__btn {
+  margin-bottom: 1.5rem;
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: var(--grey-input-color);
+
+  background-color: transparent;
+  border: none;
+
+  cursor: pointer;
+}
+
+.authorization__btn:first-child {
+  margin-right: 1.25rem;
+}
+
+.authorization__btn--active {
+  color: var(--black-color);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.88rem;
+}
+
+.form__input {
+  width: 90.6%;
+  padding: 0.38rem 0.94rem;
+
+  color: var(--black-color);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.72rem;
+  border: 0.06rem solid var(--grey-input-color);
+}
+
+::placeholder {
+  color: var(--grey-input-color);
+}
+
+.round-btn {
+  align-self: flex-end;
+  width: 11.1rem;
+  height: 11.1rem;
+
+  color: var(--white-color);
+  font-weight: 700;
+  font-size: 2.1rem;
+  line-height: 2.6rem;
+
+  background-color: var(--purple-color);
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition: 0.5s;
+}
+
+.round-btn:hover {
+  background-color: var(--hover-btn);
+}
+
+.form__round-btn {
+  margin-top: 1.9rem;
+}
