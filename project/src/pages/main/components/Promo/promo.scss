@@ -1,0 +1,16 @@
+.page {
+
+  &__descr {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7D7D7D;
+    margin-bottom: 5px;
+    text-align: right;
+  }
+  
+  &__line {
+    border-bottom: 1px solid #B2B2B2;
+    margin-bottom: 40px;
+  }
+
+}

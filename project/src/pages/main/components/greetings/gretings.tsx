@@ -14,7 +14,6 @@ function Greetings() {
         <Icon type="greetings" />
       </div>
       <div className="greetings__text">HELLO, {name ?? "Student1"}!</div>
-      <p className="greetings__descr">Let’s play!</p>
     </div>
   );
 }

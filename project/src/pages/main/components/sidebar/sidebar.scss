@@ -40,9 +40,20 @@
 
     &_active {
       color: black;
-    }
-  }
 
+      &::before {
+        content: '';
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: black;
+        position: absolute;
+        transform: translate(-30px, 0px);
+      }
+    }
+
+  
+  }
 
   &__link-text {
     margin-left: 30px;

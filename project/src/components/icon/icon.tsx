@@ -1,14 +1,20 @@
 import React from "react";
 type IconType = "settings" | "log-out" | "logo" | "icon" | "greetings";
 
-export function Icon({ type }: { type: IconType }) {
+export interface IconProps {
+  type: IconType;
+  width?: number;
+  height?: number;
+}
+
+export function Icon({ type, width, height }: IconProps) {
   function getIcon() {
     switch (type) {
       case "settings":
         return (
           <svg
-            width="29"
-            height="28"
+            width={width ?? 29}
+            height={height ?? 28}
             viewBox="0 0 29 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -119,8 +125,9 @@ export function Icon({ type }: { type: IconType }) {
       case "icon":
         return (
           <svg
-            width="171"
-            height="171"
+            className="icon"
+            width={width ?? 171}
+            height={height ?? 171}
             viewBox="0 0 171 171"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

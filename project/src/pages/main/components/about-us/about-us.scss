@@ -1,0 +1,58 @@
+.page {
+
+  &__descr {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7D7D7D;
+    margin-bottom: 5px;
+    text-align: right;
+  }
+  
+  &__line {
+    border-bottom: 1px solid #B2B2B2;
+    margin-bottom: 40px;
+  }
+
+}
+
+.about {
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    color: #000000;
+  }
+
+  &__line {
+    width: 100%;
+    border-bottom: 1px solid #B2B2B2;
+  }
+
+  &__job {
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    color: #7D7D7D;
+  }
+
+  &__text {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #7D7D7D;
+  }
+  
+  &__column {
+    display: flex;
+
+  }
+
+  &__column .icon{
+    flex: 0 1 250px;
+  }
+
+  &__descr {
+    margin-left: 23px;
+  }
+
+}
