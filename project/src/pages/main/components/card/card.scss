@@ -1,0 +1,39 @@
+.card {
+  padding: 20px;
+  border: 1px solid #B2B2B2;
+  min-height: 154px;
+
+  &__flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 114px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: #000000;
+    margin-bottom: 11px;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    color: #7D7D7D;
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    & > *:not(:last-child) {
+      margin-bottom: 18px;
+    }
+  }
+}
+

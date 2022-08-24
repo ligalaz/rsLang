@@ -17,6 +17,7 @@ const LoginPage = () => {
   const userId: string = useAppSelector(
     (state: RootState) => state.authState.auth?.userId
   );
+  console.log(getUserWords("1"));
 
   const login: FormEventHandler<HTMLFormElement> = (
     event: FormEvent<HTMLFormElement>

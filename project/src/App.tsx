@@ -19,7 +19,8 @@ function App() {
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
             <Route path="promo" element={<Promo />} />
-            <Route path="textbook/:group/:page" element={<Textbook />} />
+            <Route path="textbook" element={<Textbook />} />
+            {/* <Route path="textbook/:group/:page" element={<Textbook />} /> */}
             <Route path="about-us" element={<AboutUs />} />
           </Route>
           <Route path="*" element={<Navigate to="main" />} />
