@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import LoginPage from "./pages/auth/login/login";
 import RegistrationPage from "./pages/auth/registration/registration";
 import MainPage from "./pages/main/main";
-import "./App.scss";
 import Textbook from "./pages/main/components/textbook/textbook";
 import AboutUs from "./pages/main/components/about-us/about-us";
 import Home from "./pages/main/components/Home/home";
 import Promo from "./pages/main/components/Promo/promo";
+import "./App.scss";
 
 function App() {
   return (
