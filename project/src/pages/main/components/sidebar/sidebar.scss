@@ -3,6 +3,7 @@
   flex-shrink: 0;
 
   &__flex {
+    min-width: 334px;
     padding: 60px;
     height: 100%;
     display: flex;
@@ -43,12 +44,13 @@
 
       &::before {
         content: '';
-        width: 20px;
-        height: 20px;
+        content: "";
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background-color: black;
         position: absolute;
-        transform: translate(-30px, 0px);
+        transform: translate(-30px, 5px);
       }
     }
 

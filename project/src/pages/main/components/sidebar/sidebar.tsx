@@ -44,16 +44,17 @@ function Sidebar() {
             }
             to="/main/textbook"
           >
-            Dictonary
+            Textbook
           </NavLink>
-          <NavLink
+          {/* TODO: uncomment for statistics */}
+          {/* <NavLink
             className={({ isActive }) =>
               isActive ? "sidebar__link sidebar__link_active" : "sidebar__link"
             }
             to="/statistics"
           >
             Statistics
-          </NavLink>
+          </NavLink> */}
         </div>
 
         <div className="sidebar__footer">
