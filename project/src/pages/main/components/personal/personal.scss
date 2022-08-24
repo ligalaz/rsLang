@@ -1,0 +1,76 @@
+.personal {
+  background: #FAFAFA;
+  flex-shrink: 0;
+
+  &__wrapper {
+    min-width: 452px;
+    padding: 70px 54px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  &__img {
+    width:171px;
+    height:171px;
+    background-color: orange;
+    border-radius: 50%;
+  }
+
+  &__title {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+  }
+  &__city {
+    font-family: Montserrat;
+    font-size: 1.1rem;
+    color: #b2b2b2;
+    text-align: center;
+  }
+
+  &__descr {
+    font-family: Montserrat;
+    font-weight: 500;
+    color: #b2b2b2;
+    font-size: 1.1rem
+  }
+
+  &__progress {
+    width: 100%;
+    border-bottom: 1px solid #b2b2b2;
+  }
+
+  &__counter {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 1.8rem
+  }
+
+  &__success{
+    margin: 30px 0 8px;
+    font-family: Montserrat;
+    font-weight: 700;
+    color: #7d7d7d;
+    font-size: 1.4rem;
+  }
+
+
+  &__words-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__counter {
+    text-align: center;
+  }
+
+  &__diagram {
+    margin-top: 30px;
+    width: 240px;
+  }
+  
+}
