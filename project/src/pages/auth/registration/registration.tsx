@@ -2,12 +2,15 @@ import React, { useState, FormEventHandler, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../../services/auth-service";
 
+import { ToastContainer } from "react-toastify";
+import { notify } from "../../../utils/notifications";
+
 const RegistrationPage = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [createUser] = useCreateUserMutation();
+  const [createUser, { error, isError }] = useCreateUserMutation();
 
   const navigate = useNavigate();
 
@@ -16,7 +19,7 @@ const RegistrationPage = () => {
   ) => {
     event.preventDefault();
     await createUser({ name, email, password });
-    navigate("/login");
+    !isError ? navigate("/login") : null;
   };
 
   return (
@@ -69,6 +72,9 @@ const RegistrationPage = () => {
               <button className="round-btn form__round-btn" type="submit">
                 OK
               </button>
+              <>
+                <ToastContainer />
+              </>
             </form>
           </section>
         </div>

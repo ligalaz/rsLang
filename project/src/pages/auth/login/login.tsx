@@ -3,6 +3,7 @@ import { useSignInMutation } from "../../../services/auth-service";
 
 import "./login.css";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -59,6 +60,9 @@ const LoginPage = () => {
               <button className="round-btn form__round-btn" type="submit">
                 OK
               </button>
+              <>
+                <ToastContainer />
+              </>
             </form>
           </section>
         </div>

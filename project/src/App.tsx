@@ -7,6 +7,7 @@ import LoginPage from "./pages/auth/login/login";
 import RegistrationPage from "./pages/auth/registration/registration";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -37,6 +38,9 @@ function App() {
           <Route path="*" element={<Navigate to="/registration" />} />
           <Route path="/main" element={<div>main</div>} />
         </Routes>
+        <>
+          <ToastContainer />
+        </>
       </div>
     </BrowserRouter>
   );

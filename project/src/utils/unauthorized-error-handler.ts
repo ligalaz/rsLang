@@ -1,4 +1,7 @@
 import { logout } from "../store/auth-slice";
+import { toast } from "react-toastify";
+import { notify } from "../utils/notifications";
+import { ApiError } from "../interfaces/ApiError";
 
 export async function unauthorizedErrorHandler<T>(
   args: T,
@@ -9,8 +12,11 @@ export async function unauthorizedErrorHandler<T>(
 ) {
   try {
     await queryFulfilled;
-  } catch (error: unknown) {
-    // TODO: define caching error with 401 status
-    dispatch(logout());
+  } catch (err: unknown) {
+    const error = err as ApiError;
+    if (error.error.originalStatus === 401) {
+      notify("Необходимо выполнить авторизацию", toast.error);
+      dispatch(logout());
+    }
   }
 }

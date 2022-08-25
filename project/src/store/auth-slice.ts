@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAuth } from "../interfaces/auth";
 import { AUTH_KEY } from "../config";
-import { AppDispatch } from "./store";
-import { useDispatch } from "react-redux";
 import { authService } from "../services/auth-service";
 import { store } from "../index";
 
