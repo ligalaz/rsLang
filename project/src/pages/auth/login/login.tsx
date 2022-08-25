@@ -1,49 +1,73 @@
 import React, { useState, FormEventHandler, FormEvent } from "react";
 import { useSignInMutation } from "../../../services/auth-service";
-import { useGetUserWordsMutation } from "../../../services/user-words-service";
-import { useAppSelector, RootState } from "../../../store/store";
-import { IAuth } from "../../../interfaces/auth";
-//import { wordsService } from "../../../services/words-service";
+
+import "../auth.scss";
+import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [
-    signIn,
-    { data, error, isUninitialized, isLoading, isSuccess, isError, reset },
-  ] = useSignInMutation();
+  const [signIn] = useSignInMutation();
 
-  const [getUserWords, { data: userWords }] = useGetUserWordsMutation();
-  const userId: string = useAppSelector(
-    (state: RootState) => state.authState.auth?.userId
-  );
-
-  const login: FormEventHandler<HTMLFormElement> = (
+  const login: FormEventHandler<HTMLFormElement> = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    signIn({ email, password });
+    await signIn({ email, password });
   };
 
   return (
-    <div>
-      <form onSubmit={login}>
-        <input
-          onChange={(event) => setEmail(event.target.value)}
-          value={email}
-          type="email"
-        />
-        <input
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
-          type="password"
-        />
-        <button>Войти</button>
-        {userId && (
-          <button onClick={() => getUserWords(userId)}>Получить слова</button>
-        )}
-      </form>
-    </div>
+    <main id="top" className="main">
+      <div className="container main__container">
+        <div className="authorization-page">
+          <div className="authorization-page__text">
+            Start your study today!
+          </div>
+          <h2 className="title authorization-page__title">
+            learning languages is easy!
+          </h2>
+          <section className="authorization">
+            <button
+              className="authorization__btn authorization__btn--active"
+              type="button"
+            >
+              Sign in
+            </button>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/registration"
+              className="authorization__btn authorization__btn"
+              type="button"
+            >
+              Sign up
+            </Link>
+            <form onSubmit={login} className="form">
+              <input
+                className="form__input"
+                type="email"
+                placeholder="your e-mail"
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
+              />
+              <input
+                className="form__input"
+                type="password"
+                placeholder="your password"
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+              />
+              <button className="round-btn form__round-btn" type="submit">
+                OK
+              </button>
+              <>
+                <ToastContainer />
+              </>
+            </form>
+          </section>
+        </div>
+      </div>
+    </main>
   );
 };
 

@@ -1,0 +1,108 @@
+$dark-purple-color: #404497;
+$auth-btn-text: #fff;
+$auth-active-btn: #000;
+$auth-form: #b2b2b2;
+$auth-btn: #6550de;
+$auth-hover-btn: #fec246;
+
+.main__container {
+  max-width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 9.6rem 0;
+  overflow-y: hidden;
+  background-image: url("../../assets/img/start-page-bg.jpg.png");
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.authorization-page {
+  width: 39%;
+
+  &__text {
+    margin-top: 2rem;
+    margin-bottom: 0.9rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+  }
+
+  &__title {
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 2.97rem;
+    line-height: 3.5rem;
+    text-transform: uppercase;
+  }
+}
+
+.authorization__btn {
+  margin-bottom: 1.5rem;
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: $auth-form;
+
+  background-color: transparent;
+  border: none;
+
+  cursor: pointer;
+
+  &:first-child {
+    margin-right: 1.25rem;
+  }
+
+  &--active {
+    color: $auth-active-btn;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.88rem;
+
+  &__input {
+    width: 90.6%;
+    padding: 0.38rem 0.94rem;
+
+    color: $auth-active-btn;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.72rem;
+    border: 0.06rem solid $auth-form;
+  }
+  &__round-btn {
+    margin-top: 1rem;
+  }
+}
+
+::placeholder {
+  color: $auth-form;
+}
+
+.round-btn {
+  align-self: flex-end;
+  width: 11.1rem;
+  height: 11.1rem;
+  color: $auth-btn-text;
+  font-weight: 700;
+  font-size: 2.1rem;
+  line-height: 2.6rem;
+  background-color: $auth-btn;
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  &:hover {
+    background-color: $auth-hover-btn;
+  }
+}
