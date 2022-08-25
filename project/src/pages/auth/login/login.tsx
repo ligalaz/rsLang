@@ -1,7 +1,7 @@
 import React, { useState, FormEventHandler, FormEvent } from "react";
 import { useSignInMutation } from "../../../services/auth-service";
 
-import "./login.css";
+import "../auth.scss";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 

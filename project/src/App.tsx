@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import { IAuth } from "./interfaces/auth";
 import LoginPage from "./pages/auth/login/login";
 import RegistrationPage from "./pages/auth/registration/registration";
