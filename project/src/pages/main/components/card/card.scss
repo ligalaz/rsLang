@@ -12,7 +12,10 @@
   }
 
   &__word {
+    margin-top: 5px;
     font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 11px;
   }
 
   &__img-container {
@@ -30,6 +33,10 @@
     justify-content: space-between;
     align-items: center;
     min-height: 114px;
+  }
+
+  &__center {
+    margin-left: 60px;
   }
 
   &__title {

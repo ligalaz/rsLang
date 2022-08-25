@@ -1,7 +1,6 @@
-import React, { MouseEventHandler, SyntheticEvent, useState } from "react";
+import React from "react";
 import Icon from "../../../../components/icon/icon";
 import "./card.scss";
-import { IWord } from "../../../../interfaces/word";
 import { API_BASE_URL } from "../../../../config";
 import { ICardProps } from "../../../../interfaces/cardProps";
 
@@ -17,9 +16,7 @@ function Card({ info, togglePopup }: ICardProps) {
               alt="img"
             />
             <div className="card__center">
-              <div className="card__word">
-                <div className="card__word-en">{info.word}</div>
-              </div>
+              <div className="card__word">{info.word}</div>
               <div className="card__text">{info.textMeaning}</div>
             </div>
           </div>

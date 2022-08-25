@@ -9,7 +9,9 @@ function Sidebar() {
       <div className="sidebar__flex">
         <div className="sidebar__upper">
           <div className="sidebar__logo">
-            <Icon type="logo" />
+            <NavLink to="/main">
+              <Icon type="logo" />
+            </NavLink>
           </div>
         </div>
         <div className="sidebar__links">

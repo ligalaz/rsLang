@@ -1,7 +1,8 @@
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GetWordsRequest, IWord } from "../../../../interfaces/word";
 import { useGetWordsQuery } from "../../../../services/words-service";
 import Card from "../card/card";
+import PopUp from "../popUp/popUp";
 import "./textbook.scss";
 
 function Textbook() {
@@ -16,15 +17,32 @@ function Textbook() {
   } = useGetWordsQuery({ page: 0, group: 0 });
 
   const [popUp, setpopup] = useState(false);
-  const [i, seti] = useState(-1);
+  const [idPopUp, setidPopUp] = useState(-1);
 
   function togglePopup(value: number) {
-    seti(value);
+    setidPopUp(value);
+    setpopup((prev) => !prev);
+  }
+
+  function clickNext() {
+    console.log(idPopUp);
+    setidPopUp((prev) => ++prev);
+  }
+
+  function clickExit() {
     setpopup((prev) => !prev);
   }
 
   function untoggle(event: any) {
-    if (!event.target.closest(".card")) {
+    console.log(
+      event.target.closest(".popup"),
+      event.target.closest(".popup__button")
+    );
+    if (
+      !(
+        event.target.closest(".popup") || event.target.closest(".popup__button")
+      )
+    ) {
       setpopup((prev) => !prev);
     }
   }
@@ -36,35 +54,23 @@ function Textbook() {
         <div className="filter"></div>
         <div onClick={untoggle} className="overlay">
           <div className="overlay__container">
-            <Card key={"777"} info={words[elem]} />
+            <PopUp
+              clickExit={clickExit}
+              number={idPopUp}
+              clickNext={clickNext}
+              key={words[elem].id}
+              info={words[elem]}
+            />
           </div>
         </div>
       </>
     );
   }
 
-  // useEffect(() => {
-  //   if (!isLoading && randomWords.length < 21) {
-  //     setParams((prev: GetWordsRequest) => ({
-  //       ...prev,
-  //       page: Math.round(Math.random() * 20),
-  //     }));
-  //   }
-  // }, [words]);
-
-  // useEffect(() => {
-  //   setRandomWords((prev: IWord[]) => [...prev, ...words]);
-  // }, [words]);
-
-  // useEffect(() => {
-  //   if (isLoading === false && words.length) {
-  //     setCards(words);
-  //   }
-  // }, [words]);
   console.log("words", words);
   return (
     <>
-      {popUp && gather(i)}
+      {popUp && gather(idPopUp)}
       <div className="page">
         <div className="page__descr">Dictionary</div>
         <div className="page__line"></div>
