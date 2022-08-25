@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../../services/auth-service";
 
 import { ToastContainer } from "react-toastify";
-import { notify } from "../../../utils/notifications";
-
 const RegistrationPage = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");

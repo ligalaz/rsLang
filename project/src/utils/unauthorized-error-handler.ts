@@ -15,7 +15,7 @@ export async function unauthorizedErrorHandler<T>(
   } catch (err: unknown) {
     const error = err as ApiError;
     if (error.error.originalStatus === 401) {
-      notify("Необходимо выполнить авторизацию", toast.error);
+      notify("Authorization required", toast.error);
       dispatch(logout());
     }
   }

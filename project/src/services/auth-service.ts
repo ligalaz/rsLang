@@ -11,7 +11,6 @@ import { notify } from "../utils/notifications";
 import "react-toastify/dist/ReactToastify.css";
 import { ApiError } from "../interfaces/ApiError";
 import { logout } from "../store/auth-slice";
-import { useNavigate } from "react-router";
 
 export const authService = createApi({
   reducerPath: "auth",
@@ -40,10 +39,7 @@ export const authService = createApi({
           const error = err as ApiError;
 
           if (error.error.status === 422) {
-            notify(
-              "Некорректные данные ввода, повторите регистрацию",
-              toast.error
-            );
+            notify("Incorrect input data, please re-register", toast.error);
           }
         }
       },
@@ -61,19 +57,19 @@ export const authService = createApi({
         } catch (err: unknown) {
           const error = err as ApiError;
           if (error.error.originalStatus === 401) {
-            notify("Ошибка авторизации", toast.error);
+            notify("Authorization Error", toast.error);
           }
           if (error.error.originalStatus === 404) {
-            notify(
-              "Пользователь не найден, необходима регистрация",
-              toast.error
-            );
+            notify("User not found, registration required", toast.error);
           }
           if (error.error.originalStatus === 403) {
-            notify("Ошибка ввода данных", toast.error);
+            notify("Data entry error", toast.error);
           }
           if (error.error.originalStatus === 422) {
-            notify("Длина пароля не менее 8 символов", toast.error);
+            notify(
+              "Password length must be at least 8 characters",
+              toast.error
+            );
           }
         }
       },
@@ -88,7 +84,7 @@ export const authService = createApi({
           const error = err as ApiError;
           if (error.error.originalStatus === 401) {
             notify(
-              "Доступ отсутствует или недействителен, повторите авторизацию",
+              "Access denied or invalid, please re-authorize",
               toast.error
             );
             dispatch(logout());
