@@ -18,5 +18,4 @@ export interface IWord {
 export interface GetWordsRequest {
   group?: number;
   page?: number;
-  limit?: number;
 }
