@@ -9,30 +9,6 @@ import { GetWordsRequest, IWord } from "../../interfaces/word";
 import { Outlet } from "react-router";
 
 const MainPage = () => {
-  // const [params, setParams] = useState<GetWordsRequest>({
-  //   group: 0,
-  //   page: Math.round(Math.random() * 20),
-  // });
-  // const {
-  //   data: words = [],
-  //   isLoading,
-  //   isFetching: isWordsFetching,
-  // } = useGetWordsQuery(params);
-  // const [randomWords, setRandomWords] = useState<IWord[]>([]);
-
-  // useEffect(() => {
-  //   if (!isLoading && randomWords.length < 60) {
-  //     setParams((prev: GetWordsRequest) => ({
-  //       ...prev,
-  //       page: Math.round(Math.random() * 20),
-  //     }));
-  //   }
-  // }, [words]);
-
-  // useEffect(() => {
-  //   setRandomWords((prev: IWord[]) => [...prev, ...words]);
-  // }, [words]);
-
   return (
     <div className="main">
       <Sidebar />
