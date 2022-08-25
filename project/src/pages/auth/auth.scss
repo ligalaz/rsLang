@@ -6,13 +6,18 @@ $auth-btn: #6550de;
 $auth-hover-btn: #fec246;
 
 .main__container {
-  height: 100vh;
-  overflow-y: hidden;
+  max-width: 100%;
+  margin: 0 auto;
+  height: 100%;
   padding: 0 9.6rem 0;
+  overflow-y: hidden;
   background-image: url("../../assets/img/start-page-bg.jpg.png");
   background-position: right;
   background-size: contain;
   background-repeat: no-repeat;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .authorization-page {

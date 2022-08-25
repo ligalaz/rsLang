@@ -1,0 +1,15 @@
+@import "./components/styles/main-page-title.scss";
+
+.main {
+  
+   display: flex;
+   height: 100%;
+
+  &__middle {
+    flex-grow: 1;
+    padding: 74px 20px;
+    margin: 0 auto;
+    max-width: 892px;
+  }
+ 
+}

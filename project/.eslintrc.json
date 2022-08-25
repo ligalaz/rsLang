@@ -31,7 +31,8 @@
         "endOfLine": "auto"
       }
     ],
-    "no-unused-vars": "off",
-    "no-debugger": "off"
+    "no-debugger": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }

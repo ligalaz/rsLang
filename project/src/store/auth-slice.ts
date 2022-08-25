@@ -5,12 +5,12 @@ import { authService } from "../services/auth-service";
 import { store } from "../index";
 
 interface IAuthState {
-  auth: IAuth;
-  user?: string;
-  token?: string;
+  auth: IAuth | null;
+  user?: string | null;
+  token?: string | null;
 }
 
-let timerId: number = null;
+let timerId: number | null = null;
 
 const createTimer = (callback: VoidFunction) => {
   timerId = window.setTimeout(() => {
@@ -20,7 +20,7 @@ const createTimer = (callback: VoidFunction) => {
 };
 
 const clearTimer = () => {
-  window.clearTimeout(timerId);
+  window.clearTimeout(timerId as number);
   timerId = null;
 };
 
@@ -31,7 +31,7 @@ const initialState: IAuthState = {
 };
 
 const actualState: IAuthState = {
-  auth: JSON.parse(localStorage.getItem(AUTH_KEY)) ?? null,
+  auth: JSON.parse(localStorage.getItem(AUTH_KEY) as string) ?? null,
 };
 
 export const authSlice = createSlice({
@@ -61,8 +61,8 @@ export const authSlice = createSlice({
       .addMatcher(
         authService.endpoints.token.matchFulfilled,
         (state, { payload }) => {
-          state.auth.token = payload.token;
-          state.auth.refreshToken = payload.refreshToken;
+          state.auth!.token = payload.token;
+          state.auth!.refreshToken = payload.refreshToken;
           localStorage.setItem(AUTH_KEY, JSON.stringify(state.auth));
 
           createTimer(() => {

@@ -18,7 +18,7 @@ export const authService = createApi({
     baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const refreshToken: string = (getState() as RootState).authState.auth
-        ?.refreshToken;
+        ?.refreshToken as string;
       if (refreshToken) {
         headers.set("Authorization", `Bearer ${refreshToken}`);
       }
