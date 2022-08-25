@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { GetWordsRequest, IWord } from "../../../../interfaces/word";
 import { useGetWordsQuery } from "../../../../services/words-service";
 import Card from "../card/card";
@@ -14,9 +14,34 @@ function Textbook() {
     isLoading,
     isFetching: isWordsFetching,
   } = useGetWordsQuery({ page: 0, group: 0 });
-  const [cards, setCards] = useState(words);
 
-  // const [randomWords, setRandomWords] = useState<IWord[]>([]);
+  const [popUp, setpopup] = useState(false);
+  const [i, seti] = useState(-1);
+
+  function togglePopup(value: number) {
+    seti(value);
+    setpopup((prev) => !prev);
+  }
+
+  function untoggle(event: any) {
+    if (!event.target.closest(".card")) {
+      setpopup((prev) => !prev);
+    }
+  }
+
+  function gather(elem: number) {
+    console.log(words[elem]);
+    return (
+      <>
+        <div className="filter"></div>
+        <div onClick={untoggle} className="overlay">
+          <div className="overlay__container">
+            <Card key={"777"} info={words[elem]} />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   // useEffect(() => {
   //   if (!isLoading && randomWords.length < 21) {
@@ -36,19 +61,20 @@ function Textbook() {
   //     setCards(words);
   //   }
   // }, [words]);
-
-  console.log("words", words, isLoading);
+  console.log("words", words);
   return (
     <>
+      {popUp && gather(i)}
       <div className="page">
         <div className="page__descr">Dictionary</div>
         <div className="page__line"></div>
       </div>
       <div className="textbook">
         <div className="textbook__wrapper">
-          {words.map((a) => (
-            <Card key={a.id} info={a} />
-          ))}
+          {words.length &&
+            words.map((a, i) => (
+              <Card key={a.id} info={a} togglePopup={() => togglePopup(i)} />
+            ))}
         </div>
       </div>
     </>

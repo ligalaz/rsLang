@@ -12,14 +12,28 @@ export interface IconProps {
   type: IconType;
   width?: number;
   height?: number;
+  url?: string;
 }
 
-export function Icon({ type, width, height }: IconProps) {
+function spell(address: string, address2?: string) {
+  console.log(address, address2);
+  new Audio(address).play();
+  if (address2) {
+    new Audio(address).addEventListener("ended", function () {
+      new Audio(address2).play();
+    });
+  }
+}
+
+export function Icon({ type, width, height, url }: IconProps) {
   function getIcon() {
     switch (type) {
       case "info":
         return (
           <svg
+            onClick={() => {
+              spell(url);
+            }}
             width="26"
             height="26"
             viewBox="0 0 26 26"
@@ -43,6 +57,9 @@ export function Icon({ type, width, height }: IconProps) {
       case "sound":
         return (
           <svg
+            onClick={() => {
+              spell(url);
+            }}
             width="29"
             height="29"
             viewBox="0 0 29 29"

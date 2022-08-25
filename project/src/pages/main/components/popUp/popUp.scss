@@ -1,4 +1,4 @@
-.card {
+.popup {
   padding: 20px;
   border: 1px solid #B2B2B2;
   min-height: 154px;
@@ -13,16 +13,6 @@
 
   &__word {
     font-weight: 700;
-  }
-
-  &__img-container {
-    display: flex;
-
-  }
-  &__img {
-    width: 120px;
-    border-radius: 50%;
-    height: auto;
   }
 
   &__flex {
@@ -58,4 +48,3 @@
     }
   }
 }
-

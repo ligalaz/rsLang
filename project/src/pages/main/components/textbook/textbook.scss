@@ -1,0 +1,36 @@
+.filter {
+  min-width: 100vh;
+  min-height: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: blur(4px);
+  z-index: 1;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(41,41,41,0.6);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    width: 61.8%;
+    height: 80%;
+    position:relative;
+    z-index: 2;
+    background-color: white;
+  }
+}
+
+.textbook {
+
+  &__wrapper {
+    overflow:hidden
+  }
+}
