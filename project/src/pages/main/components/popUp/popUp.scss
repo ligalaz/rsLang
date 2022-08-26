@@ -6,6 +6,17 @@
   background-color: white;
   border-radius: 15px;
 
+
+  &__sound {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6550DE;
+  }
+
   &__word {
     font-weight: 700;
   }
@@ -20,8 +31,12 @@
       height: auto;
   }
 
-  &__column-left {
+  &__line {
+    width: 100%;
+    min-height: 1px;
+    background-color: #ccc;
   }
+
 
   &__container {
     margin: 0 auto;
@@ -35,6 +50,7 @@
     line-height: 2rem;
     color: #000000;
     display: flex;
+    justify-content: space-between;
   }
   
   &__button {
@@ -47,7 +63,7 @@
     justify-content: space-evenly;
     align-items: center;
 
-    &-next {
+    &-next,&-prev {
       background-color: #2acf2a;
     }
 
@@ -67,6 +83,7 @@
   &__buttons {
     display: flex;
     justify-content: space-between;
+    user-select:none;
   }
 
 }

@@ -5,6 +5,5 @@ export interface IPopUp {
   info: IWord;
   togglePopup?: any;
   number: number;
-  clickNext: any;
-  clickExit: any;
+  clickPage: any;
 }

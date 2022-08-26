@@ -1,4 +1,8 @@
 .page {
+  position: sticky;
+  top: 0;
+  background-color: white;
+
 
   &__descr {
     font-size: 1.5rem;

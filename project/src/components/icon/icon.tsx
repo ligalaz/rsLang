@@ -13,19 +13,35 @@ export interface IconProps {
   width?: number;
   height?: number;
   url?: string;
+  audioExample?: string;
+  audioMeaning?: string;
 }
 
-function spell(address: string, address2?: string) {
-  console.log(address, address2);
-  new Audio(address).play();
+function spell(address: string, address1?: string, address2?: string) {
+  console.log("spell", address, address1, address2);
+  const audio1 = new Audio(address);
+  const audio2 = new Audio(address1);
+  const audio3 = new Audio(address2);
   if (address2) {
-    new Audio(address).addEventListener("ended", function () {
-      new Audio(address2).play();
+    audio1.addEventListener("ended", function () {
+      audio2.play();
+    });
+
+    audio2.addEventListener("ended", function () {
+      audio3.play();
     });
   }
+  audio1.play();
 }
 
-export function Icon({ type, width, height, url }: IconProps) {
+export function Icon({
+  type,
+  width,
+  height,
+  url,
+  audioExample,
+  audioMeaning,
+}: IconProps) {
   function getIcon() {
     switch (type) {
       case "info":
@@ -58,7 +74,7 @@ export function Icon({ type, width, height, url }: IconProps) {
         return (
           <svg
             onClick={() => {
-              spell(url);
+              spell(url, audioExample, audioMeaning);
             }}
             width="29"
             height="29"

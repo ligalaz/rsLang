@@ -9,9 +9,11 @@ const MainPage = () => {
   return (
     <div className="main">
       <Sidebar />
-      <div className="main__middle">
-        <Greetings />
-        <Outlet />
+      <div className="main__wrapper">
+        <div className="main__middle">
+          <Greetings />
+          <Outlet />
+        </div>
       </div>
       <Personal />
     </div>

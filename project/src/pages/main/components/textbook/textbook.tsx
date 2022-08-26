@@ -24,13 +24,8 @@ function Textbook() {
     setpopup((prev) => !prev);
   }
 
-  function clickNext() {
-    console.log(idPopUp);
-    setidPopUp((prev) => ++prev);
-  }
-
-  function clickExit() {
-    setpopup((prev) => !prev);
+  function clickPage(value: number) {
+    setidPopUp((prev) => prev + value);
   }
 
   function untoggle(event: any) {
@@ -55,9 +50,8 @@ function Textbook() {
         <div onClick={untoggle} className="overlay">
           <div className="overlay__container">
             <PopUp
-              clickExit={clickExit}
               number={idPopUp}
-              clickNext={clickNext}
+              clickPage={clickPage}
               key={words[elem].id}
               info={words[elem]}
             />
@@ -75,14 +69,19 @@ function Textbook() {
         <div className="page__descr">Dictionary</div>
         <div className="page__line"></div>
       </div>
-      <div className="textbook">
-        <div className="textbook__wrapper">
-          {words.length &&
-            words.map((a, i) => (
-              <Card key={a.id} info={a} togglePopup={() => togglePopup(i)} />
-            ))}
+
+      {isLoading ? (
+        <div className="textbook__loading"></div>
+      ) : (
+        <div className="textbook">
+          <div className="textbook__wrapper">
+            {words.length &&
+              words.map((a, i) => (
+                <Card key={a.id} info={a} togglePopup={() => togglePopup(i)} />
+              ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
