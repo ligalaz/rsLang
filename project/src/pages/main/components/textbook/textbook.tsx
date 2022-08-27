@@ -1,49 +1,66 @@
-import React, { useState } from "react";
-import { GetWordsRequest, IWord } from "../../../../interfaces/word";
-import { useGetWordsQuery } from "../../../../services/words-service";
+import React, { useState, useEffect, MouseEvent } from "react";
+import { useParams } from "react-router";
+import { Word } from "../../../../interfaces/word";
+import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
+import { useGetWordsMutation } from "../../../../services/words-service";
+import { RootState, useAppSelector } from "../../../../store/store";
 import Card from "../card/card";
 import PopUp from "../popUp/popUp";
 import "./textbook.scss";
 
 function Textbook() {
-  // const [params, setParams] = useState<GetWordsRequest>({
-  //   group: 0,
-  //   page: Math.round(1 * 20),
-  // });
-  const {
-    data: words = [],
-    isLoading,
-    isFetching: isWordsFetching,
-  } = useGetWordsQuery({ page: 0, group: 0 });
+  const [getWords, { isLoading: isWordsLoading }] = useGetWordsMutation();
+  const [getAggregatedWords, { isLoading: isUserWordsLoading }] =
+    useGetUserWordsMutation();
+  const { group, page } = useParams();
 
-  const [popUp, setpopup] = useState(false);
-  const [idPopUp, setidPopUp] = useState(-1);
+  const userId: string = useAppSelector(
+    (state: RootState) => state.authState.auth?.userId
+  );
 
-  function togglePopup(value: number) {
-    setidPopUp(value);
-    setpopup((prev) => !prev);
-  }
+  const words: Word[] = useAppSelector(
+    (state: RootState) => state.wordsState.words || []
+  );
 
-  function clickPage(value: number) {
-    setidPopUp((prev) => prev + value);
-  }
+  const [popUp, setPopup] = useState(false);
+  const [idPopUp, setIdPopup] = useState(-1);
 
-  function untoggle(event: any) {
-    console.log(
-      event.target.closest(".popup"),
-      event.target.closest(".popup__button")
-    );
-    if (
-      !(
-        event.target.closest(".popup") || event.target.closest(".popup__button")
-      )
-    ) {
-      setpopup((prev) => !prev);
+  useEffect(() => {
+    getProperlyWords();
+  }, [page, group]);
+
+  function getProperlyWords(): void {
+    if (userId) {
+      getAggregatedWords({
+        userId,
+        params: {
+          page: parseInt(page),
+          group: parseInt(group),
+          wordsPerPage: 20,
+        },
+      });
+    } else {
+      getWords({ page: parseInt(page), group: parseInt(group) });
     }
   }
 
-  function gather(elem: number) {
-    console.log(words[elem]);
+  function togglePopup(value: number) {
+    setIdPopup(value);
+    setPopup((prev) => !prev);
+  }
+
+  function clickPage(value: number): void {
+    setIdPopup((prev) => prev + value);
+  }
+
+  function untoggle(event: MouseEvent<HTMLElement>): void {
+    const target: HTMLElement = event.target as HTMLElement;
+    if (!(target.closest(".popup") || target.closest(".popup__button"))) {
+      setPopup((prev) => !prev);
+    }
+  }
+
+  function gatherPopup(elem: number) {
     return (
       <>
         <div className="filter"></div>
@@ -61,16 +78,15 @@ function Textbook() {
     );
   }
 
-  console.log("words", words);
   return (
     <>
-      {popUp && gather(idPopUp)}
+      {popUp && gatherPopup(idPopUp)}
       <div className="page">
         <div className="page__descr">Dictionary</div>
         <div className="page__line"></div>
       </div>
 
-      {isLoading ? (
+      {isWordsLoading || isUserWordsLoading ? (
         <div className="textbook__loading"></div>
       ) : (
         <div className="textbook">

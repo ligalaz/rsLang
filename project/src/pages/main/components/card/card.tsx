@@ -1,13 +1,27 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import Icon from "../../../../components/icon/icon";
 import "./card.scss";
 import { API_BASE_URL } from "../../../../config";
-import { ICardProps } from "../../../../interfaces/cardProps";
+import { Word } from "../../../../interfaces/word";
+
+export interface ICardProps {
+  info: Word;
+  togglePopup?: MouseEventHandler<HTMLElement>;
+}
 
 function Card({ info, togglePopup }: ICardProps) {
   return (
     <>
-      <div onClick={togglePopup} className="card">
+      <div
+        className={`card ${
+          info?.userWord?.difficulty === "hard"
+            ? "hard"
+            : info?.userWord?.difficulty === "normal"
+            ? "normal"
+            : ""
+        }`}
+        onClick={togglePopup}
+      >
         <div className="card__flex">
           <div className="card__img-container">
             <img
@@ -17,7 +31,10 @@ function Card({ info, togglePopup }: ICardProps) {
             />
             <div className="card__center">
               <div className="card__word">{info.word}</div>
-              <div className="card__text">{info.textMeaning}</div>
+              <div
+                className="card__text"
+                dangerouslySetInnerHTML={{ __html: info.textMeaning }}
+              ></div>
             </div>
           </div>
           <div className="card__controls">

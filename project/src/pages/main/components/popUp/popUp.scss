@@ -78,6 +78,10 @@
     &-hard {
       background-color: #bd3b1d;
     }
+
+    &:disabled {
+      background-color: #ccc;
+    }
   }
 
   &__buttons {
@@ -88,6 +92,10 @@
 
 }
 
-.disabled {
-  background-color: #ccc;
+.normal {
+  background-color:rgb(59, 85, 170);
+}
+
+.hard {
+  background-color:rgb(163, 73, 73);
 }
