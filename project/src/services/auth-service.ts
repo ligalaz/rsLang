@@ -3,14 +3,27 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { IUser } from "../interfaces/user";
 import { IAuth } from "../interfaces/auth";
 import { HTTPMethods } from "../enums/http-methods";
-import { setAuth, logout } from "../store/auth-slice";
 import { API_BASE_URL } from "../config";
 import { ServerRoutes } from "../enums/server-routes";
+import { RootState } from "../store/store";
+import { toast } from "react-toastify";
+import { notify } from "../utils/notifications";
+import "react-toastify/dist/ReactToastify.css";
+import { ApiError } from "../interfaces/ApiError";
+import { logout } from "../store/auth-slice";
 
 export const authService = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const refreshToken: string = (getState() as RootState).authState.auth
+        ?.refreshToken as string;
+      if (refreshToken) {
+        headers.set("Authorization", `Bearer ${refreshToken}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (build) => ({
     createUser: build.mutation<IUser, IUser>({
@@ -19,7 +32,19 @@ export const authService = createApi({
         method: HTTPMethods.POST,
         body: user,
       }),
+      async onQueryStarted(args: IUser, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+        } catch (err: unknown) {
+          const error = err as ApiError;
+
+          if (error.error.status === 422) {
+            notify("Incorrect input data, please re-register", toast.error);
+          }
+        }
+      },
     }),
+
     signIn: build.mutation<IAuth, IUser>({
       query: (user: IUser) => ({
         url: ServerRoutes.signin,
@@ -29,9 +54,23 @@ export const authService = createApi({
       async onQueryStarted(args: IUser, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setAuth(data));
-        } catch (error) {
-          console.log(error);
+        } catch (err: unknown) {
+          const error = err as ApiError;
+          if (error.error.originalStatus === 401) {
+            notify("Authorization Error", toast.error);
+          }
+          if (error.error.originalStatus === 404) {
+            notify("User not found, registration required", toast.error);
+          }
+          if (error.error.originalStatus === 403) {
+            notify("Data entry error", toast.error);
+          }
+          if (error.error.originalStatus === 422) {
+            notify(
+              "Password length must be at least 8 characters",
+              toast.error
+            );
+          }
         }
       },
     }),
@@ -41,10 +80,15 @@ export const authService = createApi({
       async onQueryStarted(args: string, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setAuth(data));
-        } catch (error) {
-          // TODO: add 401 error handlind
-          dispatch(logout());
+        } catch (err: unknown) {
+          const error = err as ApiError;
+          if (error.error.originalStatus === 401) {
+            notify(
+              "Access denied or invalid, please re-authorize",
+              toast.error
+            );
+            dispatch(logout());
+          }
         }
       },
     }),

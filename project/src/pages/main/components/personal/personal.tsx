@@ -8,7 +8,7 @@ import "react-circular-progressbar/dist/styles.css";
 function Personal() {
   const name: string = useAppSelector(
     (state: RootState) => state.authState.auth?.name
-  );
+  ) as string;
   const percentage = 66;
 
   return (

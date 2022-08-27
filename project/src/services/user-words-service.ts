@@ -11,9 +11,10 @@ export const userWordsService = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token: string = (getState() as RootState).authState.auth?.token;
+      const token: string = (getState() as RootState).authState.auth
+        ?.token as string;
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },
