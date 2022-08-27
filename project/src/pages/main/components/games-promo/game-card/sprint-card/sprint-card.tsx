@@ -1,4 +1,5 @@
 import React from "react";
+import "./sprint-card.scss";
 
 const SprintCard = (): JSX.Element => {
   return (

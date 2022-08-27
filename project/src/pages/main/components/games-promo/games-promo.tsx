@@ -2,6 +2,7 @@ import React from "react";
 import GameCard from "./game-card/game-card";
 import AudioCallCard from "./game-card/audio-call-card/audio-call-card";
 import SprintCard from "./game-card/sprint-card/sprint-card";
+import "./games-promo.scss";
 
 const games = [
   {

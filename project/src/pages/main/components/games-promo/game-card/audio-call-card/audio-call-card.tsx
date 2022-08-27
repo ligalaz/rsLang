@@ -1,4 +1,5 @@
 import React from "react";
+import "./audio-call-card.scss";
 
 const AudioCallCard = (): JSX.Element => {
   return (

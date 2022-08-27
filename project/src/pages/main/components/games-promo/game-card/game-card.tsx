@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GameCardItem } from "../../../../../interfaces/game-card";
+import "./game-card.scss";
 
 const GameCard = (props: GameCardItem): JSX.Element => {
   const { name, description, promo } = props.game;
