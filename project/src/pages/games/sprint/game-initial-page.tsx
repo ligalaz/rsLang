@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { startGame } from "../../../store/sprint-slice";
 import { useGetWordsQuery } from "../../../services/words-service";
 import { TUTORIAL_SECTION_COUNT } from "../../../config";
 
-const GameStartPage = () => {
+const GameInitialPage = () => {
   let count = TUTORIAL_SECTION_COUNT;
 
   const [select, setSelect] = useState("1");
-  const [isStarted, setIsStarted] = useState(false);
   const { data, isLoading } = useGetWordsQuery({ group: Number(select) - 1 });
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -28,15 +31,9 @@ const GameStartPage = () => {
             .reverse()}
         </select>
       </label>
-      <button
-        onClick={() => {
-          setIsStarted(true);
-        }}
-      >
-        Start Game
-      </button>
+      <button onClick={() => dispatch(startGame())}>Start Game</button>
     </>
   );
 };
 
-export default GameStartPage;
+export default GameInitialPage;
