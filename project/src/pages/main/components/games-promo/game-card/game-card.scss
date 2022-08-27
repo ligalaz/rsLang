@@ -1,0 +1,60 @@
+:root {
+  --btn-text-color: #fff;
+  --hover-btn-color: #fec246;
+  --promo-game-decor-color: #fff;
+}
+
+.game-card {
+  width: 16.6rem;
+  height: 15.3rem;
+
+  &__promo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  &__content {
+    display: flex;
+  }
+
+  &__title {
+    margin: 0;
+    margin-bottom: 0.2rem;
+
+    font-weight: 700;
+    font-size: 1.12rem;
+    line-height: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  &__description {
+    margin: 0;
+
+    font-size: 0.88rem;
+    line-height: 1.07rem;
+  }
+
+  &__start-btn {
+    padding: 0.8rem 0.5rem;
+    align-self: flex-end;
+
+    color: var(--btn-text-color);
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 0.99rem;
+
+    background-color: #404497;
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    transition: 0.5s;
+
+    &:hover {
+      background-color: var(--hover-btn-color);
+    }
+  }
+}
