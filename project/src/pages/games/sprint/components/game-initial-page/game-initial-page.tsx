@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { startGame } from "../../../store/sprint-slice";
-import { useGetWordsQuery } from "../../../services/words-service";
-import { TUTORIAL_SECTION_COUNT } from "../../../config";
+import { useActions } from "../../../../../hooks/actions";
+import { useGetWordsQuery } from "../../../../../services/words-service";
+import { TUTORIAL_SECTION_COUNT } from "../../../../../config";
 
 const GameInitialPage = () => {
   let count = TUTORIAL_SECTION_COUNT;
@@ -10,7 +9,7 @@ const GameInitialPage = () => {
   const [select, setSelect] = useState("1");
   const { data, isLoading } = useGetWordsQuery({ group: Number(select) - 1 });
 
-  const dispatch = useDispatch();
+  const { startGame } = useActions();
 
   return (
     <>
@@ -31,7 +30,7 @@ const GameInitialPage = () => {
             .reverse()}
         </select>
       </label>
-      <button onClick={() => dispatch(startGame())}>Start Game</button>
+      <button onClick={() => startGame(data)}>Start Game</button>
     </>
   );
 };
