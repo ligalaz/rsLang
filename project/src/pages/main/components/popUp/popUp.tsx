@@ -132,7 +132,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           onClick={() => clickPage(-1)}
           className="popup__button popup__button-prev"
         >
-          Предыдущая
+          Previous
         </button>
 
         <button
@@ -140,21 +140,21 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           className="popup__button popup__button-known"
           onClick={() => markAsLearned()}
         >
-          Изучил
+          Learn
         </button>
         <button
           disabled={!isAuth || info.userWord?.difficulty === "hard"}
           onClick={() => markAsHard()}
           className="popup__button popup__button-hard"
         >
-          Сложно
+          Hard
         </button>
         <button
           disabled={!condition}
           onClick={() => clickPage(1)}
           className="popup__button popup__button-next"
         >
-          Cледующая
+          Next
         </button>
       </div>
 

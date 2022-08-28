@@ -1,10 +1,13 @@
 import React, { useState, useEffect, MouseEvent } from "react";
-import { useParams } from "react-router";
+import ReactPaginate from "react-paginate";
+import { useNavigate, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { Word } from "../../../../interfaces/word";
 import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import { useGetWordsMutation } from "../../../../services/words-service";
 import { RootState, useAppSelector } from "../../../../store/store";
 import Card from "../card/card";
+import PaginatedItems from "../pagination/pagination";
 import PopUp from "../popUp/popUp";
 import "./textbook.scss";
 
@@ -13,11 +16,15 @@ function Textbook() {
   const [getAggregatedWords, { isLoading: isUserWordsLoading }] =
     useGetUserWordsMutation();
   const { group, page } = useParams();
+  const navigate = useNavigate();
 
   const userId: string = useAppSelector(
     (state: RootState) => state.authState.auth?.userId
   );
 
+  function setPage(newPage: number) {
+    navigate(`../textbook/${group}/${newPage}`, { replace: true });
+  }
   const words: Word[] = useAppSelector(
     (state: RootState) => state.wordsState.words || []
   );
@@ -86,6 +93,25 @@ function Textbook() {
         <div className="page__line"></div>
       </div>
 
+      <div className="chapter">
+        {new Array(7).fill(0).map((_, index) => (
+          <Link
+            key={`chapter__${index}`}
+            to={`../textbook/${index}/0`}
+            className={`chapter__link ${
+              +window.location.href.split("/")[5] === index
+                ? `chapter__link${index}`
+                : ""
+            }`}
+            type="button"
+          >
+            {index != 6 ? `Раздел ${index + 1}` : `Cложные слова`}
+          </Link>
+        ))}
+      </div>
+      <div className="global__info">
+        <PaginatedItems itemsPerPage={1} setPage={setPage} />
+      </div>
       {isWordsLoading || isUserWordsLoading ? (
         <div className="textbook__loading"></div>
       ) : (

@@ -1,6 +1,5 @@
 .popup {
   padding: 20px;
-  border: 1px solid #B2B2B2;
   min-height: 154px;
   margin-bottom: 13px;
   background-color: white;
@@ -34,7 +33,7 @@
   &__line {
     width: 100%;
     min-height: 1px;
-    background-color: #ccc;
+    background-color: #F3F3F3;
   }
 
 
@@ -62,9 +61,10 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    border: 0;
 
     &-next,&-prev {
-      background-color: #2acf2a;
+      background-color: #F56748;
     }
 
     &-unknown {
@@ -72,15 +72,15 @@
     }
 
     &-known {
-      background-color: #3e94f7;
+      background-color: #6550DE;
     }
 
     &-hard {
-      background-color: #bd3b1d;
+      background-color: #6550DE;
     }
 
     &:disabled {
-      background-color: #ccc;
+      background-color: #B2B2B2;
     }
   }
 
@@ -93,9 +93,9 @@
 }
 
 .normal {
-  background-color:rgb(59, 85, 170);
+  background-color:#E3DEFF;
 }
 
 .hard {
-  background-color:rgb(163, 73, 73);
+  background-color:#FFCFCF;
 }

@@ -64,12 +64,20 @@
       margin-bottom: 18px;
     }
   }
+
+  &__control-option {
+    cursor: pointer;
+
+    &:hover path {
+      fill: #6550DE;
+    }
+  }
 }
 
 .normal {
-  background-color:rgb(59, 85, 170);
+  background-color: #E3DEFF;
 }
 
 .hard {
-  background-color:rgb(163, 73, 73);
+  background-color: #FFCFCF;
 }

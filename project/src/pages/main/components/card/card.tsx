@@ -20,7 +20,6 @@ function Card({ info, togglePopup }: ICardProps) {
             ? "normal"
             : ""
         }`}
-        onClick={togglePopup}
       >
         <div className="card__flex">
           <div className="card__img-container">
@@ -38,10 +37,10 @@ function Card({ info, togglePopup }: ICardProps) {
             </div>
           </div>
           <div className="card__controls">
-            <a>
+            <a className="card__control-option">
               <Icon url={API_BASE_URL + "/" + info.audio} type="sound" />
             </a>
-            <a>
+            <a className="card__control-option" onClick={togglePopup}>
               <Icon url={API_BASE_URL + "/" + info.audioMeaning} type="info" />
             </a>
           </div>
