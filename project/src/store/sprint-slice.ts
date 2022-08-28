@@ -35,8 +35,6 @@ export const sprintSlice = createSlice({
     },
     finishGame: (state) => {
       state.isGameStarted = false;
-    },
-    switchResultsVisibility: (state) => {
       state.isResultsShown = !state.isResultsShown;
     },
     increaseScore: (state, { payload = 0 }) => {
@@ -44,6 +42,18 @@ export const sprintSlice = createSlice({
     },
     addGameData: (state, { payload }) => {
       state.gameData.push(payload);
+    },
+    increaseTrueAnswersCount: (state) => {
+      state.trueAnswersCount += 1;
+    },
+    resetTrueAnswersCount: (state) => {
+      state.trueAnswersCount = 0;
+    },
+    addTrueAnswers: (state, { payload }) => {
+      state.trueAnswers.push(payload);
+    },
+    addFalseAnswers: (state, { payload }) => {
+      state.falseAnswers.push(payload);
     },
   },
 });

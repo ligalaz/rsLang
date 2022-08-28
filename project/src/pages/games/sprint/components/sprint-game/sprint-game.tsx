@@ -11,8 +11,18 @@ const timerDetails = {
 };
 
 const SprintGame = () => {
-  const { data } = useAppSelector((state) => state.sprintState);
-  const { addGameData } = useActions();
+  const {
+    addGameData,
+    increaseTrueAnswersCount,
+    resetTrueAnswersCount,
+    increaseScore,
+    addTrueAnswers,
+    addFalseAnswers,
+  } = useActions();
+  const { data, gameData, trueAnswersCount, score } = useAppSelector(
+    (state) => state.sprintState
+  );
+
   const [word, setWord] = useState("");
   const [wordTranslate, setWordTranslate] = useState("");
 
@@ -32,15 +42,14 @@ const SprintGame = () => {
     setWordTranslate(randWordTranslate);
   };
 
-  const getRandomNumber = (max: number, min = 0): number => {
+  const getRandNumber = (max: number, min = 0): number => {
     const rand = min + Math.random() * (max + 1 - min);
-    console.log();
     return Math.floor(rand);
   };
 
   const getRightAnswerState = () => {
     const rightAnswerStates = [true, false];
-    const randRightAnswerStateNumber = getRandomNumber(
+    const randRightAnswerStateNumber = getRandNumber(
       rightAnswerStates.length - 1
     );
 
@@ -48,7 +57,7 @@ const SprintGame = () => {
   };
 
   const getRandWord = (): [IWord, number] => {
-    const randDataNumber = getRandomNumber(data.length - 1);
+    const randDataNumber = getRandNumber(data.length - 1);
     return [data.at(randDataNumber), randDataNumber];
   };
 
@@ -60,13 +69,44 @@ const SprintGame = () => {
     let { wordTranslate } = wordData;
 
     if (!rightAnswerState) {
-      const randomWordTranslateNumber = getRandomNumber(data.length - 2);
+      const randomWordTranslateNumber = getRandNumber(data.length - 2);
       wordTranslate = [...data.slice(0, position), ...data.slice(position)].at(
         randomWordTranslateNumber
       ).wordTranslate;
     }
 
     return wordTranslate;
+  };
+
+  const checkTrueAnswer = () => {
+    return gameData.at(-1).wordTranslate === wordTranslate;
+  };
+
+  const checkFalseAnswer = () => {
+    return gameData.at(-1).wordTranslate !== wordTranslate;
+  };
+
+  const changeGameScore = (isTrue: boolean) => {
+    const wordData = gameData.at(-1);
+
+    if (isTrue) {
+      increaseTrueAnswersCount();
+      let points = 10;
+      console.log(trueAnswersCount);
+      if (trueAnswersCount > 11) {
+        points = 80;
+      } else if (trueAnswersCount > 7) {
+        points = 40;
+      } else if (trueAnswersCount > 3) {
+        points = 20;
+      }
+
+      increaseScore(points);
+      addTrueAnswers(wordData);
+    } else {
+      resetTrueAnswersCount();
+      addFalseAnswers(wordData);
+    }
   };
 
   useEffect(() => {
@@ -81,7 +121,7 @@ const SprintGame = () => {
       <main className="main">
         <section className="sprint-game">
           <div className="sprint-game__header">
-            <span className="score"></span>
+            <span className="score">{score}</span>
             <div></div>
           </div>
           <Timer timerDetails={timerDetails} />
@@ -92,8 +132,26 @@ const SprintGame = () => {
             </span>
           </div>
           <div>
-            <button className="sprint-game__no-btn">неверно</button>
-            <button className="sprint-game__yes-btn">верно</button>
+            <button
+              onClick={() => {
+                const isTrue = checkFalseAnswer();
+                changeGameScore(isTrue);
+                updateWord();
+              }}
+              className="sprint-game__no-btn"
+            >
+              неверно
+            </button>
+            <button
+              onClick={() => {
+                const isTrue = checkTrueAnswer();
+                changeGameScore(isTrue);
+                updateWord();
+              }}
+              className="sprint-game__yes-btn"
+            >
+              верно
+            </button>
           </div>
         </section>
       </main>

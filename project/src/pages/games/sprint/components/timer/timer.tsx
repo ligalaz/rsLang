@@ -4,7 +4,7 @@ import TimerDetails from "../../../../../interfaces/timer";
 
 const Timer = ({ timerDetails }: { timerDetails: TimerDetails }) => {
   const { initial, delay, className } = timerDetails;
-  const { switchResultsVisibility } = useActions();
+  const { finishGame } = useActions();
   const [timer, setTimer] = useState(initial);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const Timer = ({ timerDetails }: { timerDetails: TimerDetails }) => {
       }, delay);
       return () => clearTimeout(timerId);
     } else {
-      switchResultsVisibility();
+      finishGame();
     }
   }, [timer]);
 
