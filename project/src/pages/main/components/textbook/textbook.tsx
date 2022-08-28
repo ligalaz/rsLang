@@ -40,11 +40,16 @@ function Textbook() {
     if (userId) {
       getAggregatedWords({
         userId,
-        params: {
-          page: parseInt(page),
-          group: parseInt(group),
-          wordsPerPage: 20,
-        },
+        params:
+          +group != 6
+            ? {
+                page: parseInt(page),
+                group: parseInt(group),
+                wordsPerPage: 20,
+              }
+            : {
+                filter: '{"userWord.difficulty":"hard"}',
+              },
       });
     } else {
       getWords({ page: parseInt(page), group: parseInt(group) });
@@ -94,7 +99,7 @@ function Textbook() {
       </div>
 
       <div className="chapter">
-        {new Array(7).fill(0).map((_, index) => (
+        {new Array(userId ? 7 : 6).fill(0).map((_, index) => (
           <Link
             key={`chapter__${index}`}
             to={`../textbook/${index}/0`}
@@ -105,12 +110,12 @@ function Textbook() {
             }`}
             type="button"
           >
-            {index != 6 ? `Раздел ${index + 1}` : `Cложные слова`}
+            {index != 6 ? `Chapter ${index + 1}` : `Difficuilt words`}
           </Link>
         ))}
       </div>
       <div className="global__info">
-        <PaginatedItems itemsPerPage={1} setPage={setPage} />
+        {+group - 6 && <PaginatedItems itemsPerPage={1} setPage={setPage} />}
       </div>
       {isWordsLoading || isUserWordsLoading ? (
         <div className="textbook__loading"></div>
