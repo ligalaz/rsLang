@@ -4,9 +4,10 @@ import Sidebar from "./components/sidebar/sidebar";
 import Greetings from "./components/greetings/gretings";
 import Personal from "./components/personal/personal";
 import { RootState, useAppSelector } from "../../store/store";
-import { useGetWordsQuery } from "../../services/words-service";
+//import { useGetWordsQuery } from "../../services/words-service";
 import { GetWordsRequest, IWord } from "../../interfaces/word";
 import { Outlet } from "react-router";
+import GameStartScreen from "../auth/games/game-start-screen.component";
 
 const MainPage = () => {
   // const [params, setParams] = useState<GetWordsRequest>({

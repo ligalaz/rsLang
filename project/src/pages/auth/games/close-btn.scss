@@ -1,0 +1,37 @@
+.__close-btn {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background: #e5e5e5;
+  border: none;
+  cursor: pointer;
+
+  &-item {
+    top: 27.5px;
+    left: 12.5px;
+    position: absolute;
+    width: 35px;
+    height: 5px;
+    background: #6550de;
+    border-radius: 55px;
+  }
+  & .first-item {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+  }
+  & .second-item {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+  }
+}

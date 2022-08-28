@@ -13,6 +13,8 @@ import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
+import AudioCallPage from "./pages/auth/games/audiocall/audiocall";
+import GameStartScreen from "./pages/auth/games/game-start-screen.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -25,6 +27,8 @@ function App() {
       dispatch(authService.endpoints.token.initiate(auth.userId));
     }
   }, []);
+
+  const gameChoise = false;
 
   return (
     <BrowserRouter>
@@ -40,11 +44,22 @@ function App() {
             path="login"
             element={!auth ? <LoginPage /> : <Navigate to="main" replace />}
           />
+          <Route
+            path="game-screen"
+            element={
+              !gameChoise ? (
+                <GameStartScreen gameName="audiocall" />
+              ) : (
+                <GameStartScreen gameName="sprint" />
+              )
+            }
+          />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
             <Route path="promo" element={<Promo />} />
             <Route path="textbook" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route path="audiocall" element={<AudioCallPage />} />
           </Route>
           <Route path="*" element={<Navigate to="main" />} />
         </Routes>

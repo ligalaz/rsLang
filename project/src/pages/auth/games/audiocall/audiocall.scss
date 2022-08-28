@@ -1,0 +1,134 @@
+.word-repeater {
+  width: 211px;
+  height: 211px;
+  margin-bottom: 100px;
+  background: #6550de;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border: 1px solid #000000;
+  cursor: pointer;
+}
+.word-repeater__logo {
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+.word-repeater__logo:hover {
+  fill: red;
+  transform: scale(1.2);
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+}
+
+.word-repeater__row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.game-element {
+  font-family: "Montserrat";
+  font-size: 25px;
+  font-weight: 700;
+  color: #b2b2b2;
+  margin-bottom: 50px;
+}
+
+.game-true {
+  position: relative;
+  color: #000000;
+}
+.game-true::before,
+.game-false::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 8px;
+  left: -15px;
+  background: url("../../../../assets/labels/checkmark.png");
+}
+.game-false::before {
+  width: 16px;
+  height: 16px;
+  background: url("../../../../assets/labels/checkmark_remove.png");
+}
+.game-false {
+  position: relative;
+  color: red;
+}
+
+.settings-form {
+  position: relative;
+  left: 70%;
+
+  margin-bottom: 10px;
+}
+#gamelevel {
+  margin-right: 25px;
+}
+label {
+  margin-right: 10px;
+}
+.play-btn {
+  position: relative;
+  width: 247.88px;
+  height: 59.49px;
+  left: 70%;
+  background: #fff;
+  border: 1px solid #b2b2b2;
+  border-radius: 75px;
+  margin-bottom: 125px;
+  -webkit-border-radius: 75px;
+  -moz-border-radius: 75px;
+  -ms-border-radius: 75px;
+  -o-border-radius: 75px;
+
+  font-family: "Roboto";
+  font-weight: bold;
+  line-height: 25px;
+  font-size: 22px;
+  color: #7d7d7d;
+  cursor: pointer;
+}
+
+.play-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.play-btn::before {
+  position: absolute;
+  content: "";
+  width: 48px;
+  height: 48px;
+  top: 5px;
+  left: 7px;
+  border-radius: 50%;
+  background: #6550de;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+progress {
+  margin-bottom: 16px;
+}
+
+.game-element {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}

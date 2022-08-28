@@ -13,8 +13,8 @@ export const audioService = (
 ) => {
   const audio = new Audio();
   audio.setAttribute("src", `${url}/${source.audio}`);
-  const audioHandler = (e: Event) => {
-    const target = e.target as HTMLAudioElement;
+  const audioHandler = (event: Event) => {
+    const target = event.target as HTMLAudioElement;
     const audioSource = target.getAttribute("src") as string;
     switch (audioSource) {
       case `${url}/${source.audio}`:
