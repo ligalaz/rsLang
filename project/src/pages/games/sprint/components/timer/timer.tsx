@@ -4,7 +4,7 @@ import TimerDetails from "../../../../../interfaces/timer";
 
 const Timer = ({ timerDetails }: { timerDetails: TimerDetails }) => {
   const { initial, delay, className } = timerDetails;
-  const { isResultsShown } = useActions();
+  const { switchResultsVisibility } = useActions();
   const [timer, setTimer] = useState(initial);
 
   useEffect(() => {
@@ -14,9 +14,9 @@ const Timer = ({ timerDetails }: { timerDetails: TimerDetails }) => {
       }, delay);
       return () => clearTimeout(timerId);
     } else {
-      isResultsShown();
+      switchResultsVisibility();
     }
-  });
+  }, [timer]);
 
   return <div className={`timer ${className}`}>{timer}</div>;
 };

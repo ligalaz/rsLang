@@ -34,7 +34,7 @@ export const sprintSlice = createSlice({
     finishGame: (state) => {
       state.isGameStarted = false;
     },
-    isResultsShown: (state) => {
+    switchResultsVisibility: (state) => {
       state.isResultsShown = !state.isResultsShown;
     },
     increaseScore: (state, { payload = 0 }) => {
