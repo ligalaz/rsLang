@@ -8,6 +8,11 @@
   &__wrapper {
     flex-grow: 1;
     overflow-y: auto;
+
+    background-image: url('../../assets/img/background.jpg');
+    background-size: cover;
+    background-blend-mode: color-dodge;
+    background-color: #ffffff;
   }
 
   &__middle {
@@ -16,31 +21,32 @@
     max-width: 892px;
   }
 
-  &__color0 {
-    background-color: rgb(211 164 243);
-  }
-  &__color1 {
-    background-color: rgb(243 228 164);;
+  &__bg-filter-0 {
+    background-color: #0a0b0e;
   }
 
-  &__color2 {
-    background-color: rgb(164 186 243);
+  &__bg-filter-1 {
+    background-color: #0b0b10;
   }
 
-  &__color3 {
-    background-color: rgb(193 241 186);
+  &__bg-filter-2 {
+    background-color: #0a0a0e;
   }
 
-   &__color4 {
-    background-color: rgb(247 247 167);
+  &__bg-filter-3 {
+    background-color: #09090c;
+  }
+  
+  &__bg-filter-4 {
+    background-color:  #08080c;
+  }
+  
+  &__bg-filter-5 {
+    background-color: #07070c;
   }
 
-  &__color5 {
-    background-color: rgb(249 176 107);
-  }
-
-  &__color6 {
-    background-color: rgb(243 200 200);
+  &__bg-filter-6 {
+    background-color: #260707;
   }
 
 }

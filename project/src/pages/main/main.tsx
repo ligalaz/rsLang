@@ -16,7 +16,7 @@ const MainPage = () => {
   return (
     <div className="main">
       <Sidebar />
-      <div className={`main__wrapper main__color${color}`}>
+      <div className={`main__wrapper main__bg-filter-${color}`}>
         <div className="main__middle">
           <Greetings />
           <Outlet />

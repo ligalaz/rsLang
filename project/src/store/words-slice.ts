@@ -38,7 +38,6 @@ export const wordsSlice = createSlice({
       .addMatcher(
         userWordsService.endpoints.createUserWord.matchFulfilled,
         (state, { payload }) => {
-          debugger;
           const word: Word = state.words.find(
             (word: Word) => word.id === (payload as UserWordResponse).wordId
           );

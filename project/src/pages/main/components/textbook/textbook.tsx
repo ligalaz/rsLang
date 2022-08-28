@@ -96,27 +96,24 @@ function Textbook() {
       <div className="page">
         <div className="page__descr">Dictionary</div>
         <div className="page__line"></div>
+        <div className="chapter">
+          {new Array(userId ? 7 : 6).fill(0).map((_, index) => (
+            <Link
+              key={`chapter__${index}`}
+              to={`../textbook/${index}/0`}
+              className={`chapter__link ${
+                +window.location.href.split("/")[5] === index
+                  ? "chapter__link_active"
+                  : ""
+              }`}
+              type="button"
+            >
+              {index != 6 ? `Group ${index + 1}` : `Difficuilt words`}
+            </Link>
+          ))}
+        </div>
       </div>
 
-      <div className="chapter">
-        {new Array(userId ? 7 : 6).fill(0).map((_, index) => (
-          <Link
-            key={`chapter__${index}`}
-            to={`../textbook/${index}/0`}
-            className={`chapter__link ${
-              +window.location.href.split("/")[5] === index
-                ? `chapter__link${index}`
-                : ""
-            }`}
-            type="button"
-          >
-            {index != 6 ? `Chapter ${index + 1}` : `Difficuilt words`}
-          </Link>
-        ))}
-      </div>
-      <div className="global__info">
-        {+group - 6 && <PaginatedItems itemsPerPage={1} setPage={setPage} />}
-      </div>
       {isWordsLoading || isUserWordsLoading ? (
         <div className="textbook__loading"></div>
       ) : (
@@ -124,11 +121,19 @@ function Textbook() {
           <div className="textbook__wrapper">
             {words.length &&
               words.map((a, i) => (
-                <Card key={a.id} info={a} togglePopup={() => togglePopup(i)} />
+                <Card
+                  key={a.id}
+                  isAuth={!!userId}
+                  info={a}
+                  togglePopup={() => togglePopup(i)}
+                />
               ))}
           </div>
         </div>
       )}
+      <div className="global__info">
+        {+group - 6 && <PaginatedItems itemsPerPage={1} setPage={setPage} />}
+      </div>
     </>
   );
 }

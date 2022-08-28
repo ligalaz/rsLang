@@ -1,14 +1,78 @@
 .card {
-  padding: 20px;
-  border: 1px solid #B2B2B2;
-  min-height: 154px;
   margin-bottom: 13px;
+  position: relative;
 
-  &__popup {
+  &::before {
     position: absolute;
-    width:  100%;
-    height: 100%;
-    filter: blur(5px)
+    top: 41px;
+    right:-0.5rem;
+    height: 28px;
+    width: 28px;
+    color: #fff;
+    transform : rotate(45deg);
+    content: '';
+    background-color: #F3F3F3;
+  }
+  
+  &::after{
+    position: absolute;
+    top: 20px;
+    right: -14px;
+    padding: 0.5rem;
+    width: 7rem;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    text-align: center;
+    color: #7D7D7D;
+    box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.05);
+    content: 'New';
+    font-weight: 500;
+    background-color: #F3F3F3;
+  }
+
+  &_normal {
+    &::after {
+      content: 'Learned';
+      color: #fff;
+      background-color: #6550DE;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.2);
+    }
+
+    &::before {
+      content: '';
+      background-color: #6550DE;
+    }
+  }
+
+  &_hard {
+    &::after {
+      content: 'Difficult';
+      color: #fff;
+      background-color: #F56748;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.2);
+    }
+
+    &::before {
+      content: '';
+      background-color: #F56748;
+    }
+  }
+
+  &_no-auth {
+    &::before, &::after {
+      content: none;
+    }
+  }
+
+  &__flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    min-height: 154px;
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #B2B2B2;
+    border-radius: 4px;
   }
 
   &__word {
@@ -20,23 +84,21 @@
 
   &__img-container {
     display: flex;
-
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
   }
+
   &__img {
     width: 120px;
+    height: 120px;
     border-radius: 50%;
-    height: auto;
-  }
-
-  &__flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 114px;
   }
 
   &__center {
     margin-left: 60px;
+    flex-grow: 1;
   }
 
   &__title {
@@ -57,11 +119,14 @@
   &__controls {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    align-self: self-end;
+
+    &_no-auth {
+      align-self: self-start;
+    }
 
     & > *:not(:last-child) {
-      margin-bottom: 18px;
+      margin-bottom: 9px;
     }
   }
 
