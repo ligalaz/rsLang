@@ -9,6 +9,7 @@ interface SprintState {
   data: IWord[];
   gameData: IWord[];
   trueAnswers: IWord[];
+  trueAnswersCount: number;
   falseAnswers: IWord[];
   score: number;
 }
@@ -19,6 +20,7 @@ const initialState: SprintState = {
   data: [],
   gameData: [],
   trueAnswers: [],
+  trueAnswersCount: 0,
   falseAnswers: [],
   score: 0,
 };
@@ -39,6 +41,9 @@ export const sprintSlice = createSlice({
     },
     increaseScore: (state, { payload = 0 }) => {
       state.score += payload;
+    },
+    addGameData: (state, { payload }) => {
+      state.gameData.push(payload);
     },
   },
 });
