@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useActions } from "../../../../../hooks/actions";
-import { TUTORIAL_SECTION_COUNT } from "../../../../../config";
-import { useAppSelector } from "../../../../../store/store";
+import { useActions } from "../../../../hooks/actions";
+import { TUTORIAL_SECTION_COUNT } from "../../../../config";
+import { useAppSelector } from "../../../../store/store";
 
 const GameInitialPage = () => {
   let count = TUTORIAL_SECTION_COUNT;

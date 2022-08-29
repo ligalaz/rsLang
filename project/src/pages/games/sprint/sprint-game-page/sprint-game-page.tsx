@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../../../../../store/store";
-import { useActions } from "../../../../../hooks/actions";
-import { useGetWordsQuery } from "../../../../../services/words-service";
-import Timer from "../timer/timer";
+import { useAppSelector } from "../../../../store/store";
+import { useActions } from "../../../../hooks/actions";
+import { useGetWordsQuery } from "../../../../services/words-service";
+import Timer from "../components/timer/timer";
 
 const timerDetails = {
   delay: 1000,
@@ -19,7 +19,6 @@ const SprintGamePage = () => {
 
   const checkFalseAnswer = () => {
     const isTrue = gameData.at(-1).wordTranslate !== currentWord.wordTranslate;
-    console.log(isTrue);
     changeGameScore(isTrue);
     gameStep();
   };
