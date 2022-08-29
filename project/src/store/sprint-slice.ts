@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store/store";
 import { IWord } from "../interfaces/word";
 
 interface SprintState {
   isGameStarted: boolean;
   isResultsShown: boolean;
-  data: IWord[];
+  level: number;
   gameData: IWord[];
   trueAnswers: IWord[];
   trueAnswersCount: number;
@@ -17,7 +15,7 @@ interface SprintState {
 const initialState: SprintState = {
   isGameStarted: false,
   isResultsShown: false,
-  data: [],
+  level: 1,
   gameData: [],
   trueAnswers: [],
   trueAnswersCount: 0,
@@ -29,13 +27,17 @@ export const sprintSlice = createSlice({
   name: "sprint",
   initialState,
   reducers: {
-    startGame: (state, { payload }) => {
-      state.isGameStarted = true;
-      state.data = payload;
+    setLevel: (state, { payload }) => {
+      state.level = payload;
     },
-    finishGame: (state) => {
-      state.isGameStarted = false;
-      state.isResultsShown = !state.isResultsShown;
+    startGame: (state) => {
+      state.isGameStarted = true;
+    },
+    showResults: (state) => {
+      state.isResultsShown = true;
+    },
+    resetGame: (state) => {
+      return { ...initialState, level: state.level };
     },
     increaseScore: (state, { payload = 0 }) => {
       state.score += payload;

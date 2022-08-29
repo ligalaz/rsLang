@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../../../../store/store";
 import { useActions } from "../../../../../hooks/actions";
 import { IWord } from "../../../../../interfaces/word";
+import { useGetWordsQuery } from "../../../../../services/words-service";
 import Timer from "../timer/timer";
 
 const timerDetails = {
@@ -10,7 +11,7 @@ const timerDetails = {
   className: "sprint-timer",
 };
 
-const SprintGame = () => {
+const SprintGamePage = () => {
   const {
     addGameData,
     increaseTrueAnswersCount,
@@ -19,9 +20,10 @@ const SprintGame = () => {
     addTrueAnswers,
     addFalseAnswers,
   } = useActions();
-  const { data, gameData, trueAnswersCount, score } = useAppSelector(
-    (state) => state.sprintState
-  );
+  const { isGameStarted, gameData, trueAnswersCount, score, level } =
+    useAppSelector((state) => state.sprintState);
+
+  const { data, isLoading } = useGetWordsQuery({ group: Number(level) - 1 });
 
   const [word, setWord] = useState("");
   const [wordTranslate, setWordTranslate] = useState("");
@@ -92,7 +94,7 @@ const SprintGame = () => {
     if (isTrue) {
       increaseTrueAnswersCount();
       let points = 10;
-      console.log(trueAnswersCount);
+
       if (trueAnswersCount > 11) {
         points = 80;
       } else if (trueAnswersCount > 7) {
@@ -110,53 +112,61 @@ const SprintGame = () => {
   };
 
   useEffect(() => {
-    updateWord();
-  }, []);
+    if (!isLoading) {
+      updateWord();
+    }
+  }, [isLoading]);
 
   return (
     <div className="container">
-      <header className="header">
-        <div className="close-btn"></div>
-      </header>
-      <main className="main">
-        <section className="sprint-game">
-          <div className="sprint-game__header">
-            <span className="score">{score}</span>
-            <div></div>
-          </div>
-          <Timer timerDetails={timerDetails} />
-          <div className="sprint-game__word">
-            {word}
-            <span className="sprint-game__word-translation">
-              {wordTranslate}
-            </span>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                const isTrue = checkFalseAnswer();
-                changeGameScore(isTrue);
-                updateWord();
-              }}
-              className="sprint-game__no-btn"
-            >
-              неверно
-            </button>
-            <button
-              onClick={() => {
-                const isTrue = checkTrueAnswer();
-                changeGameScore(isTrue);
-                updateWord();
-              }}
-              className="sprint-game__yes-btn"
-            >
-              верно
-            </button>
-          </div>
-        </section>
-      </main>
+      {isLoading ? (
+        <div>...Loading</div>
+      ) : (
+        <>
+          <header className="header">
+            <div className="close-btn"></div>
+          </header>
+          <main className="main">
+            <section className="sprint-game">
+              <div className="sprint-game__header">
+                <span className="score">{score}</span>
+                <div></div>
+              </div>
+              <Timer timerDetails={timerDetails} />
+              <div className="sprint-game__word">
+                {word}
+                <span className="sprint-game__word-translation">
+                  {wordTranslate}
+                </span>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    const isTrue = checkFalseAnswer();
+                    changeGameScore(isTrue);
+                    updateWord();
+                  }}
+                  className="sprint-game__no-btn"
+                >
+                  неверно
+                </button>
+                <button
+                  onClick={() => {
+                    const isTrue = checkTrueAnswer();
+                    changeGameScore(isTrue);
+                    updateWord();
+                  }}
+                  className="sprint-game__yes-btn"
+                >
+                  верно
+                </button>
+              </div>
+            </section>
+          </main>
+        </>
+      )}
     </div>
   );
 };
 
-export default SprintGame;
+export default SprintGamePage;

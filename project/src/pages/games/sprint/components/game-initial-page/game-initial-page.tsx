@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { useActions } from "../../../../../hooks/actions";
-import { useGetWordsQuery } from "../../../../../services/words-service";
 import { TUTORIAL_SECTION_COUNT } from "../../../../../config";
+import { useAppSelector } from "../../../../../store/store";
 
 const GameInitialPage = () => {
   let count = TUTORIAL_SECTION_COUNT;
 
-  const [select, setSelect] = useState("1");
-  const { data, isLoading } = useGetWordsQuery({ group: Number(select) - 1 });
-
-  const { startGame } = useActions();
+  const { level } = useAppSelector((state) => state.sprintState);
+  const { startGame, setLevel } = useActions();
 
   return (
     <>
@@ -17,9 +15,9 @@ const GameInitialPage = () => {
       <label>
         Level
         <select
-          value={select}
+          value={level}
           className="level__list"
-          onChange={(event) => setSelect(event.target.value)}
+          onChange={(event) => setLevel(event.target.value)}
         >
           {[...new Array(TUTORIAL_SECTION_COUNT)]
             .map(() => (
@@ -30,7 +28,13 @@ const GameInitialPage = () => {
             .reverse()}
         </select>
       </label>
-      <button onClick={() => startGame(data)}>Start Game</button>
+      <button
+        onClick={() => {
+          startGame();
+        }}
+      >
+        Start Game
+      </button>
     </>
   );
 };

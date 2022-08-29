@@ -1,12 +1,20 @@
 import React from "react";
 import { useAppSelector } from "../../../store/store";
-import SprintGame from "./components/sprint-game/sprint-game";
+import SprintGamePage from "./components/sprint-game-page/sprint-game-page";
 import GameInitialPage from "./components/game-initial-page/game-initial-page";
+import GameResultPage from "./components/game-result-page/game-result-page";
 
 const SprintGameStart = () => {
-  const { isGameStarted } = useAppSelector((state) => state.sprintState);
+  const { isGameStarted, isResultsShown } = useAppSelector(
+    (state) => state.sprintState
+  );
 
-  return <>{isGameStarted ? <SprintGame /> : <GameInitialPage />}</>;
+  return (
+    <>
+      {isGameStarted ? <SprintGamePage /> : <GameInitialPage />}
+      {isResultsShown && <GameResultPage />}
+    </>
+  );
 };
 
 export default SprintGameStart;
