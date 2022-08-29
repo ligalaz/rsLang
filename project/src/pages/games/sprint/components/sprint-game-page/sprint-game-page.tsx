@@ -20,8 +20,9 @@ const SprintGamePage = () => {
     addTrueAnswers,
     addFalseAnswers,
   } = useActions();
-  const { isGameStarted, gameData, trueAnswersCount, score, level } =
-    useAppSelector((state) => state.sprintState);
+  const { gameData, trueAnswersCount, score, level } = useAppSelector(
+    (state) => state.sprintState
+  );
 
   const { data, isLoading } = useGetWordsQuery({ group: Number(level) - 1 });
 
@@ -109,6 +110,20 @@ const SprintGamePage = () => {
       resetTrueAnswersCount();
       addFalseAnswers(wordData);
     }
+  };
+
+  document.onkeydown = (event) => {
+    let isTrue = false;
+
+    if (event.code === "ArrowRight") {
+      isTrue = checkTrueAnswer();
+    }
+    if (event.code === "ArrowLeft") {
+      isTrue = checkFalseAnswer();
+    }
+
+    changeGameScore(isTrue);
+    updateWord();
   };
 
   useEffect(() => {
