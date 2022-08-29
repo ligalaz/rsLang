@@ -12,16 +12,30 @@ function AboutUs() {
       <div className="about">
         <div className="about__flex">
           <div className="about__column">
-            <Icon type="icon" width={182} height={182} />
+            <Icon type="icon" width={100} height={100} />
             <div className="about__descr">
-              <div className="about__title">some</div>
+              <div className="about__title">Alexey</div>
               <div className="about__line"></div>
               <div className="about__job">developer</div>
-              <div className="about__text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores
-                unde ut dolorum ratione praesentium quaerat eveniet soluta, nam
-                distinctio ad.
-              </div>
+              <div className="about__text">TextBook, routes</div>
+            </div>
+          </div>
+          <div className="about__column">
+            <Icon type="icon" width={100} height={100} />
+            <div className="about__descr">
+              <div className="about__title">Artem Mikula</div>
+              <div className="about__line"></div>
+              <div className="about__job">developer</div>
+              <div className="about__text">AudioGame</div>
+            </div>
+          </div>
+          <div className="about__column">
+            <Icon type="icon" width={100} height={100} />
+            <div className="about__descr">
+              <div className="about__title">Evgenia Zhadan</div>
+              <div className="about__line"></div>
+              <div className="about__job">developer</div>
+              <div className="about__text">Sprint</div>
             </div>
           </div>
         </div>
