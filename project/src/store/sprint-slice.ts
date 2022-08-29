@@ -4,7 +4,12 @@ import { IWord } from "../interfaces/word";
 interface SprintState {
   isGameStarted: boolean;
   isResultsShown: boolean;
-  level: number;
+  level: string;
+  currentWord: {
+    word: string;
+    wordTranslate: string;
+  };
+  wordsData: IWord[];
   gameData: IWord[];
   trueAnswers: IWord[];
   trueAnswersCount: number;
@@ -15,7 +20,12 @@ interface SprintState {
 const initialState: SprintState = {
   isGameStarted: false,
   isResultsShown: false,
-  level: 1,
+  level: "1",
+  currentWord: {
+    word: "",
+    wordTranslate: "",
+  },
+  wordsData: [],
   gameData: [],
   trueAnswers: [],
   trueAnswersCount: 0,
@@ -27,7 +37,10 @@ export const sprintSlice = createSlice({
   name: "sprint",
   initialState,
   reducers: {
-    setLevel: (state, { payload }) => {
+    getData: (state, { payload }: { payload: IWord[] }) => {
+      state.wordsData = payload;
+    },
+    setLevel: (state, { payload }: { payload: string }) => {
       state.level = payload;
     },
     startGame: (state) => {
@@ -39,23 +52,52 @@ export const sprintSlice = createSlice({
     resetGame: (state) => {
       return { ...initialState, level: state.level };
     },
-    increaseScore: (state, { payload = 0 }) => {
-      state.score += payload;
+    gameStep: (state) => {
+      const { wordsData } = state;
+
+      const getRandNumber = (max = 1, min = 0): number => {
+        return Math.floor(min + Math.random() * (max + 1 - min));
+      };
+
+      const rightAnswerStates = Boolean(getRandNumber());
+
+      const randWordNumber = getRandNumber(wordsData.length - 1);
+      const randWordData = wordsData.at(randWordNumber);
+      state.gameData.push(randWordData);
+
+      let { wordTranslate } = randWordData;
+
+      if (!rightAnswerStates) {
+        wordTranslate = [
+          ...wordsData.slice(0, randWordNumber),
+          ...wordsData.slice(randWordNumber + 1),
+        ].at(getRandNumber(wordsData.length - 2)).wordTranslate;
+      }
+
+      state.currentWord = { word: randWordData.word, wordTranslate };
     },
-    addGameData: (state, { payload }) => {
-      state.gameData.push(payload);
-    },
-    increaseTrueAnswersCount: (state) => {
-      state.trueAnswersCount += 1;
-    },
-    resetTrueAnswersCount: (state) => {
-      state.trueAnswersCount = 0;
-    },
-    addTrueAnswers: (state, { payload }) => {
-      state.trueAnswers.push(payload);
-    },
-    addFalseAnswers: (state, { payload }) => {
-      state.falseAnswers.push(payload);
+    changeGameScore: (state, { payload }: { payload: boolean }) => {
+      const { trueAnswersCount } = state;
+      const wordData = state.gameData.at(-1);
+
+      if (payload) {
+        state.trueAnswersCount += 1;
+        let points = 10;
+
+        if (trueAnswersCount > 11) {
+          points = 80;
+        } else if (trueAnswersCount > 7) {
+          points = 40;
+        } else if (trueAnswersCount > 3) {
+          points = 20;
+        }
+
+        state.score += points;
+        state.trueAnswers.push(wordData);
+      } else {
+        state.trueAnswersCount = 0;
+        state.falseAnswers.push(wordData);
+      }
     },
   },
 });

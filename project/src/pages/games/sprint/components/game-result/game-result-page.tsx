@@ -28,7 +28,8 @@ const GameResultPage = () => {
         </h3>
         {trueAnswers.map((trueAnswer, index) => (
           <div className="answers__item" key={index}>
-            {trueAnswer.word}
+            <div>{trueAnswer.word}</div>
+            <div>{trueAnswer.wordTranslate}</div>
           </div>
         ))}
       </section>
@@ -42,7 +43,8 @@ const GameResultPage = () => {
         </h3>
         {falseAnswers.map((falseAnswer, index) => (
           <div className="answers__item" key={index}>
-            {falseAnswer.word}
+            <div>{falseAnswer.word}</div>
+            <div>{falseAnswer.wordTranslate}</div>
           </div>
         ))}
       </section>
