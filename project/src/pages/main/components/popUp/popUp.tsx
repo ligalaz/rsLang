@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
 import Icon from "../../../../components/icon/icon";
 import "./popUp.scss";
@@ -9,6 +10,7 @@ import {
   useUpdateUserWordMutation,
 } from "../../../../services/user-words-service";
 import { IAuth } from "../../../../interfaces/auth";
+import classNames from "classnames";
 
 export interface IPopUp {
   key: string | number;
@@ -21,7 +23,7 @@ export interface IPopUp {
 function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
   const condition = number != 19;
   const auth: IAuth = useAppSelector(
-    (state: RootState) => state.authState.auth
+    (state: RootState) => state.authState?.auth
   );
 
   const isAuth = !!auth;
@@ -33,6 +35,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
 
   function markAsHard(): void {
     if (info.userWord) {
+      delete info.userWord?.optional?.time;
       updateUserWord({
         id: auth.userId,
         wordId: info.id,
@@ -53,7 +56,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
       updateUserWord({
         id: auth.userId,
         wordId: info.id,
-        difficulty: info.userWord?.difficulty ?? "normal",
+        difficulty: "normal",
         optional: {
           ...info.userWord?.optional?.toDto(),
           time: new Date().toISOString(),
@@ -75,13 +78,10 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
     <>
       <div
         onClick={togglePopup}
-        className={`popup ${
-          info?.userWord?.difficulty === "hard"
-            ? "hard"
-            : info?.userWord?.difficulty === "normal"
-            ? "normal"
-            : ""
-        }`}
+        className={classNames("popup", {
+          hard: info?.userWord?.difficulty === "hard",
+          normal: info?.userWord?.difficulty === "normal",
+        })}
       >
         <div className="popup__sound">
           <Icon
@@ -92,36 +92,33 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           />
         </div>
         <div className="popup__container">
-          <div className="popup__center">
-            <div className="popup__column-left">
-              <div className="popup__titles">
-                <div className="popup__word-en">{info.word}</div>
-                <div className="popup__word-transq">{info.transcription}</div>
-                <div className="popup__word-ru">{info.wordTranslate}</div>
-              </div>
-              <div className="popup__titles-footer">
-                <div
-                  className="popup__text"
-                  dangerouslySetInnerHTML={{ __html: info.textMeaning }}
-                ></div>
-              </div>
+          <div className="popup__top">
+            <div className="popup__top-left popup__title">
+              {info.word} - {info.wordTranslate}
             </div>
-            <div className="popup__column-rigth">
-              <img
-                className="popup__img"
-                src={API_BASE_URL + "/" + info.image}
-                alt="img"
-              />
+            <div className="popup__top-right">
+              <div
+                className="popup__image"
+                style={{
+                  backgroundImage: `url(${API_BASE_URL + "/" + info.image})`,
+                }}
+              ></div>
             </div>
           </div>
-          <div className="popup__line"></div>
-          <div className="popup__text">{info.textMeaningTranslate}</div>
-          <div className="popup__footer">
-            <div
-              className="popup__text"
-              dangerouslySetInnerHTML={{ __html: info.textExample }}
-            ></div>
-            <div className="popup__text">{info.textExampleTranslate}</div>
+          <div className="popup__separator"></div>
+          <div className="popup__bottom">
+            <div className="popup__bottom-left">
+              <div className="popup__subtitle" dangerouslySetInnerHTML={{ __html: info.textExample }}></div>
+              <div className="popup__subtitle popup__mb-50">{info.textExampleTranslate}</div>
+              <div
+                className="popup__text"
+                dangerouslySetInnerHTML={{ __html: info.textMeaning }}
+              ></div>
+              <div className="popup__text">{info.textMeaningTranslate}</div>
+            </div>
+            <div className="popup__bottom-right">
+              <div className="popup__text">{info.transcription}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -136,7 +133,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         </button>
 
         <button
-          disabled={!isAuth || !!info.userWord?.optional?.time}
+          disabled={!isAuth || info.userWord?.difficulty === "normal"}
           className="popup__button popup__button-known"
           onClick={() => markAsLearned()}
         >

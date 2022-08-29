@@ -2,8 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
-  color: #7D7D7D;
+  
   margin: 50px 0 0;
 
   a {
@@ -16,6 +15,8 @@
     font-weight: 700;
     border: 1px solid #B2B2B2;
     cursor: pointer;
+    color: #7D7D7D;
+    background-color: #ffffff;
 
     &:hover {
       background-color:#6550DE;

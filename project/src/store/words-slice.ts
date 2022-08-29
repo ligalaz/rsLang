@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Word } from "../interfaces/word";
 import { wordsService } from "../services/words-service";
 import { aggregatedWordsService } from "../services/aggregated-words-service";
@@ -20,7 +20,13 @@ const initialState: IWordsState = {
 export const wordsSlice = createSlice({
   initialState,
   name: "words",
-  reducers: {},
+  reducers: {
+    removeById: (state, action: PayloadAction<string>) => {
+      state.words = state.words.filter(
+        (word: Word) => word.id !== action.payload
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(
@@ -66,5 +72,7 @@ export const wordsSlice = createSlice({
       );
   },
 });
+
+export const { removeById } = wordsSlice.actions;
 
 export default wordsSlice.reducer;

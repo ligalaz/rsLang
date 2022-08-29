@@ -8,16 +8,19 @@ import classNames from "classnames";
 export interface ICardProps {
   info: Word;
   togglePopup?: MouseEventHandler<HTMLElement>;
+  removeWord?: MouseEventHandler<HTMLElement>;
   isAuth: boolean;
+  group: number;
 }
 
-function Card({ info, togglePopup, isAuth }: ICardProps) {
+function Card({ info, togglePopup, removeWord, isAuth, group }: ICardProps) {
   return (
     <div
       className={classNames("card", {
         card_hard: info?.userWord?.difficulty === "hard",
         card_normal: !!info?.userWord?.optional?.time,
-        "card_no-auth": !isAuth,
+        "card_no-badge":
+          !isAuth || (!group && info?.userWord?.difficulty === "hard"),
       })}
     >
       <div className="card__flex">
@@ -34,15 +37,21 @@ function Card({ info, togglePopup, isAuth }: ICardProps) {
         </div>
         <div
           className={classNames("card__controls", {
-            "card__controls_no-auth": !isAuth,
+            "card__controls_no-badge":
+              !isAuth || (!group && info?.userWord?.difficulty === "hard"),
           })}
         >
           <a className="card__control-option">
             <Icon url={API_BASE_URL + "/" + info.audio} type="sound" />
           </a>
           <a className="card__control-option" onClick={togglePopup}>
-            <Icon url={API_BASE_URL + "/" + info.audioMeaning} type="info" />
+            <Icon type="info" />
           </a>
+          {!group && info?.userWord?.difficulty === "hard" && (
+            <a className="card__control-option" onClick={removeWord}>
+              <Icon type="basket" />
+            </a>
+          )}
         </div>
       </div>
     </div>

@@ -70,15 +70,6 @@ function Sidebar() {
         </div>
 
         <div className="sidebar__footer">
-          {isAuth && (
-            <NavLink
-              className="sidebar__link sidebar__footer-flex"
-              to="/statistics"
-            >
-              <Icon type="settings" />
-              <span className="sidebar__link-text">Settings</span>
-            </NavLink>
-          )}
           {isAuth ? (
             <div
               onClick={() => dispatch(logout())}

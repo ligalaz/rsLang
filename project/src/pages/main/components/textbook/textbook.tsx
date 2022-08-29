@@ -1,16 +1,21 @@
 import React, { useState, useEffect, MouseEvent } from "react";
-import ReactPaginate from "react-paginate";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import Icon from "../../../../components/icon/icon";
 import { Word } from "../../../../interfaces/word";
 import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import { useGetWordsMutation } from "../../../../services/words-service";
-import { RootState, useAppSelector } from "../../../../store/store";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../store/store";
 import Card from "../card/card";
 import PaginatedItems from "../pagination/pagination";
 import PopUp from "../popUp/popUp";
+import { removeById } from "../../../../store/words-slice";
 import "./textbook.scss";
+import { useUpdateUserWordMutation } from "../../../../services/user-words-service";
 
 function Textbook() {
   const [getWords, { isLoading: isWordsLoading }] = useGetWordsMutation();
@@ -18,6 +23,10 @@ function Textbook() {
     useGetUserWordsMutation();
   const { group, page } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [updateUserWord, { isLoading: isUserWordUpdateLoading }] =
+    useUpdateUserWordMutation();
 
   const userId: string = useAppSelector(
     (state: RootState) => state.authState.auth?.userId
@@ -73,10 +82,22 @@ function Textbook() {
     }
   }
 
+  async function updateDifficultWord(word: Word): Promise<void> {
+    try {
+      await updateUserWord({
+        id: userId,
+        wordId: word.id,
+        difficulty: "new",
+        optional: word.userWord?.optional?.toDto(),
+      });
+      dispatch(removeById(word.id));
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+  }
+
   function gatherPopup(elem: number) {
     return (
       <>
-        <div className="filter"></div>
         <div onClick={untoggle} className="overlay">
           <div className="overlay__container">
             <PopUp
@@ -94,7 +115,7 @@ function Textbook() {
   return (
     <>
       {popUp && gatherPopup(idPopUp)}
-      <div className="page">
+      <div className="page page_with-border">
         <div className="page__descr">TextBook</div>
         <div className="page__line"></div>
         <div className="chapter">
@@ -129,6 +150,8 @@ function Textbook() {
                     key={a.id}
                     isAuth={!!userId}
                     info={a}
+                    group={+group - 6}
+                    removeWord={() => updateDifficultWord(a)}
                     togglePopup={() => togglePopup(i)}
                   />
                 ))}

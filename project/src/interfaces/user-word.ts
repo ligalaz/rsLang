@@ -1,7 +1,7 @@
 import { IWord } from "./word";
 
 export interface IUserWord {
-  difficulty: "normal" | "hard";
+  difficulty: "new" | "normal" | "hard";
   optional?: IUserWordOptions;
 }
 
@@ -14,7 +14,7 @@ export interface IUserWordOptions {
 export interface UserWordResponse {
   id: string;
   wordId: string;
-  difficulty?: "normal" | "hard";
+  difficulty?: "new" | "normal" | "hard";
   optional?: IUserWordOptions;
 }
 
@@ -28,7 +28,7 @@ export interface IAggreagedWordsTotal {
 }
 
 export class UserWord {
-  public difficulty: "normal" | "hard";
+  public difficulty: "new" | "normal" | "hard";
   public optional: UserWordOptions;
 
   public static fromServer(dto: IUserWord): UserWord {

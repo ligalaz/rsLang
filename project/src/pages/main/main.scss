@@ -1,17 +1,5 @@
 @import "./components/styles/main-page-title.scss";
 
-@supports (overflow: overlay) {
-  overflow {
-    overflow: hidden overlay;
-  }
-}
-
-@supports not (overflow: overlay) {
-  overflow {
-    overflow: hidden auto;
-  }
-}
-
 .main {
   
   display: flex;
@@ -19,7 +7,14 @@
 
   &__wrapper {
     flex-grow: 1;
-    overflow-y: auto;
+
+    @supports (overflow: overlay) {
+      overflow: hidden overlay;
+    }
+    
+    @supports not (overflow: overlay) {
+      overflow: hidden auto;
+    }
 
     background-image: url('../../assets/img/background.jpg');
     background-size: cover;
@@ -32,7 +27,7 @@
     transition: color .4s ease-in-out;
 
     &:hover {
-        color: transparentize(#c1c7cd, 0);
+      color: transparentize(#c1c7cd, 0);
     }
 
     &::-webkit-scrollbar {

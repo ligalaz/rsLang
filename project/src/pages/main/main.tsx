@@ -7,7 +7,6 @@ import { Outlet, useLocation } from "react-router";
 
 const MainPage = () => {
   const location = useLocation();
-  console.log(location.pathname.split("/")[3]);
   const [color, setColor] = useState(location.pathname.split("/")[3]);
 
   useEffect(() => {
