@@ -1,0 +1,24 @@
+@import './breakpoints';
+
+@mixin desktop-highest {
+  @media (max-width: $desktop-highest) {
+    @content;
+  }
+}
+
+@mixin desktop-middle {
+  @media (max-width: $desktop-middle) {
+    @content;
+  }
+}
+@mixin desktop-lower {
+  @media (max-width: $desktop-lower) {
+    @content;
+  }
+}
+
+@mixin desktop-lowest {
+  @media (max-width: $desktop-lowest) {
+    @content;
+  }
+}

@@ -1,3 +1,5 @@
+@import '../responsive/responsive-media.scss';
+
 .personal {
   background: #FAFAFA;
   flex-shrink: 0;
@@ -10,6 +12,22 @@
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+
+    @include desktop-highest() {
+      padding: 40px 45px;
+      width: 320px;
+      min-width: auto;
+    }
+
+    @include desktop-middle() {
+      padding: 40px 40px;
+      width: 260px;
+    }
+
+    @include desktop-lower() {
+      padding: 30px;
+      width: 220px;
+    }
   }
 
   &__img {
@@ -70,7 +88,67 @@
 
   &__diagram {
     margin-top: 30px;
+    margin-bottom: 30px;
     width: 240px;
+    
+    @include desktop-highest() {
+      width: 100%;
+    }
+  }
+
+  &__upper {
+    width:200px;
+
+    @include desktop-highest() {
+      width:185px;
+    }
+
+    @include desktop-middle() {
+      width:165px;
+    }
+
+    @include desktop-lower() {
+      width:145px;
+    }
+  }
+
+  &__games {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    border-top: 1px solid #b2b2b2;
+    
+
+    @include desktop-highest() {
+      flex-direction: column;
+    }
+
+    @include desktop-middle() {
+
+    }
+
+    @include desktop-lower() {
+
+    }
+  }
+
+  &__game {
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 23px;
+    color: #FFFFFF;
+    padding: 12px;
+    text-align: center;
+    flex: 0 1 44%;
+    margin: 10px 0;
+  }
+
+  &__game1 {
+    background: #6550DE;
+  }
+
+  &__game2 {
+    background: #F56748;
   }
   
 }

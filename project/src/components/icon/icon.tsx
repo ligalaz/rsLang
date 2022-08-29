@@ -1,4 +1,6 @@
+import { rejects } from "assert";
 import React from "react";
+import { AudioService } from "../../utils/audio-service";
 type IconType =
   | "settings"
   | "log-out"
@@ -6,6 +8,7 @@ type IconType =
   | "icon"
   | "greetings"
   | "info"
+  | "loading"
   | "sound";
 
 export interface IconProps {
@@ -17,23 +20,9 @@ export interface IconProps {
   audioMeaning?: string;
 }
 
-function spell(address: string, address1?: string, address2?: string) {
-  console.log("spell", address, address1, address2);
-  const audio1 = new Audio(address);
-  const audio2 = new Audio(address1);
-  const audio3 = new Audio(address2);
-  if (address2) {
-    audio1.addEventListener("ended", function () {
-      audio2.play();
-    });
-
-    audio2.addEventListener("ended", function () {
-      audio3.play();
-    });
-  }
-  audio1.play();
-}
-
+// function throwError() {
+//   throw new Error();
+// }
 export function Icon({
   type,
   width,
@@ -43,13 +32,33 @@ export function Icon({
   audioMeaning,
 }: IconProps) {
   function getIcon() {
+    // function spell(address: string, address1?: string, address2?: string) {
+    //   document
+    //     .querySelector(".popup__svg")
+    //     .addEventListener("click", throwError, { once: true });
+    //   const audio1 = new Audio(address);
+    //   const audio2 = new Audio(address1);
+    //   const audio3 = new Audio(address2);
+    //   if (address2) {
+    //     audio1.addEventListener("ended", function () {
+    //       audio2.play();
+    //     });
+    //     audio2.addEventListener("ended", function () {
+    //       audio3.play();
+    //     });
+    //   }
+    //   audio1.play().then(
+    //   ) ;
+    // }
+
+    function spell(...urls: string[]) {
+      AudioService.play(urls);
+    }
+
     switch (type) {
       case "info":
         return (
           <svg
-            onClick={() => {
-              spell(url);
-            }}
             width="26"
             height="26"
             viewBox="0 0 26 26"
@@ -76,6 +85,7 @@ export function Icon({
             onClick={() => {
               spell(url, audioExample, audioMeaning);
             }}
+            className="popup__svg"
             width="29"
             height="29"
             viewBox="0 0 29 29"
@@ -220,13 +230,86 @@ export function Icon({
             </g>
           </svg>
         );
+      case "loading":
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.0"
+            width="64px"
+            height="64px"
+            viewBox="0 0 128 128"
+            xmlSpace="preserve"
+          >
+            <rect x="0" y="0" width="100%" height="100%" fill="#FFFFFF" />
+            <g>
+              <circle cx="16" cy="64" r="16" fill="#4b5ae6" />
+              <circle
+                cx="16"
+                cy="64"
+                r="14.344"
+                fill="#4b5ae6"
+                transform="rotate(45 64 64)"
+              />
+              <circle
+                cx="16"
+                cy="64"
+                r="12.531"
+                fill="#4b5ae6"
+                transform="rotate(90 64 64)"
+              />
+              <circle
+                cx="16"
+                cy="64"
+                r="10.75"
+                fill="#4b5ae6"
+                transform="rotate(135 64 64)"
+              />
+              <circle
+                cx="16"
+                cy="64"
+                r="10.063"
+                fill="#4b5ae6"
+                transform="rotate(180 64 64)"
+              />
+              <circle
+                cx="16"
+                cy="64"
+                r="8.063"
+                fill="#4b5ae6"
+                transform="rotate(225 64 64)"
+              />
+              <circle
+                cx="16"
+                cy="64"
+                r="6.438"
+                fill="#4b5ae6"
+                transform="rotate(270 64 64)"
+              />
+              <circle
+                cx="16"
+                cy="64"
+                r="5.375"
+                fill="#4b5ae6"
+                transform="rotate(315 64 64)"
+              />
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="0 64 64;315 64 64;270 64 64;225 64 64;180 64 64;135 64 64;90 64 64;45 64 64"
+                calcMode="discrete"
+                dur="720ms"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </g>
+          </svg>
+        );
 
       case "icon":
         return (
           <svg
             className="icon"
-            width={width ?? 171}
-            height={height ?? 171}
+            width={width ?? "100%"}
+            height={height ?? "100%"}
             viewBox="0 0 171 171"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

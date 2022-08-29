@@ -2,6 +2,7 @@ import React, { useState, useEffect, MouseEvent } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
+import Icon from "../../../../components/icon/icon";
 import { Word } from "../../../../interfaces/word";
 import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import { useGetWordsMutation } from "../../../../services/words-service";
@@ -94,7 +95,7 @@ function Textbook() {
     <>
       {popUp && gatherPopup(idPopUp)}
       <div className="page">
-        <div className="page__descr">Dictionary</div>
+        <div className="page__descr">TextBook</div>
         <div className="page__line"></div>
         <div className="chapter">
           {new Array(userId ? 7 : 6).fill(0).map((_, index) => (
@@ -115,25 +116,31 @@ function Textbook() {
       </div>
 
       {isWordsLoading || isUserWordsLoading ? (
-        <div className="textbook__loading"></div>
-      ) : (
-        <div className="textbook">
-          <div className="textbook__wrapper">
-            {words.length &&
-              words.map((a, i) => (
-                <Card
-                  key={a.id}
-                  isAuth={!!userId}
-                  info={a}
-                  togglePopup={() => togglePopup(i)}
-                />
-              ))}
-          </div>
+        <div className="textbook__loading">
+          <Icon type="loading" />
         </div>
+      ) : (
+        <>
+          <div className="textbook">
+            <div className="textbook__wrapper">
+              {words.length &&
+                words.map((a, i) => (
+                  <Card
+                    key={a.id}
+                    isAuth={!!userId}
+                    info={a}
+                    togglePopup={() => togglePopup(i)}
+                  />
+                ))}
+            </div>
+          </div>
+          <div className="global__info">
+            {+group - 6 && (
+              <PaginatedItems itemsPerPage={1} setPage={setPage} />
+            )}
+          </div>
+        </>
       )}
-      <div className="global__info">
-        {+group - 6 && <PaginatedItems itemsPerPage={1} setPage={setPage} />}
-      </div>
     </>
   );
 }
