@@ -20,6 +20,9 @@ export interface IPopUp {
   clickPage: (value: number) => void;
 }
 
+
+
+
 function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
   const condition = number != 19;
   const auth: IAuth = useAppSelector(
@@ -35,7 +38,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
 
   function markAsHard(): void {
     if (info.userWord) {
-      delete info.userWord?.optional?.time;
+      delete info.userWord?.optional?.learnedDate;
       updateUserWord({
         id: auth.userId,
         wordId: info.id,
@@ -47,6 +50,9 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         id: auth.userId,
         wordId: info.id,
         difficulty: "hard",
+        optional: {
+          firstSeenDate: new Date().toISOString(),
+        },
       });
     }
   }
@@ -59,7 +65,8 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         difficulty: "normal",
         optional: {
           ...info.userWord?.optional?.toDto(),
-          time: new Date().toISOString(),
+          learnedDate: new Date().toISOString(),
+          firstSeenDate: info.userWord.optional?.firstSeenDate ?? new Date().toISOString(),
         },
       });
     } else {
@@ -68,10 +75,17 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         wordId: info.id,
         difficulty: "normal",
         optional: {
-          time: new Date().toISOString(),
+          learnedDate: new Date().toISOString(),
+          firstSeenDate: new Date().toISOString(),
         },
       });
     }
+
+
+  }
+
+  function statisticsRequest() {
+    
   }
 
   return (

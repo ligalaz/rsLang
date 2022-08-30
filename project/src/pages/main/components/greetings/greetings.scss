@@ -9,10 +9,8 @@
     font-weight: 700;
   }
 
-  &__svg {
-    width:100%;
-    height:100%;
-    object-fit:cover;
+  &__container {
+    overflow-x: hidden;
   }
 
   &__descr {

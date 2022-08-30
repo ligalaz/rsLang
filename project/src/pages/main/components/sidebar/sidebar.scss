@@ -21,11 +21,8 @@
     @include desktop-lower() {
       padding: 30px;
     }
-
     
   }
-
-
 
   &__logo {
     display: flex;
@@ -68,8 +65,6 @@
         transform: translate(-30px, 5px);
       }
     }
-
-  
   }
 
   &__link-text {
@@ -80,14 +75,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    &:not(:last-child) {
 
+    &:not(:last-child) {
       margin-bottom: 16px;
     }
-  }
-
-  &__games {
-
   }
 
   &__game {

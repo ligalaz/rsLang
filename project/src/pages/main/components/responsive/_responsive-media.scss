@@ -22,3 +22,15 @@
     @content;
   }
 }
+
+@mixin desktop-bottom {
+  @media (max-width: $desktop-bottom) {
+    @content;
+  }
+}
+
+@mixin tablet-upper {
+  @media (max-width: $tablet-upper) {
+    @content;
+  }
+}
