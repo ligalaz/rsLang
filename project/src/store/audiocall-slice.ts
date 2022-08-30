@@ -21,8 +21,12 @@ const initialState: IAudioCallState = {
   currentWord: null,
   trueAnswer: [],
   falseAnswer: [],
-  currentStep: 1,
+  currentStep: 0,
 };
+function excludeRepeat(first: string[], second: IWord[]): IWord {
+  const current = second[Math.ceil(Math.random() * 19)];
+  return !first.includes(current.id) ? current : excludeRepeat(first, second);
+}
 
 export const audioCallSlice = createSlice({
   initialState,
@@ -31,29 +35,38 @@ export const audioCallSlice = createSlice({
     startGame(state, action: PayloadAction<Partial<IAudioCallState>>) {
       state.isGameStarted = true;
       state.dataBox = action.payload.dataBox;
-      state.currentWord = action.payload.dataBox[Math.ceil(Math.random() * 10)];
+      state.currentWord = action.payload.dataBox[Math.ceil(Math.random() * 19)];
       state.gameBox.push(state.currentWord);
       while (state.gameBox.length < 5) {
-        const newWord = state.dataBox[Math.ceil(Math.random() * 10)];
+        const newWord = state.dataBox[Math.ceil(Math.random() * 19)];
         if (!state.gameBox.includes(newWord)) state.gameBox.push(newWord);
       }
       state.gameBox.sort(() => Math.random() - 0.5);
       state.playedBox.push(state.currentWord.id);
-      console.log("curr", state.gameBox);
     },
     gameStep(state, action: PayloadAction<Partial<IAudioCallState>>) {
       state.isGameStarted = false;
+
       state.currentStep++;
+
       state.dataBox = action.payload.dataBox;
       state.gameBox = [];
-      console.log(state.playedBox.includes(state.currentWord.id));
-      state.currentWord = action.payload.dataBox[Math.ceil(Math.random() * 10)];
+
+      state.currentWord = excludeRepeat(state.playedBox, state.dataBox);
       state.gameBox.push(state.currentWord);
       while (state.gameBox.length < 5) {
-        const newWord = state.dataBox[Math.ceil(Math.random() * 10)];
+        const newWord = state.dataBox[Math.ceil(Math.random() * 19)];
         if (!state.gameBox.includes(newWord)) state.gameBox.push(newWord);
       }
+      state.gameBox.sort(() => Math.random() - 0.5);
+      state.playedBox.push(state.currentWord.id);
+      state.trueAnswer = action.payload.trueAnswer;
+      state.falseAnswer = action.payload.falseAnswer;
+
       state.isGameStarted = true;
+    },
+    endGame(state) {
+      state.isGameStarted = false;
     },
     resetGame(state) {
       return initialState;
@@ -63,4 +76,5 @@ export const audioCallSlice = createSlice({
 
 export default audioCallSlice.reducer;
 
-export const { startGame, gameStep, resetGame } = audioCallSlice.actions;
+export const { startGame, gameStep, endGame, resetGame } =
+  audioCallSlice.actions;

@@ -28,7 +28,7 @@ function App() {
     }
   }, []);
 
-  const gameChoise = false;
+  const gameChoise = true;
 
   return (
     <BrowserRouter>
@@ -54,12 +54,12 @@ function App() {
               )
             }
           />
+          <Route path="audiocall" element={<AudioCallPage />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
             <Route path="promo" element={<Promo />} />
             <Route path="textbook" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
-            <Route path="audiocall" element={<AudioCallPage />} />
           </Route>
           <Route path="*" element={<Navigate to="main" />} />
         </Routes>

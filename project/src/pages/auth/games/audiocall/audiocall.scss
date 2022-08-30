@@ -1,3 +1,11 @@
+.audiocall-body {
+  width: 1920px;
+  height: 1024px;
+  background: url("../../../../assets/img/audiocall-bg.jpg") no-repeat center;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
 .word-repeater {
   width: 211px;
   height: 211px;
@@ -131,4 +139,42 @@ progress {
   border: none;
   background: transparent;
   cursor: pointer;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.next {
+  width: 113px;
+  height: 113px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border: 2px solid #f56748;
+  background: transparent;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #000000;
+  cursor: pointer;
+}
+.next-t {
+  background: #f56748;
+}
+
+.imgimg {
+  width: 211px;
+  height: 211px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }

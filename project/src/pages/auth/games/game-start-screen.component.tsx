@@ -19,11 +19,11 @@ const GameStartScreen = (props: IStartScreenProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  // if (timeStart === 0) {
-  //   props.gameName === "sprint"
-  //     ? navigate("/sprint", { replace: true })
-  //     : navigate("/audiocall", { replace: true });
-  // }
+  if (timeStart === 0) {
+    props.gameName === "sprint"
+      ? navigate("/sprint", { replace: true })
+      : navigate("/audiocall", { replace: true });
+  }
 
   return (
     <div className="start-screen">
