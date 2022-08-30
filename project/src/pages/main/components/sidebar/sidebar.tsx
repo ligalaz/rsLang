@@ -1,15 +1,27 @@
-import "./sidebar.scss";
 import React from "react";
 import Icon from "../../../../components/icon/icon";
 import { NavLink } from "react-router-dom";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../store/store";
+import "./sidebar.scss";
+import { logout } from "../../../../store/auth-slice";
 
 function Sidebar() {
+  const isAuth: boolean = useAppSelector(
+    (state: RootState) => !!state.authState.auth
+  );
+  const dispatch = useAppDispatch();
   return (
     <aside className="sidebar">
       <div className="sidebar__flex">
         <div className="sidebar__upper">
           <div className="sidebar__logo">
-            <Icon type="logo" />
+            <NavLink to="/main">
+              <Icon type="logo" />
+            </NavLink>
           </div>
         </div>
         <div className="sidebar__links">
@@ -42,7 +54,7 @@ function Sidebar() {
             className={({ isActive }) =>
               isActive ? "sidebar__link sidebar__link_active" : "sidebar__link"
             }
-            to="/main/textbook"
+            to="/main/textbook/0/0"
           >
             Textbook
           </NavLink>
@@ -58,20 +70,20 @@ function Sidebar() {
         </div>
 
         <div className="sidebar__footer">
-          <NavLink
-            className="sidebar__link sidebar__footer-flex"
-            to="/statistics"
-          >
-            <Icon type="settings" />
-            <span className="sidebar__link-text">Settings</span>
-          </NavLink>
-          <NavLink
-            className="sidebar__link sidebar__footer-flex"
-            to="/statistics"
-          >
-            <Icon type="log-out" />
-            <span className="sidebar__link-text">Log Out</span>
-          </NavLink>
+          {isAuth ? (
+            <div
+              onClick={() => dispatch(logout())}
+              className="sidebar__link sidebar__footer-flex "
+            >
+              <Icon type="log-out" />
+              <span className="sidebar__link-text">Log Out</span>
+            </div>
+          ) : (
+            <NavLink className="sidebar__link sidebar__footer-flex" to="/login">
+              <Icon type="log-out" />
+              <span className="sidebar__link-text">Log In</span>
+            </NavLink>
+          )}
         </div>
       </div>
     </aside>

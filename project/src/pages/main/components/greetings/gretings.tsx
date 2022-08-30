@@ -7,7 +7,6 @@ function Greetings() {
   const name: string = useAppSelector(
     (state: RootState) => state.authState.auth?.name
   );
-
   return (
     <div className="greetings">
       <div className="greetings__container">

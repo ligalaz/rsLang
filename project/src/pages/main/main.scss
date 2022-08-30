@@ -2,14 +2,86 @@
 
 .main {
   
-   display: flex;
-   height: 100%;
+  display: flex;
+  height: 100%;
+
+  &__wrapper {
+    flex-grow: 1;
+
+    @supports (overflow: overlay) {
+      overflow: hidden overlay;
+    }
+    
+    @supports not (overflow: overlay) {
+      overflow: hidden auto;
+    }
+
+    background-image: url('../../assets/img/background.jpg');
+    background-size: cover;
+    background-blend-mode: color-dodge;
+    background-color: #ffffff;
+
+    scrollbar-width: thin;
+    scrollbar-color: #e6e8eb #c1c7cd;
+    color: transparentize(#c1c7cd, 1);
+    transition: color .4s ease-in-out;
+
+    &:hover {
+      color: transparentize(#c1c7cd, 0);
+    }
+
+    &::-webkit-scrollbar {
+        width: 20px;
+        height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border: 8px solid rgba(0, 0, 0, 0);
+        background-clip: padding-box; // this property + border 'cuts down' thumb to appear only 4px in width
+        border-radius: 12px;
+        box-shadow: inset 0 0 0 10px;
+        min-height: 60px;
+    }
+  }
 
   &__middle {
-    flex-grow: 1;
     padding: 74px 20px;
     margin: 0 auto;
     max-width: 892px;
   }
- 
+
+  &__bg-filter-0 {
+    background-color: #0a0b0e;
+  }
+
+  &__bg-filter-1 {
+    background-color: #0b0b10;
+  }
+
+  &__bg-filter-2 {
+    background-color: #0a0a0e;
+  }
+
+  &__bg-filter-3 {
+    background-color: #09090c;
+  }
+  
+  &__bg-filter-4 {
+    background-color:  #08080c;
+  }
+  
+  &__bg-filter-5 {
+    background-color: #07070c;
+  }
+
+  &__bg-filter-6 {
+    background-color: #260707;
+  }
+
 }
+
+

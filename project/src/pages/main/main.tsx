@@ -3,42 +3,23 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar/sidebar";
 import Greetings from "./components/greetings/gretings";
 import Personal from "./components/personal/personal";
-import { RootState, useAppSelector } from "../../store/store";
-import { useGetWordsQuery } from "../../services/words-service";
-import { GetWordsRequest, IWord } from "../../interfaces/word";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 const MainPage = () => {
-  // const [params, setParams] = useState<GetWordsRequest>({
-  //   group: 0,
-  //   page: Math.round(Math.random() * 20),
-  // });
-  // const {
-  //   data: words = [],
-  //   isLoading,
-  //   isFetching: isWordsFetching,
-  // } = useGetWordsQuery(params);
-  // const [randomWords, setRandomWords] = useState<IWord[]>([]);
+  const location = useLocation();
+  const [color, setColor] = useState(location.pathname.split("/")[3]);
 
-  // useEffect(() => {
-  //   if (!isLoading && randomWords.length < 60) {
-  //     setParams((prev: GetWordsRequest) => ({
-  //       ...prev,
-  //       page: Math.round(Math.random() * 20),
-  //     }));
-  //   }
-  // }, [words]);
-
-  // useEffect(() => {
-  //   setRandomWords((prev: IWord[]) => [...prev, ...words]);
-  // }, [words]);
-
+  useEffect(() => {
+    setColor(location.pathname.split("/")[3]);
+  }, [location.pathname]);
   return (
     <div className="main">
       <Sidebar />
-      <div className="main__middle">
-        <Greetings />
-        <Outlet />
+      <div className={`main__wrapper main__bg-filter-${color}`}>
+        <div className="main__middle">
+          <Greetings />
+          <Outlet />
+        </div>
       </div>
       <Personal />
     </div>

@@ -27,12 +27,12 @@ export const userWordsService = createApi({
       }),
       onQueryStarted: unauthorizedErrorHandler,
     }),
-    getUserWordById: build.query<IUserWord, UserWordResponse>({
+    getUserWordById: build.query<UserWordResponse, UserWordResponse>({
       query: (userWord: UserWordResponse) =>
         `${ServerRoutes.users}/${userWord.id}${ServerRoutes.words}/${userWord.wordId}`,
       onQueryStarted: unauthorizedErrorHandler,
     }),
-    createUserWord: build.mutation<IUserWord, UserWordResponse>({
+    createUserWord: build.mutation<UserWordResponse, UserWordResponse>({
       query: (userWord) => ({
         url: `${ServerRoutes.users}/${userWord.id}${ServerRoutes.words}/${userWord.wordId}`,
         method: HTTPMethods.POST,
@@ -43,7 +43,7 @@ export const userWordsService = createApi({
       }),
       onQueryStarted: unauthorizedErrorHandler,
     }),
-    updateUserWord: build.mutation<IUserWord, UserWordResponse>({
+    updateUserWord: build.mutation<UserWordResponse, UserWordResponse>({
       query: (userWord) => ({
         url: `${ServerRoutes.users}/${userWord.id}${ServerRoutes.words}/${userWord.wordId}`,
         method: HTTPMethods.PUT,
@@ -54,7 +54,7 @@ export const userWordsService = createApi({
       }),
       onQueryStarted: unauthorizedErrorHandler,
     }),
-    deleteUserWord: build.mutation<IUserWord, UserWordResponse>({
+    deleteUserWord: build.mutation<UserWordResponse, UserWordResponse>({
       query: (userWord) => ({
         url: `${ServerRoutes.users}/${userWord.id}${ServerRoutes.words}/${userWord.wordId}`,
         method: HTTPMethods.DELETE,
