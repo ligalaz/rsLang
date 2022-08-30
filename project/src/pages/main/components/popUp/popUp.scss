@@ -13,6 +13,14 @@
   box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.05);
   color: #000000;
 
+  @include desktop-lower() {
+    padding: 30px 45px;
+  }
+
+  @include desktop-lowest() {
+    padding: 25px 25px;
+  }
+
   &__top {
     display: flex;
     justify-content: space-between;
@@ -101,10 +109,7 @@
   &__container {
     width: 100%;
     margin-left: 60px;
-    @include desktop-lower() {
-      margin-left: 55px;
-      width: auto;
-    }
+
   }
   
   &__button {

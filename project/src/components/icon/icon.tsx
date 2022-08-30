@@ -1,5 +1,7 @@
 import React from "react";
 import { AudioService } from "../../utils/audio-service";
+import { spell } from "../../utils/spell";
+
 type IconType =
   | "settings"
   | "log-out"
@@ -29,9 +31,6 @@ export function Icon({
   audioMeaning,
 }: IconProps) {
   function getIcon() {
-    function spell(...urls: string[]) {
-      AudioService.play(urls);
-    }
     switch (type) {
       case "info":
         return (

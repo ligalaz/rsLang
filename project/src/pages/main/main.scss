@@ -1,3 +1,4 @@
+@import "./components/responsive/responsive-media";
 @import "./components/styles/main-page-title.scss";
 
 .main {
@@ -52,6 +53,14 @@
     padding: 74px 20px;
     margin: 0 auto;
     max-width: 892px;
+
+    @include desktop-lower() {
+      padding: 60px 20px;
+    }
+
+    @include desktop-lowest() {
+      padding: 40px 20px;
+    }
   }
 
   &__bg-filter-0 {

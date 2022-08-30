@@ -1,20 +1,31 @@
 import { IWord } from "./word";
 
 export interface IUserWord {
-  difficulty: "new" | "normal" | "hard";
+  difficulty: "seen" | "new" | "normal" | "hard";
   optional?: IUserWordOptions;
 }
 
+interface IAudioCall {
+  attempts: number;
+  mistakes: number;
+}
+
+interface ISprint {
+  attempts: number;
+  mistakes: number;
+}
+
 export interface IUserWordOptions {
-  time?: string;
-  mistakes?: number;
-  attempts?: number;
+  learnedDate?: string;
+  firstSeenDate?: string;
+  audioCall?: IAudioCall;
+  sprint?: ISprint;
 }
 
 export interface UserWordResponse {
   id: string;
   wordId: string;
-  difficulty?: "new" | "normal" | "hard";
+  difficulty?: "seen" | "new" | "normal" | "hard";
   optional?: IUserWordOptions;
 }
 
@@ -28,7 +39,7 @@ export interface IAggreagedWordsTotal {
 }
 
 export class UserWord {
-  public difficulty: "new" | "normal" | "hard";
+  public difficulty: "seen" | "new" | "normal" | "hard";
   public optional: UserWordOptions;
 
   public static fromServer(dto: IUserWord): UserWord {
@@ -45,9 +56,10 @@ export class UserWord {
 }
 
 export class UserWordOptions {
-  public time: Date;
-  public mistakes: number;
-  public attempts: number;
+  learnedDate?: string;
+  firstSeenDate?: string;
+  audioCall?: IAudioCall;
+  sprint?: ISprint;
 
   public static fromServer(dto: IUserWordOptions): UserWordOptions {
     if (!dto) {
@@ -55,23 +67,26 @@ export class UserWordOptions {
     }
     const instance: UserWordOptions = new UserWordOptions();
 
-    instance.time = dto.time && new Date(dto.time);
-    instance.mistakes = dto.mistakes;
-    instance.attempts = dto.attempts;
+    instance.learnedDate = dto.learnedDate;
+    instance.audioCall = dto.audioCall;
+    instance.sprint = dto.sprint;
 
     return instance;
   }
 
   public toDto(): IUserWordOptions {
     const result: IUserWordOptions = {};
-    if (this.time) {
-      result.time = this.time.toISOString();
+    if (this.learnedDate) {
+      result.learnedDate = this.learnedDate;
     }
-    if (this.attempts) {
-      result.attempts = this.attempts;
+    if (this.firstSeenDate) {
+      result.firstSeenDate = this.learnedDate;
     }
-    if (this.mistakes) {
-      result.mistakes = this.mistakes;
+    if (this.audioCall) {
+      result.audioCall = this.audioCall;
+    }
+    if (this.sprint) {
+      result.sprint = this.sprint;
     }
     return result;
   }
