@@ -18,7 +18,7 @@ function Card({ info, togglePopup, removeWord, isAuth, group }: ICardProps) {
     <div
       className={classNames("card", {
         card_hard: info?.userWord?.difficulty === "hard",
-        card_normal: !!info?.userWord?.optional?.time,
+        card_normal: !!info?.userWord?.optional?.learnedDate,
         "card_no-badge":
           !isAuth || (!group && info?.userWord?.difficulty === "hard"),
       })}

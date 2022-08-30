@@ -80,12 +80,6 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         },
       });
     }
-
-
-  }
-
-  function statisticsRequest() {
-    
   }
 
   return (
