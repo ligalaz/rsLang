@@ -1,7 +1,10 @@
 import React from "react";
 import "./close-btn.scss";
+export interface ICloseProps {
+  className?: string;
+}
 
-const CloseBtnComponent = () => {
+const CloseBtnComponent = ({ className }: ICloseProps) => {
   return (
     <button className="__close-btn">
       <div className="__close-btn-item first-item"></div>

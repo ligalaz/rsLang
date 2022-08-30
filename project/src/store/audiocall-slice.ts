@@ -4,6 +4,7 @@ import { IWord } from "../interfaces/word";
 
 interface IAudioCallState {
   isGameStarted: boolean;
+  isGameEnded: boolean;
   dataBox: IWord[];
   gameBox: IWord[];
   playedBox: string[];
@@ -14,6 +15,7 @@ interface IAudioCallState {
 }
 
 const initialState: IAudioCallState = {
+  isGameEnded: false,
   isGameStarted: false,
   dataBox: [],
   gameBox: [],
@@ -66,7 +68,12 @@ export const audioCallSlice = createSlice({
       state.isGameStarted = true;
     },
     endGame(state) {
-      state.isGameStarted = false;
+      // state.isGameStarted = false;
+      if (state.currentStep === 10) {
+        localStorage.setItem("trueAnswers", JSON.stringify(state.trueAnswer));
+        localStorage.setItem("falseAnswers", JSON.stringify(state.falseAnswer));
+        state.isGameEnded = true;
+      }
     },
     resetGame(state) {
       return initialState;

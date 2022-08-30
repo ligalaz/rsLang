@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IAudioCallSettings {
-  group: number;
-  page: number;
+  group?: number;
+  page?: number;
   maxGroup?: number;
   maxPage?: number;
   allGameWords?: number;
   allPlayWords?: number;
+  isAnswer?: boolean;
 }
 
 const initialState: IAudioCallSettings = {
@@ -16,6 +17,7 @@ const initialState: IAudioCallSettings = {
   maxPage: 30,
   allGameWords: 10,
   allPlayWords: 5,
+  isAnswer: false,
 };
 
 export const audioCallSettingsSlice = createSlice({
@@ -26,6 +28,9 @@ export const audioCallSettingsSlice = createSlice({
       state.group = action.payload.group;
       state.page = action.payload.page;
     },
+    changeAnswer(state, action: PayloadAction<IAudioCallSettings>) {
+      state.isAnswer = action.payload.isAnswer;
+    },
     settingsDown(state) {
       return initialState;
     },
@@ -33,4 +38,5 @@ export const audioCallSettingsSlice = createSlice({
 });
 
 export default audioCallSettingsSlice.reducer;
-export const { settingsUp, settingsDown } = audioCallSettingsSlice.actions;
+export const { settingsUp, settingsDown, changeAnswer } =
+  audioCallSettingsSlice.actions;

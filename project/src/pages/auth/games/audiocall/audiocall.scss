@@ -1,49 +1,59 @@
 .audiocall-body {
-  width: 1920px;
-  height: 1024px;
+  width: 1280px;
+  //height: 1024px;
   background: url("../../../../assets/img/audiocall-bg.jpg") no-repeat center;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
 }
 
-.word-repeater {
+.audiocall__row-view-item {
   width: 211px;
   height: 211px;
-  margin-bottom: 100px;
-  background: #6550de;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  border: 1px solid #000000;
+  margin-bottom: 30px;
+}
+
+.word-repeater {
+  width: 211px;
+  height: 211px;
+  border-radius: 50%;
+  border-radius: 50%;
+  margin-bottom: 100px;
+  background: #6550de;
   cursor: pointer;
-}
-.word-repeater__logo {
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-}
-.word-repeater__logo:hover {
-  fill: red;
-  transform: scale(1.2);
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  -o-transform: scale(1.2);
+
+  &__logo {
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+
+    &:hover {
+      fill: red;
+      transform: scale(1.2);
+      transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -ms-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      -webkit-transform: scale(1.2);
+      -moz-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+      -o-transform: scale(1.2);
+    }
+  }
 }
 
 .word-repeater__row {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .game-element {
@@ -90,11 +100,12 @@
 label {
   margin-right: 10px;
 }
+
 .play-btn {
   position: relative;
   width: 247.88px;
   height: 59.49px;
-  left: 70%;
+
   background: #fff;
   border: 1px solid #b2b2b2;
   border-radius: 75px;
@@ -139,14 +150,28 @@ progress {
   border: none;
   background: transparent;
   cursor: pointer;
+  padding: 10px;
+  transition: 0.5s ease-in-out;
+}
+.game-element:hover {
+  background: #6550de;
+  color: #f56748;
+  transition: 0.5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -ms-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
 }
 
-.btn-container {
+.audiocall__btn-container {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
-
-.next {
+.audiocall__btn-container-item {
+  width: 113px;
+  height: 113px;
+  border-radius: 50%;
   width: 113px;
   height: 113px;
   border-radius: 50%;
@@ -161,20 +186,48 @@ progress {
   font-weight: bold;
   font-size: 14px;
   line-height: 16px;
-
   color: #000000;
   cursor: pointer;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background: #f56748;
+    transition: 0.3s ease-in-out;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -ms-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
+  }
 }
-.next-t {
+
+.btn-next {
   background: #f56748;
 }
 
-.imgimg {
-  width: 211px;
-  height: 211px;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
+.audiocall__row-header {
+  column-gap: 20px;
+  padding-right: 5%;
+  display: flex;
+  justify-content: flex-end;
+}
+.repeater-mini {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 0;
+}
+
+.repeater-mini svg {
+  width: 15px;
+  height: 15px;
+}
+
+.repeater-small {
+  width: 52px;
+  height: 52px;
+  margin-top: 45px;
+
+  & svg {
+    width: 28px;
+    height: 28px;
+  }
 }
