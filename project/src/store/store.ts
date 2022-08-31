@@ -7,6 +7,8 @@ import { aggregatedWordsService } from "../services/aggregated-words-service";
 import { statisticsService } from "../services/statistics-service";
 import wordsReducer from "./words-slice";
 import authReducer from "./auth-slice";
+import audioCallSettingsReducer from "./audiocall-settings-slice";
+import audioCallReducer from "./audiocall-slice";
 import statisticsReducer from "./statistics-slice";
 
 export const rootReducer = combineReducers({
@@ -17,6 +19,8 @@ export const rootReducer = combineReducers({
   [statisticsService.reducerPath]: statisticsService.reducer,
   wordsState: wordsReducer,
   authState: authReducer,
+  audioCallReducer,
+  audioCallSettingsReducer,
   statisticsState: statisticsReducer,
 });
 export const setupStore = () => {
