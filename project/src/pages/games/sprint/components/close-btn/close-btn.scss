@@ -1,0 +1,53 @@
+.circle__cross {
+  
+  &--closed {
+    width: 3.7rem;
+    height: 3.7rem;
+
+    background-color: var(--close-btn-color);
+
+    transition: 0.5s;
+
+    cursor: pointer;
+
+    &::after,
+    &::before {
+      background-color: var(--yes-btn-color);
+
+      transition: 0.5s;
+
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: var(--yes-btn-color);
+
+      &::after,
+      &::before {
+        background-color: var(--close-btn-color);
+      }
+    }
+  }
+}
+
+.circle--disabled {
+  background-color: var(--gray-text-color);
+
+  cursor: default;
+
+  &::after,
+  &::before {
+    background-color: var(--btn-text-color);
+  }
+
+  &:hover {
+    background-color: var(--gray-text-color);
+
+    &::after,
+    &::before {
+      background-color: var(--btn-text-color);
+
+      cursor: default;
+    }
+  }
+}

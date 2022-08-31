@@ -3,7 +3,7 @@ import { useActions } from "../../../../hooks/actions";
 import { useAppSelector } from "../../../../store/store";
 import ResultBlock from "../components/result-block/result-block";
 
-const GameResultPage = () => {
+const GameResultPage = (): JSX.Element => {
   const { trueAnswers, falseAnswers, score } = useAppSelector(
     (state) => state.sprintState
   );
@@ -12,12 +12,12 @@ const GameResultPage = () => {
   const results = [
     {
       answers: Array.from(new Set(trueAnswers)),
-      header: "Я знаю :)",
+      header: "I know :)",
       classModifier: "true",
     },
     {
       answers: Array.from(new Set(falseAnswers)),
-      header: "Я не знаю :(",
+      header: "I don't know :(",
       classModifier: "false",
     },
   ];

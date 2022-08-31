@@ -3,7 +3,7 @@ import { useActions } from "../../../../hooks/actions";
 import { TUTORIAL_SECTION_COUNT } from "../../../../config";
 import { useAppSelector } from "../../../../store/store";
 
-const GameInitialPage = () => {
+const GameInitialPage = (): JSX.Element => {
   let count = TUTORIAL_SECTION_COUNT;
 
   const { level } = useAppSelector((state) => state.sprintState);

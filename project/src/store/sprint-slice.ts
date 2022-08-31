@@ -77,16 +77,16 @@ export const sprintSlice = createSlice({
       state.currentWord = { word: randWordData.word, wordTranslate };
     },
     changeGameScore: (state, { payload }: { payload: boolean }) => {
-      const { trueAnswersCount } = state;
       const wordData = state.gameData.at(-1);
 
       if (payload) {
         state.trueAnswersCount += 1;
+        const { trueAnswersCount } = state;
         let points = 10;
 
-        if (trueAnswersCount > 11) {
+        if (trueAnswersCount > 9) {
           points = 80;
-        } else if (trueAnswersCount > 7) {
+        } else if (trueAnswersCount > 6) {
           points = 40;
         } else if (trueAnswersCount > 3) {
           points = 20;

@@ -1,7 +1,11 @@
 import React from "react";
 import { ResultBlockDetails } from "../../../../../interfaces/result-block";
 
-const ResultBlock = ({ result }: { result: ResultBlockDetails }) => {
+const ResultBlock = ({
+  result,
+}: {
+  result: ResultBlockDetails;
+}): JSX.Element => {
   const { answers, header, classModifier } = result;
   const headerComponents = header.split(" ");
   return (

@@ -4,7 +4,7 @@ import SprintGamePage from "./sprint-game-page/sprint-game-page";
 import GameInitialPage from "./game-initial-page/game-initial-page";
 import GameResultPage from "./game-result-page/game-result-page";
 
-const SprintGameStart = () => {
+const SprintGameStart = (): JSX.Element => {
   const { isGameStarted, isResultsShown } = useAppSelector(
     (state) => state.sprintState
   );

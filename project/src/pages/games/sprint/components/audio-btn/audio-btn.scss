@@ -1,0 +1,25 @@
+.circle__audio {
+  background-color: var(--yes-btn-color);
+
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  &--inactive {
+    background-color: var(--no-btn-color);
+  }
+
+  &:hover {
+    background-color: var(--hover-btn-color);
+  }
+  
+  &--disabled {
+    background-color: var(--gray-text-color);
+
+    cursor: default;
+    
+    &:hover {
+      background-color: var(--gray-text-color);
+    }
+  }
+}
