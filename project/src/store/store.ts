@@ -6,6 +6,8 @@ import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
 import { aggregatedWordsService } from "../services/aggregated-words-service";
 import wordsReducer from "./words-slice";
 import authReducer from "./auth-slice";
+import audioCallSettingsReducer from "./audiocall-settings-slice";
+import audioCallReducer from "./audiocall-slice";
 
 export const rootReducer = combineReducers({
   [wordsService.reducerPath]: wordsService.reducer,
@@ -14,6 +16,8 @@ export const rootReducer = combineReducers({
   [userWordsService.reducerPath]: userWordsService.reducer,
   wordsState: wordsReducer,
   authState: authReducer,
+  audioCallReducer,
+  audioCallSettingsReducer,
 });
 export const setupStore = () => {
   return configureStore({
