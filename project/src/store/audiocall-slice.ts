@@ -1,5 +1,4 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import { Set } from "typescript";
 import { IWord } from "../interfaces/word";
 
 interface IAudioCallState {
@@ -29,6 +28,20 @@ function excludeRepeat(first: string[], second: IWord[]): IWord {
   const current = second[Math.ceil(Math.random() * 19)];
   return !first.includes(current.id) ? current : excludeRepeat(first, second);
 }
+function createGameRow(
+  _gameBox: IWord[],
+  _currentWord: IWord,
+  _dataBox: IWord[],
+  _playedBox: string[]
+): void {
+  _gameBox.push(_currentWord);
+  while (_gameBox.length < 5) {
+    const newWord = _dataBox[Math.ceil(Math.random() * 19)];
+    if (!_gameBox.includes(newWord)) _gameBox.push(newWord);
+  }
+  _gameBox.sort(() => Math.random() - 0.5);
+  _playedBox.push(_currentWord.id);
+}
 
 export const audioCallSlice = createSlice({
   initialState,
@@ -38,42 +51,51 @@ export const audioCallSlice = createSlice({
       state.isGameStarted = true;
       state.dataBox = action.payload.dataBox;
       state.currentWord = action.payload.dataBox[Math.ceil(Math.random() * 19)];
-      state.gameBox.push(state.currentWord);
-      while (state.gameBox.length < 5) {
-        const newWord = state.dataBox[Math.ceil(Math.random() * 19)];
-        if (!state.gameBox.includes(newWord)) state.gameBox.push(newWord);
-      }
-      state.gameBox.sort(() => Math.random() - 0.5);
-      state.playedBox.push(state.currentWord.id);
+      createGameRow(
+        state.gameBox,
+        state.currentWord,
+        state.dataBox,
+        state.playedBox
+      );
     },
     gameStep(state, action: PayloadAction<Partial<IAudioCallState>>) {
       state.isGameStarted = false;
-
       state.currentStep++;
-
       state.dataBox = action.payload.dataBox;
-      state.gameBox = [];
-
       state.currentWord = excludeRepeat(state.playedBox, state.dataBox);
-      state.gameBox.push(state.currentWord);
-      while (state.gameBox.length < 5) {
-        const newWord = state.dataBox[Math.ceil(Math.random() * 19)];
-        if (!state.gameBox.includes(newWord)) state.gameBox.push(newWord);
-      }
-      state.gameBox.sort(() => Math.random() - 0.5);
-      state.playedBox.push(state.currentWord.id);
+      state.gameBox = [];
+      createGameRow(
+        state.gameBox,
+        state.currentWord,
+        state.dataBox,
+        state.playedBox
+      );
+
       state.trueAnswer = action.payload.trueAnswer;
       state.falseAnswer = action.payload.falseAnswer;
 
       state.isGameStarted = true;
     },
     endGame(state) {
-      // state.isGameStarted = false;
       if (state.currentStep === 10) {
         localStorage.setItem("trueAnswers", JSON.stringify(state.trueAnswer));
         localStorage.setItem("falseAnswers", JSON.stringify(state.falseAnswer));
         state.isGameEnded = true;
       }
+    },
+    restartGame(state) {
+      state.isGameEnded = false;
+      state.isGameStarted = true;
+      state.currentStep = 0;
+      state.playedBox = [];
+      state.currentWord = state.dataBox[Math.ceil(Math.random() * 19)];
+      state.gameBox = [];
+      createGameRow(
+        state.gameBox,
+        state.currentWord,
+        state.dataBox,
+        state.playedBox
+      );
     },
     resetGame(state) {
       return initialState;
@@ -83,5 +105,5 @@ export const audioCallSlice = createSlice({
 
 export default audioCallSlice.reducer;
 
-export const { startGame, gameStep, endGame, resetGame } =
+export const { startGame, gameStep, endGame, resetGame, restartGame } =
   audioCallSlice.actions;
