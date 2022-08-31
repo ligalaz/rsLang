@@ -1,18 +1,18 @@
 import { IWord } from "./word";
 
 export interface IUserWord {
-  difficulty: "seen" | "new" | "normal" | "hard";
+  difficulty: "seen" | "learned" | "hard";
   optional?: IUserWordOptions;
 }
 
 interface IAudioCall {
   attempts: number;
-  mistakes: number;
+  guesses: number;
 }
 
 interface ISprint {
   attempts: number;
-  mistakes: number;
+  guesses: number;
 }
 
 export interface IUserWordOptions {
@@ -25,7 +25,7 @@ export interface IUserWordOptions {
 export interface UserWordResponse {
   id: string;
   wordId: string;
-  difficulty?: "seen" | "new" | "normal" | "hard";
+  difficulty?: "seen" | "learned" | "hard";
   optional?: IUserWordOptions;
 }
 
@@ -39,7 +39,7 @@ export interface IAggreagedWordsTotal {
 }
 
 export class UserWord {
-  public difficulty: "seen" | "new" | "normal" | "hard";
+  public difficulty: "seen" | "learned" | "hard";
   public optional: UserWordOptions;
 
   public static fromServer(dto: IUserWord): UserWord {
@@ -68,6 +68,7 @@ export class UserWordOptions {
     const instance: UserWordOptions = new UserWordOptions();
 
     instance.learnedDate = dto.learnedDate;
+    instance.firstSeenDate = dto.firstSeenDate;
     instance.audioCall = dto.audioCall;
     instance.sprint = dto.sprint;
 
@@ -80,7 +81,7 @@ export class UserWordOptions {
       result.learnedDate = this.learnedDate;
     }
     if (this.firstSeenDate) {
-      result.firstSeenDate = this.learnedDate;
+      result.firstSeenDate = this.firstSeenDate;
     }
     if (this.audioCall) {
       result.audioCall = this.audioCall;

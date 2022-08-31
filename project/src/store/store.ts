@@ -4,16 +4,20 @@ import { authService } from "../services/auth-service";
 import { userWordsService } from "../services/user-words-service";
 import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
 import { aggregatedWordsService } from "../services/aggregated-words-service";
+import { statisticsService } from "../services/statistics-service";
 import wordsReducer from "./words-slice";
 import authReducer from "./auth-slice";
+import statisticsReducer from "./statistics-slice";
 
 export const rootReducer = combineReducers({
   [wordsService.reducerPath]: wordsService.reducer,
   [authService.reducerPath]: authService.reducer,
   [aggregatedWordsService.reducerPath]: aggregatedWordsService.reducer,
   [userWordsService.reducerPath]: userWordsService.reducer,
+  [statisticsService.reducerPath]: statisticsService.reducer,
   wordsState: wordsReducer,
   authState: authReducer,
+  statisticsState: statisticsReducer,
 });
 export const setupStore = () => {
   return configureStore({
@@ -25,7 +29,8 @@ export const setupStore = () => {
         wordsService.middleware,
         authService.middleware,
         aggregatedWordsService.middleware,
-        userWordsService.middleware
+        userWordsService.middleware,
+        statisticsService.middleware
       ),
   });
 };

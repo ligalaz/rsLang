@@ -24,14 +24,11 @@
     width: 7rem;
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     text-align: center;
-    color: #7D7D7D;
-    box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.05);
-    content: 'New';
     font-weight: 500;
     background-color: #F3F3F3;
   }
 
-  &_normal {
+  &_learned {
     &::after {
       content: 'Learned';
       color: #fff;
@@ -56,6 +53,34 @@
     &::before {
       content: '';
       background-color: #F56748;
+    }
+  }
+
+  &_seen {
+    &::after {
+      content: 'Seen';
+      color: #7D7D7D;
+      background-color: #F3F3F3;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.05);
+    }
+
+    &::before {
+      content: '';
+      background-color: #F3F3F3;
+    }
+  }
+
+  &_new {
+    &::after {
+      content: 'New';
+      color: #fff;
+      background-color: #FEC246;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.05);
+    }
+
+    &::before {
+      content: '';
+      background-color: #FEC246;
     }
   }
 

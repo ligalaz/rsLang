@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from "react";
+import React, { useEffect } from "react";
 import Icon from "../../../../components/icon/icon";
 import "./popUp.scss";
 import { API_BASE_URL } from "../../../../config";
@@ -11,6 +11,9 @@ import {
 } from "../../../../services/user-words-service";
 import { IAuth } from "../../../../interfaces/auth";
 import classNames from "classnames";
+import { useUpdateUserStatisticsMutation } from "../../../../services/statistics-service";
+import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
+import { IStatistic } from "../../../../interfaces/statistic";
 
 export interface IPopUp {
   key: string | number;
@@ -20,66 +23,71 @@ export interface IPopUp {
   clickPage: (value: number) => void;
 }
 
-
-
-
 function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
   const condition = number != 19;
   const auth: IAuth = useAppSelector(
     (state: RootState) => state.authState?.auth
   );
+  const statistics: IStatistic = useAppSelector(
+    (state: RootState) => state.statisticsState?.statistics
+  );
 
   const isAuth = !!auth;
 
-  const [updateUserWord, { isLoading: isUserWordsLoading }] =
-    useUpdateUserWordMutation();
-
+  const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
+  const [updateUserStatistics] = useUpdateUserStatisticsMutation();
 
-  function markAsHard(): void {
-    if (info.userWord) {
-      delete info.userWord?.optional?.learnedDate;
-      updateUserWord({
-        id: auth.userId,
-        wordId: info.id,
-        difficulty: "hard",
-        optional: info.userWord?.optional?.toDto(),
-      });
-    } else {
+  useEffect(() => {
+    if (!info.userWord && auth) {
       createUserWord({
         id: auth.userId,
         wordId: info.id,
-        difficulty: "hard",
+        difficulty: "seen",
         optional: {
-          firstSeenDate: new Date().toISOString(),
+          firstSeenDate: getStartOfDayDate(),
         },
-      });
+      })
+    }
+  }, [info])
+
+  async function markAsHard(): Promise<void> {
+    try {
+      if (info.userWord) {
+        const isLearned = info.userWord?.difficulty === "learned";
+        delete info.userWord?.optional?.learnedDate;
+        await updateUserWord({
+          id: auth.userId,
+          wordId: info.id,
+          difficulty: "hard",
+          optional: info.userWord?.optional?.toDto(),
+        });
+        if (isLearned) {
+          updateUserStatistics({ userId: auth.userId, request: {
+            learnedWords: statistics?.learnedWords - 1,
+            optional: statistics?.optional || {}
+          }})
+        }
+      }
+    } catch(e) {
+      console.log(e);
     }
   }
 
-  function markAsLearned(): void {
-    if (info.userWord) {
-      updateUserWord({
-        id: auth.userId,
-        wordId: info.id,
-        difficulty: "normal",
-        optional: {
-          ...info.userWord?.optional?.toDto(),
-          learnedDate: new Date().toISOString(),
-          firstSeenDate: info.userWord.optional?.firstSeenDate ?? new Date().toISOString(),
-        },
-      });
-    } else {
-      createUserWord({
-        id: auth.userId,
-        wordId: info.id,
-        difficulty: "normal",
-        optional: {
-          learnedDate: new Date().toISOString(),
-          firstSeenDate: new Date().toISOString(),
-        },
-      });
-    }
+  async function markAsLearned(): Promise<void> {
+    await updateUserWord({
+      id: auth.userId,
+      wordId: info.id,
+      difficulty: "learned",
+      optional: {
+        ...info.userWord?.optional?.toDto(),
+        learnedDate: getStartOfDayDate(),
+      },
+    });
+    updateUserStatistics({ userId: auth.userId, request: {
+      learnedWords: (statistics?.learnedWords || 0) + 1,
+      optional: statistics?.optional || {}
+    }})
   }
 
   return (
@@ -88,7 +96,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         onClick={togglePopup}
         className={classNames("popup", {
           hard: info?.userWord?.difficulty === "hard",
-          normal: info?.userWord?.difficulty === "normal",
+          normal: info?.userWord?.difficulty === "learned",
         })}
       >
         <div className="popup__sound">
@@ -141,14 +149,14 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         </button>
 
         <button
-          disabled={!isAuth || info.userWord?.difficulty === "normal"}
+          disabled={!info.userWord || info.userWord?.difficulty === "learned"}
           className="popup__button popup__button-known"
           onClick={() => markAsLearned()}
         >
           Learn
         </button>
         <button
-          disabled={!isAuth || info.userWord?.difficulty === "hard"}
+          disabled={!info.userWord || info.userWord?.difficulty === "hard"}
           onClick={() => markAsHard()}
           className="popup__button popup__button-hard"
         >

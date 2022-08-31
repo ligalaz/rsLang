@@ -15,3 +15,8 @@ interface IGameStatistics {
   attemps: number;
   mistakes: number;
 }
+
+export interface IStatisticsRequest {
+  userId: string;
+  request: IStatistic;
+}

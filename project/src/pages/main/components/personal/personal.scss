@@ -4,6 +4,10 @@
   background: #FAFAFA;
   flex-shrink: 0;
 
+  &__game-hidden {
+    visibility: hidden;
+  }
+
   &__wrapper {
     min-width: 452px;
     padding: 70px 54px;
@@ -69,13 +73,19 @@
   }
 
   &__success{
-    margin: 30px 0 8px;
     font-family: Montserrat;
     font-weight: 700;
     color: #7d7d7d;
     font-size: 1.4rem;
   }
 
+  &__column > * {
+    padding: 5px 0px;
+  }
+
+  &__column-info {
+    text-align: center;
+  } 
 
   &__words-flex {
     display: flex;
@@ -114,9 +124,12 @@
 
   &__games {
     display: flex;
-    width: 100%;
+    flex-direction: row;
     justify-content: space-around;
+    width: 100%;
     border-top: 1px solid #b2b2b2;
+    justify-content: space-between;
+    padding:30px 0;
     
 
     @include desktop-highest() {
@@ -132,15 +145,24 @@
     }
   }
 
+
+ 
+  
+ 
+
   &__game {
     font-weight: 700;
     font-size: 19px;
     line-height: 23px;
-    color: #FFFFFF;
+    color: black;
     padding: 12px;
     text-align: center;
     flex: 0 1 44%;
     margin: 10px 0;
+  }
+
+  &__row {
+    display: flex;
   }
 
   &__game1 {

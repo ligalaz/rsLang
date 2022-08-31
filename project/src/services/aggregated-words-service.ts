@@ -35,11 +35,6 @@ export const aggregatedWordsService = createApi({
       },
       onQueryStarted: unauthorizedErrorHandler,
     }),
-    // getUserWordById: build.mutation<IUserWord, UserWordResponse>({
-    //   query: (userWord: UserWordResponse) =>
-    //     `${ServerRoutes.users}/${userWord.id}${ServerRoutes.words}/${userWord.wordId}`,
-    //   onQueryStarted: unauthorizedErrorHandler,
-    // }),
   }),
 });
 
