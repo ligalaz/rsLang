@@ -1,4 +1,16 @@
 .page {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: #ffffff;
+  padding: 20px 0;
+  margin-bottom: 50px;
+
+  &_with-border {
+    padding: 20px;
+    border: 1px solid #B2B2B2;
+    border-radius: 4px;
+  }
 
   &__descr {
     font-size: 1.5rem;
@@ -10,7 +22,7 @@
   
   &__line {
     border-bottom: 1px solid #B2B2B2;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
 }

@@ -1,13 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { IAuth } from "../interfaces/auth";
 import { AUTH_KEY } from "../config";
 import { authService } from "../services/auth-service";
 import { store } from "../index";
 
 interface IAuthState {
-  auth: IAuth | null;
-  user?: string | null;
-  token?: string | null;
+  auth: IAuth;
 }
 
 let timerId: number | null = null;
@@ -26,8 +24,6 @@ const clearTimer = () => {
 
 const initialState: IAuthState = {
   auth: null,
-  user: null,
-  token: null,
 };
 
 const actualState: IAuthState = {

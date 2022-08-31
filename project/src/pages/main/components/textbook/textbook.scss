@@ -1,0 +1,89 @@
+@import '../responsive/responsive-media';
+
+.filter {
+  min-width: 100vh;
+  min-height: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: blur(4px);
+  z-index: 1;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(41,41,41,0.6);
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    position:relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1350px;
+
+    @include desktop-middle() {
+      max-width: 1225px;
+    }
+  
+    @include desktop-lower() {
+      max-width: 1100px;
+    }
+  
+    @include desktop-lowest() {
+      max-width: 950px;
+    }
+  }
+
+}
+
+.chapter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include desktop-lowest() {
+    flex-wrap: wrap;
+  }
+  
+  &__link {
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #7D7D7D;
+
+    @include desktop-lowest {
+      flex: 0 1 25%;
+    }
+
+    &:last-child {
+      flex: 0 1 75%;
+    }
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    &_active {
+      color: #000000;
+    }
+
+    &:hover {
+      color: #000000;
+    }
+  }
+}
+
+.textbook__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+
