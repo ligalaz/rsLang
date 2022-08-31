@@ -2,7 +2,7 @@ import { IWord } from "./word";
 
 export interface IUserWord {
   difficulty: "seen" | "learned" | "hard";
-  optional?: IUserWordOptions;
+  optional?: UserWordOptions;
 }
 
 interface IAudioCall {
@@ -13,14 +13,6 @@ interface IAudioCall {
 interface ISprint {
   attempts: number;
   guesses: number;
-}
-
-export interface IUserWordOptions {
-  learnedDate?: string;
-  firstSeenDate?: string;
-  strick?: number;
-  audioCall?: IAudioCall;
-  sprint?: ISprint;
 }
 
 export interface UserWordResponse {
@@ -54,6 +46,14 @@ export class UserWord {
 
     return instance;
   }
+}
+
+export interface IUserWordOptions {
+  learnedDate?: string;
+  firstSeenDate?: string;
+  strick?: number;
+  audioCall?: IAudioCall;
+  sprint?: ISprint;
 }
 
 export class UserWordOptions {

@@ -7,13 +7,13 @@ interface IOptional {
   sprint?: ICall;
 }
 interface ICall {
-  seria?: string;
+  seria?: number;
   [dateISO: string]: any;
 }
 
 interface IGameStatistics {
-  attemps: number;
-  mistakes: number;
+  attempts: number;
+  guesses: number;
 }
 
 export interface IStatisticsRequest {

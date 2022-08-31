@@ -26,10 +26,34 @@ import AudioCallRepeater from "./audiocall-repeater";
 import AudioCallView from "./audiocall-view";
 import AudiocallResult from "./audiocall-result";
 import "./audiocall.scss";
+import { IAuth } from "../../../../interfaces/auth";
+import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
+import { Word } from "../../../../interfaces/word";
+import {
+  useGetUserStatisticsMutation,
+  useUpdateUserStatisticsMutation,
+} from "../../../../services/statistics-service";
+import {
+  useUpdateUserWordMutation,
+  useCreateUserWordMutation,
+} from "../../../../services/user-words-service";
+import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
+import { IStatistic } from "../../../../interfaces/statistic";
+import { UserWordResponse } from "../../../../interfaces/user-word";
 
 const AudioCallPage = (props?: unknown) => {
+  const auth: IAuth = useAppSelector(
+    (state: RootState) => state.authState?.auth
+  );
+
+  const userId = auth?.userId;
   const dispatch: AppDispatch = useDispatch();
-  const [getWords, { data }] = useGetWordsMutation();
+  const [getWords] = useGetWordsMutation();
+  const [getAggregatedWords] = useGetUserWordsMutation();
+  const [getUserStatistics] = useGetUserStatisticsMutation();
+  const [updateUserStatistics] = useUpdateUserStatisticsMutation();
+  const [updateUserWord] = useUpdateUserWordMutation();
+  const [createUserWord] = useCreateUserWordMutation();
 
   const { group, page, maxGroup, maxPage, allGameWords, isAnswer } =
     useAppSelector(
@@ -38,6 +62,14 @@ const AudioCallPage = (props?: unknown) => {
     );
   const { currentWord, isGameStarted, gameBox, currentStep, isGameEnded } =
     useAppSelector((state: RootState) => state.audioCallReducer, shallowEqual);
+
+  const words: Word[] = useAppSelector(
+    (state: RootState) => state.wordsState.words || []
+  );
+
+  const statistics: IStatistic = useAppSelector(
+    (state: RootState) => state.statisticsState?.statistics
+  );
 
   const [groupValue, setGroup] = useState(String(group));
   const [pageValue, setPage] = useState(String(page));
@@ -48,10 +80,22 @@ const AudioCallPage = (props?: unknown) => {
   const dontKnowWordButton = useRef(null);
 
   useEffect(() => {
-    getWords({
-      group: +groupValue,
-      page: +pageValue,
-    });
+    if (auth?.userId) {
+      getAggregatedWords({
+        userId,
+        params: {
+          group: +groupValue,
+          page: +pageValue,
+          wordsPerPage: 20,
+        },
+      });
+      getUserStatistics(auth.userId);
+    } else {
+      getWords({
+        group: +groupValue,
+        page: +pageValue,
+      });
+    }
   }, [groupValue, pageValue]);
 
   useEffect(() => {
@@ -84,16 +128,103 @@ const AudioCallPage = (props?: unknown) => {
     dispatch(settingsUp({ page: +pageValue, group: +groupValue }));
   }
 
-  function checkTrueAnswer(event: React.MouseEvent) {
+  async function checkTrueAnswer(event: React.MouseEvent) {
     const target = event.target as HTMLButtonElement;
-    if (target.id === currentWord.id) {
+    const isAttemptCorrect: boolean = target.id === currentWord.id;
+    if (isAttemptCorrect) {
       target.classList.add("game-true");
       setTrue(trueGameAnswer.concat(currentWord));
     } else {
       target.classList.add("game-false");
       setFalse(falseGameAnswer.concat(currentWord));
     }
+    await updateUserWordStatistic(isAttemptCorrect);
     dispatch(changeAnswer({ isAnswer: true }));
+  }
+
+  async function updateUserWordStatistic(
+    isAttemptCorrect: boolean
+  ): Promise<void> {
+    const request: UserWordResponse = {
+      id: auth.userId,
+      wordId: currentWord.id,
+    };
+
+    const shouldWordMarkAsLearned: boolean =
+      isAttemptCorrect &&
+      ((currentWord.userWord?.difficulty === "seen" &&
+        currentWord.userWord?.optional?.strick == 2) ||
+        (currentWord.userWord?.difficulty === "hard" &&
+          currentWord.userWord?.optional?.strick == 4));
+
+    const shouldWorkRemoveFromLearned: boolean =
+      !isAttemptCorrect && currentWord.userWord?.difficulty === "learned";
+
+    if (!currentWord.userWord) {
+      request.difficulty = "seen";
+      request.optional = {
+        firstSeenDate: getStartOfDayDate(),
+        strick: +isAttemptCorrect,
+        audioCall: {
+          attempts: 1,
+          guesses: +isAttemptCorrect,
+        },
+      };
+    } else {
+      request.optional = {
+        ...currentWord.userWord.optional,
+        strick: isAttemptCorrect ? currentWord.userWord.optional.strick + 1 : 0,
+        audioCall: {
+          attempts:
+            (currentWord.userWord?.optional?.audioCall?.attempts || 0) + 1,
+          guesses:
+            (currentWord.userWord?.optional?.audioCall?.guesses || 0) +
+            +isAttemptCorrect,
+        },
+      };
+
+      if (shouldWordMarkAsLearned) {
+        request.difficulty = "learned";
+        request.optional.learnedDate = getStartOfDayDate();
+      } else if (shouldWorkRemoveFromLearned) {
+        request.difficulty = "seen";
+        delete currentWord.userWord?.optional?.learnedDate;
+      } else {
+        request.difficulty = currentWord.userWord.difficulty;
+      }
+    }
+
+    if (!currentWord.userWord) {
+      await createUserWord(request);
+    } else {
+      await updateUserWord(request);
+    }
+
+    await updateUserStatistics({
+      userId: auth.userId,
+      request: {
+        learnedWords:
+          (statistics?.learnedWords || 0) +
+          (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
+        optional: {
+          ...statistics?.optional,
+          audioCall: {
+            seria: isAttemptCorrect
+              ? (statistics?.optional?.audioCall?.seria || 0) +
+                +isAttemptCorrect
+              : 0,
+            [getStartOfDayDate()]: {
+              attempts:
+                (statistics?.optional?.audioCall?.[getStartOfDayDate()]
+                  ?.attempts || 0) + 1,
+              guesses:
+                (statistics?.optional?.audioCall?.[getStartOfDayDate()]
+                  ?.guesses || 0) + +isAttemptCorrect,
+            },
+          },
+        },
+      },
+    });
   }
 
   function resetBeforeNextRound() {
@@ -108,7 +239,7 @@ const AudioCallPage = (props?: unknown) => {
     });
     dispatch(
       gameStep({
-        dataBox: data,
+        dataBox: words,
         trueAnswer: trueGameAnswer,
         falseAnswer: falseGameAnswer,
       })
@@ -124,7 +255,7 @@ const AudioCallPage = (props?: unknown) => {
             <button
               className="play-btn"
               disabled
-              onClick={() => dispatch(startGame({ dataBox: data }))}
+              onClick={() => dispatch(startGame({ dataBox: words }))}
             >
               Play
             </button>
@@ -132,7 +263,7 @@ const AudioCallPage = (props?: unknown) => {
             <button
               className="play-btn"
               onClick={() => {
-                dispatch(startGame({ dataBox: data }));
+                dispatch(startGame({ dataBox: words }));
               }}
             >
               Play

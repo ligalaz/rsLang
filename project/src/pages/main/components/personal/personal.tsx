@@ -36,8 +36,6 @@ function Personal() {
   const learnedWords = words.filter(
     (a: Word) => a.userWord?.optional?.learnedDate === today
   );
-  console.log("words", words);
-  console.log(audioWords);
 
   const [getNewUserWords] = useGetNewUserWordsMutation();
   const [getUserStatistics] = useGetUserStatisticsMutation();
