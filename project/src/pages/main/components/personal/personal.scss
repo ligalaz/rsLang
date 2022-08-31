@@ -145,11 +145,6 @@
     }
   }
 
-
- 
-  
- 
-
   &__game {
     font-weight: 700;
     font-size: 19px;
@@ -172,5 +167,18 @@
   &__game2 {
     background: #F56748;
   }
+
+  &__statistics {
+    display: flex;
+    justify-content: space-around;
+
+    &-descr2 {
+    text-align: center;
+
+    }
+  }
+
+
+ 
   
 }

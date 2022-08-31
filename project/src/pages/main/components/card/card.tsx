@@ -36,6 +36,15 @@ function Card({ info, togglePopup, removeWord, isAuth, group }: ICardProps) {
         ></div>
         <div className="card__center">
           <div className="card__word">{info.word}</div>
+          <div className="card__word">
+            {(info.userWord?.optional?.audioCall ||
+              info.userWord?.optional?.sprint) &&
+              (info.userWord?.optional?.audioCall?.guesses ?? 0) +
+                (info.userWord?.optional?.sprint?.guesses ?? 0) +
+                "/" +
+                ((info.userWord?.optional?.audioCall?.attempts ?? 0) +
+                  (info.userWord?.optional?.sprint?.attempts ?? 0))}
+          </div>
           <div
             className="card__text"
             dangerouslySetInnerHTML={{ __html: info.textMeaning }}

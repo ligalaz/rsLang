@@ -7,11 +7,13 @@ import "./games-promo.scss";
 const games = [
   {
     name: "audio call",
+    link: "audiocall",
     promo: <AudioCallCard />,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   },
   {
     name: "sprint",
+    link: "sprint",
     promo: <SprintCard />,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   },

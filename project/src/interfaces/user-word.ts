@@ -18,6 +18,7 @@ interface ISprint {
 export interface IUserWordOptions {
   learnedDate?: string;
   firstSeenDate?: string;
+  strick?: number;
   audioCall?: IAudioCall;
   sprint?: ISprint;
 }
@@ -59,6 +60,7 @@ export class UserWordOptions {
   learnedDate?: string;
   firstSeenDate?: string;
   audioCall?: IAudioCall;
+  strick: number;
   sprint?: ISprint;
 
   public static fromServer(dto: IUserWordOptions): UserWordOptions {
@@ -71,6 +73,7 @@ export class UserWordOptions {
     instance.firstSeenDate = dto.firstSeenDate;
     instance.audioCall = dto.audioCall;
     instance.sprint = dto.sprint;
+    instance.strick = dto.strick;
 
     return instance;
   }
@@ -82,6 +85,9 @@ export class UserWordOptions {
     }
     if (this.firstSeenDate) {
       result.firstSeenDate = this.firstSeenDate;
+    }
+    if (this.strick) {
+      result.strick = this.strick;
     }
     if (this.audioCall) {
       result.audioCall = this.audioCall;

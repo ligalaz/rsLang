@@ -30,9 +30,13 @@ function Personal() {
   const words: Word[] = useAppSelector(
     (state: RootState) => state.statisticsState?.newWords || []
   );
-
+  const today = getStartOfDayDate();
   const audioWords = words.filter((a: Word) => a.userWord?.optional?.audioCall);
   const sprintWords = words.filter((a: Word) => a.userWord?.optional?.sprint);
+  const learnedWords = words.filter(
+    (a: Word) => a.userWord?.optional?.learnedDate === today
+  );
+  console.log("words", words);
   console.log(audioWords);
 
   const [getNewUserWords] = useGetNewUserWordsMutation();
@@ -81,7 +85,7 @@ function Personal() {
                     ) + "%"
                   : "0%"}
               </div>
-              <div className="presonal__all"></div>
+              <div className="presonal__all">{audioWords.length}</div>
             </div>
 
             <div className="personal__column personal__column-info">
@@ -101,7 +105,41 @@ function Personal() {
                     ) + "%"
                   : "0%"}
               </div>
-              <div className="personal__all"></div>
+              <div className="personal__all">{sprintWords.length}</div>
+            </div>
+
+            <div className="personal__statistics">
+              <div className="personal__statistics-descr">
+                <div className="personal__statistics-learned">Learnt today</div>
+                <div className="personal__statistics-percentage">Accuracy</div>
+                <div className="personal__statistics-all">new words</div>
+              </div>
+
+              <div className="personal__statistics-descr personal__statistics-descr2">
+                <div className="personal__statistics-learned">
+                  {learnedWords.length}
+                </div>
+                <div className="personal__statistics-percentage">
+                  {statistics?.optional?.audioCall?.[getStartOfDayDate()]
+                    ?.guesses ||
+                  statistics?.optional?.sprint?.[getStartOfDayDate()]?.guesses
+                    ? Math.round(
+                        (statistics?.optional?.audioCall?.[getStartOfDayDate()]
+                          ?.guesses ?? 0) +
+                          ((statistics?.optional?.sprint?.[getStartOfDayDate()]
+                            ?.guesses ?? 0) /
+                            ((statistics?.optional?.audioCall?.[
+                              getStartOfDayDate()
+                            ]?.attempts ?? 0) +
+                              (statistics?.optional?.sprint?.[
+                                getStartOfDayDate()
+                              ]?.attempts ?? 0))) *
+                            100
+                      ) + "%"
+                    : "0%"}
+                </div>
+                <div className="personal__statistics-all">{words.length}</div>
+              </div>
             </div>
           </div>
         )}

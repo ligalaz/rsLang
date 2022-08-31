@@ -1,5 +1,6 @@
 export interface GameCardDetails {
   name: string;
+  link: string;
   description: string;
   promo: JSX.Element;
 }
