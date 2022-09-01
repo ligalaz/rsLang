@@ -10,7 +10,7 @@ import {
   useGetUserStatisticsMutation,
 } from "../../../../services/statistics-service";
 import { IAuth } from "../../../../interfaces/auth";
-import { IStatistic } from "../../../../interfaces/statistic";
+import { Statistic } from "../../../../interfaces/statistic";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
 import { Word } from "../../../../interfaces/word";
 
@@ -19,7 +19,7 @@ function Personal() {
     (state: RootState) => state.authState?.auth
   );
 
-  const statistics: IStatistic = useAppSelector(
+  const statistics: Statistic = useAppSelector(
     (state: RootState) => state.statisticsState?.statistics
   );
   const location = useLocation();
@@ -59,53 +59,38 @@ function Personal() {
         </div>
         <div className="personal__title">{auth?.name ?? "Student1"}</div>
         {auth && (
-          <div className="personal__games">
-            <div className="personal__column">
-              <div className="personal__game-hidden">game</div>
-              <div className="personal__descr">In a row</div>
-              <div className="personal__descr">accuracy</div>
-              <div className="personal__descr">New words</div>
+          <>
+            <div className="personal__games">
+              <div className="personal__column">
+                <div className="personal__game-hidden">game</div>
+                <div className="personal__descr">In a row</div>
+                <div className="personal__descr">accuracy</div>
+                <div className="personal__descr">New words</div>
+              </div>
+
+              <div className="personal__column personal__column-info">
+                <div className="personal__game-title">AudioCall</div>
+                <div className="personal__strick">
+                  {statistics?.optional?.audioCall?.maxSeria ?? 0}
+                </div>
+                <div className="personal__percent">
+                  {statistics?.audioCallPercent || 0}%
+                </div>
+                <div className="presonal__all">{audioWords.length}</div>
+              </div>
+
+              <div className="personal__column personal__column-info">
+                <div className="personal__game-title">Sprint</div>
+                <div className="personal__strick">
+                  {statistics?.optional?.sprint?.maxSeria ?? 0}
+                </div>
+
+                <div className="personal__percent">
+                  {statistics?.sprintPercent || 0}%
+                </div>
+                <div className="personal__all">{sprintWords.length}</div>
+              </div>
             </div>
-
-            <div className="personal__column personal__column-info">
-              <div className="personal__game-title">AudioCall</div>
-              <div className="personal__strick">
-                {statistics?.optional?.audioCall?.seria ?? 0}
-              </div>
-              <div className="personal__percent">
-                {statistics?.optional?.audioCall?.[getStartOfDayDate()]?.guesses
-                  ? Math.round(
-                      (statistics?.optional?.audioCall?.[getStartOfDayDate()]
-                        ?.guesses /
-                        statistics?.optional?.audioCall?.[getStartOfDayDate()]
-                          ?.attempts) *
-                        100
-                    ) + "%"
-                  : "0%"}
-              </div>
-              <div className="presonal__all">{audioWords.length}</div>
-            </div>
-
-            <div className="personal__column personal__column-info">
-              <div className="personal__game-title">Sprint</div>
-              <div className="personal__strick">
-                {statistics?.optional?.sprint?.seria ?? 0}
-              </div>
-
-              <div className="personal__percent">
-                {statistics?.optional?.sprint?.[getStartOfDayDate()]?.guesses
-                  ? Math.round(
-                      (statistics?.optional?.sprint?.[getStartOfDayDate()]
-                        ?.guesses /
-                        statistics?.optional?.sprint?.[getStartOfDayDate()]
-                          ?.attempts) *
-                        100
-                    ) + "%"
-                  : "0%"}
-              </div>
-              <div className="personal__all">{sprintWords.length}</div>
-            </div>
-
             <div className="personal__statistics">
               <div className="personal__statistics-descr">
                 <div className="personal__statistics-learned">Learnt today</div>
@@ -118,44 +103,20 @@ function Personal() {
                   {learnedWords.length}
                 </div>
                 <div className="personal__statistics-percentage">
-                  {statistics?.optional?.audioCall?.[getStartOfDayDate()]
-                    ?.guesses ||
-                  statistics?.optional?.sprint?.[getStartOfDayDate()]?.guesses
-                    ? Math.round(
-                        (statistics?.optional?.audioCall?.[getStartOfDayDate()]
-                          ?.guesses ?? 0) +
-                          ((statistics?.optional?.sprint?.[getStartOfDayDate()]
-                            ?.guesses ?? 0) /
-                            ((statistics?.optional?.audioCall?.[
-                              getStartOfDayDate()
-                            ]?.attempts ?? 0) +
-                              (statistics?.optional?.sprint?.[
-                                getStartOfDayDate()
-                              ]?.attempts ?? 0))) *
-                            100
-                      ) + "%"
-                    : "0%"}
+                  {statistics?.gamesPercent || 0}%
                 </div>
                 <div className="personal__statistics-all">{words.length}</div>
               </div>
             </div>
-          </div>
+          </>
         )}
         <div className="personal__progress">
           <div className="personal__success">Progress</div>
         </div>
         <div className="personal__diagram">
           <CircularProgressbar
-            value={
-              statistics?.learnedWords
-                ? Math.ceil((statistics?.learnedWords / 3600) * 100)
-                : 0
-            }
-            text={`${
-              statistics?.learnedWords
-                ? Math.ceil((statistics?.learnedWords / 3600) * 100)
-                : 0
-            }%`}
+            value={statistics?.learnPercent || 0}
+            text={`${statistics?.learnPercent || 0}%`}
           />
         </div>
         {isTextbookRoute && (

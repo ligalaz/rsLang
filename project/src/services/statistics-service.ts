@@ -2,7 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { API_BASE_URL } from "../config";
 import { HTTPMethods } from "../enums/http-methods";
 import { ServerRoutes } from "../enums/server-routes";
-import { IStatistic, IStatisticsRequest } from "../interfaces/statistic";
+import {
+  IStatistic,
+  IStatisticsRequest,
+  Statistic,
+} from "../interfaces/statistic";
 import { IAggregatedWordsResponse } from "../interfaces/user-word";
 import { IWord, Word } from "../interfaces/word";
 import { RootState } from "../store/store";
@@ -23,19 +27,21 @@ export const statisticsService = createApi({
     },
   }),
   endpoints: (build) => ({
-    getUserStatistics: build.mutation<IStatistic, string>({
+    getUserStatistics: build.mutation<Statistic, string>({
       query: (id: string) => ({
         url: `${ServerRoutes.users}/${id}${ServerRoutes.statistics}`,
         method: HTTPMethods.GET,
       }),
+      transformResponse: Statistic.fromDto,
       onQueryStarted: unauthorizedErrorHandler,
     }),
-    updateUserStatistics: build.mutation<IStatistic, IStatisticsRequest>({
+    updateUserStatistics: build.mutation<Statistic, IStatisticsRequest>({
       query: (request: IStatisticsRequest) => ({
         url: `${ServerRoutes.users}/${request.userId}${ServerRoutes.statistics}`,
         method: HTTPMethods.PUT,
         body: request.request,
       }),
+      transformResponse: Statistic.fromDto,
       onQueryStarted: unauthorizedErrorHandler,
     }),
     getNewUserWords: build.mutation<Word[], string>({
@@ -44,7 +50,7 @@ export const statisticsService = createApi({
         method: HTTPMethods.GET,
         params: {
           filter: `{"userWord.optional.firstSeenDate": "${getStartOfDayDate()}"}`,
-          wordsPerPage: 3600,
+          // wordsPerPage: 3600,
         },
       }),
       transformResponse: (response) => {

@@ -146,17 +146,24 @@ const AudioCallPage = (props?: unknown) => {
     isAttemptCorrect: boolean
   ): Promise<void> {
     const request: UserWordResponse = {
-      id: auth.userId,
+      id: auth?.userId,
       wordId: currentWord.id,
     };
-
+    const seria: number = statistics?.optional?.audioCall?.seria || 0;
+    const maxSeria: number = statistics?.optional?.audioCall?.maxSeria || 0;
+    const wordStrick: number = currentWord.userWord?.optional?.strick || 0;
+    const wordAttempts: number =
+      currentWord.userWord?.optional?.audioCall?.attempts || 0;
+    const wordGuesses: number =
+      currentWord.userWord?.optional?.audioCall?.guesses || 0;
+    const statisticsAttempts: number =
+      statistics?.optional?.audioCall?.[getStartOfDayDate()]?.attempts || 0;
+    const statisticsGuesses: number =
+      statistics?.optional?.audioCall?.[getStartOfDayDate()]?.guesses || 0;
     const shouldWordMarkAsLearned: boolean =
       isAttemptCorrect &&
-      ((currentWord.userWord?.difficulty === "seen" &&
-        currentWord.userWord?.optional?.strick == 2) ||
-        (currentWord.userWord?.difficulty === "hard" &&
-          currentWord.userWord?.optional?.strick == 4));
-
+      ((currentWord.userWord?.difficulty === "seen" && wordStrick == 1) ||
+        (currentWord.userWord?.difficulty === "hard" && wordStrick == 4));
     const shouldWorkRemoveFromLearned: boolean =
       !isAttemptCorrect && currentWord.userWord?.difficulty === "learned";
 
@@ -173,13 +180,10 @@ const AudioCallPage = (props?: unknown) => {
     } else {
       request.optional = {
         ...currentWord.userWord.optional,
-        strick: isAttemptCorrect ? currentWord.userWord.optional.strick + 1 : 0,
+        strick: isAttemptCorrect ? wordStrick + 1 : 0,
         audioCall: {
-          attempts:
-            (currentWord.userWord?.optional?.audioCall?.attempts || 0) + 1,
-          guesses:
-            (currentWord.userWord?.optional?.audioCall?.guesses || 0) +
-            +isAttemptCorrect,
+          attempts: wordAttempts + 1,
+          guesses: wordGuesses + +isAttemptCorrect,
         },
       };
 
@@ -188,7 +192,7 @@ const AudioCallPage = (props?: unknown) => {
         request.optional.learnedDate = getStartOfDayDate();
       } else if (shouldWorkRemoveFromLearned) {
         request.difficulty = "seen";
-        delete currentWord.userWord?.optional?.learnedDate;
+        delete request?.optional?.learnedDate;
       } else {
         request.difficulty = currentWord.userWord.difficulty;
       }
@@ -201,7 +205,7 @@ const AudioCallPage = (props?: unknown) => {
     }
 
     await updateUserStatistics({
-      userId: auth.userId,
+      userId: userId,
       request: {
         learnedWords:
           (statistics?.learnedWords || 0) +
@@ -209,17 +213,12 @@ const AudioCallPage = (props?: unknown) => {
         optional: {
           ...statistics?.optional,
           audioCall: {
-            seria: isAttemptCorrect
-              ? (statistics?.optional?.audioCall?.seria || 0) +
-                +isAttemptCorrect
-              : 0,
+            seria: isAttemptCorrect ? seria + 1 : 0,
+            maxSeria:
+              isAttemptCorrect && seria + 1 > maxSeria ? seria + 1 : maxSeria,
             [getStartOfDayDate()]: {
-              attempts:
-                (statistics?.optional?.audioCall?.[getStartOfDayDate()]
-                  ?.attempts || 0) + 1,
-              guesses:
-                (statistics?.optional?.audioCall?.[getStartOfDayDate()]
-                  ?.guesses || 0) + +isAttemptCorrect,
+              attempts: statisticsAttempts + 1,
+              guesses: statisticsGuesses + +isAttemptCorrect,
             },
           },
         },
@@ -246,6 +245,9 @@ const AudioCallPage = (props?: unknown) => {
     );
     dispatch(changeAnswer({ isAnswer: false }));
   }
+
+  console.log("statistics", statistics?.learnedWords);
+  console.log("statistics", statistics?.optional?.audioCall);
 
   return (
     <div className="audiocall-body">

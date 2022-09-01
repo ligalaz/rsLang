@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IStatistic } from "../interfaces/statistic";
+import { IStatistic, Statistic } from "../interfaces/statistic";
 import { UserWordOptions } from "../interfaces/user-word";
 import { Word } from "../interfaces/word";
 import { statisticsService } from "../services/statistics-service";
 import { userWordsService } from "../services/user-words-service";
 
 interface IStatisticState {
-  statistics: IStatistic;
+  statistics: Statistic;
   newWords: Word[];
 }
 
