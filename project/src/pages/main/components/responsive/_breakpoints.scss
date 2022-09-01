@@ -5,12 +5,11 @@ $desktop-lowest: 1280px;
 $desktop-bottom: 1200px;
 
 $tablet-upper: 1050px;
-$tablet-middle: 1600px;
-$tablet-highest: 900px;
-$tablet-lowest: 1024px;
+$tablet-middle: 900px;
+$tablet-lower: 767px;
+$tablet-lowest: 600px;
 
-$tablet-thoushud-breakpoint:1120px;
-$tablet-breakpoint: 744px;
-$tablet-x3six-breakpoint:680px;
-$mobile-fiffif-breakpoint: 550px;
-$mobile-breakpoint: 375px;
+$mobile-upper: 550px;
+$mobile-inbetween: 500px;
+$mobile-middle: 400px;
+$mobile-lower: 321px;

@@ -1,8 +1,22 @@
 @import '../responsive/responsive-media.scss';
 
+html {
+
+  @include desktop-lower() {
+    font-size: 15px;
+  }
+
+}
+
 .personal {
   background: #FAFAFA;
   flex-shrink: 0;
+  transition: all 0.5s ease-in-out;
+
+
+  @include tablet-lower() {
+    display: none;
+  }
 
   &__game-hidden {
     visibility: hidden;
@@ -18,20 +32,15 @@
     box-sizing: border-box;
 
     @include desktop-highest() {
-      padding: 40px 40px;
+      padding: 40px;
       width: 320px;
       min-width: auto;
     }
 
-    @include desktop-middle() {
-      padding: 40px 30px;
-      width: 260px;
+    @include desktop-lowest() {
+      padding: 149px 40px 40px;
     }
 
-    @include desktop-lower() {
-      padding: 40px 30px;
-      width: 260px;
-    }
   }
 
   &__img {
@@ -46,6 +55,7 @@
     font-weight: 700;
     font-size: 2rem;
     text-align: center;
+ 
   }
   &__city {
     font-family: Montserrat;
@@ -97,12 +107,23 @@
   }
 
   &__diagram {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin: 15px 0px;
     width: 240px;
     
     @include desktop-highest() {
       width: 100%;
+    }
+
+    @include desktop-middle() {
+      width: 90%;
+    }
+
+    @include desktop-lowest() {
+      width: 80%;
+    }
+
+    @include desktop-lowest() {
+      width: 50%;
     }
   }
 

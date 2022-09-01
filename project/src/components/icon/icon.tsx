@@ -5,12 +5,15 @@ import { spell } from "../../utils/spell";
 type IconType =
   | "settings"
   | "log-out"
+  | "log-out-burger"
   | "logo"
   | "icon"
   | "greetings"
   | "info"
   | "loading"
   | "sound"
+  | "burger-sidebar"
+  | "burger-sidebar-opened"
   | "basket";
 
 export interface IconProps {
@@ -32,6 +35,124 @@ export function Icon({
 }: IconProps) {
   function getIcon() {
     switch (type) {
+      case "burger-sidebar-opened":
+        return (
+          <svg
+            width="40"
+            height="32"
+            viewBox="0 0 40 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="0.662109"
+              y="0.504608"
+              width="30"
+              height="5"
+              rx="2"
+              fill="white"
+            />
+            <rect
+              x="0.662109"
+              y="26.5046"
+              width="30"
+              height="5"
+              rx="2"
+              fill="#F56748"
+            />
+            <rect
+              x="9.66211"
+              y="13.5046"
+              width="30"
+              height="5"
+              rx="2"
+              fill="white"
+            />
+            <rect
+              x="34.6621"
+              y="0.504608"
+              width="5"
+              height="5"
+              rx="2.5"
+              fill="#F56748"
+            />
+            <rect
+              x="34.6621"
+              y="26.5046"
+              width="5"
+              height="5"
+              rx="2.5"
+              fill="white"
+            />
+            <rect
+              x="0.662109"
+              y="13.5046"
+              width="5"
+              height="5"
+              rx="2.5"
+              fill="white"
+            />
+          </svg>
+        );
+      case "burger-sidebar":
+        return (
+          <svg
+            width="40"
+            height="32"
+            viewBox="0 0 40 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="0.853516"
+              y="0.915527"
+              width="30"
+              height="5"
+              rx="2"
+              fill="#6550DE"
+            />
+            <rect
+              x="0.853516"
+              y="26.9155"
+              width="30"
+              height="5"
+              rx="2"
+              fill="#FEC246"
+            />
+            <rect
+              x="9.85352"
+              y="13.9155"
+              width="30"
+              height="5"
+              rx="2"
+              fill="#F56748"
+            />
+            <rect
+              x="34.8535"
+              y="0.915527"
+              width="5"
+              height="5"
+              rx="2.5"
+              fill="#FEC246"
+            />
+            <rect
+              x="34.8535"
+              y="26.9155"
+              width="5"
+              height="5"
+              rx="2.5"
+              fill="#F56748"
+            />
+            <rect
+              x="0.853516"
+              y="13.9155"
+              width="5"
+              height="5"
+              rx="2.5"
+              fill="#6550DE"
+            />
+          </svg>
+        );
       case "info":
         return (
           <svg
@@ -130,6 +251,25 @@ export function Icon({
             <path
               d="M6.78385 10.4531H18.918L15.7128 7.24782L16.9056 6.05499L22.1472 11.2965L16.9056 16.5382L15.7128 15.3453L18.918 12.1401H6.78385V10.4531Z"
               fill="#7D7D7D"
+            />
+          </svg>
+        );
+      case "log-out-burger":
+        return (
+          <svg
+            width="23"
+            height="23"
+            viewBox="0 0 23 23"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3.3899 0.492615H19.9222C21.3175 0.492615 22.4526 1.62777 22.4526 3.02308V6.39703H20.7657V3.02308C20.7657 2.55798 20.3873 2.17959 19.9222 2.17959H3.38986C2.92476 2.17959 2.54637 2.55798 2.54637 3.02308V19.5554C2.54637 20.0205 2.92476 20.3989 3.38986 20.3989H19.9222C20.3873 20.3989 20.7657 20.0205 20.7657 19.5554V16.1814H22.4526V19.5554C22.4526 20.9507 21.3175 22.0859 19.9222 22.0859H3.38986C1.99455 22.0859 0.859397 20.9507 0.859397 19.5554V3.02308C0.859439 1.62777 1.9946 0.492615 3.3899 0.492615Z"
+              fill="white"
+            />
+            <path
+              d="M7.10148 10.4457H19.2357L16.0304 7.24044L17.2233 6.04761L22.4648 11.2892L17.2233 16.5308L16.0304 15.3379L19.2357 12.1327H7.10148V10.4457Z"
+              fill="white"
             />
           </svg>
         );

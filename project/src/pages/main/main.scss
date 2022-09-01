@@ -2,12 +2,12 @@
 @import "./components/styles/main-page-title.scss";
 
 .main {
-  
   display: flex;
   height: 100%;
 
   &__wrapper {
     flex-grow: 1;
+
 
     @supports (overflow: overlay) {
       overflow: hidden overlay;
@@ -20,7 +20,7 @@
     background-image: url('../../assets/img/background.jpg');
     background-size: cover;
     background-blend-mode: color-dodge;
-    background-color: #ffffff;
+    background-color: #FAFAFA;
 
     scrollbar-width: thin;
     scrollbar-color: #e6e8eb #c1c7cd;
@@ -59,7 +59,11 @@
     }
 
     @include desktop-lowest() {
-      padding: 40px 20px;
+      padding: 40px 40px;
+    }
+
+    @include desktop-lowest() {
+      padding: 149px 40px 40px;
     }
   }
 

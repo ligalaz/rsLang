@@ -1,8 +1,69 @@
 @import '../responsive/responsive-media.scss';
 
+.header {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left:0px;
+  padding: 20px 25px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  z-index: 9;
+  border-bottom: 1px solid #ccc;
+    
+  @include desktop-lowest() {
+    display: flex;
+  }
+
+  &__burger {
+    display: none;
+    align-items: center;
+    position: absolute;
+    top: 42px;
+    right: 47px;
+    z-index: 15;
+    transition: 0.5s ease;
+    width: 30px;
+    height: 30px;
+
+    @include desktop-lowest() {
+      display: block;
+    }
+  
+    &-rotate {
+      transform: rotate(90deg);
+    }
+  
+    &-line {
+      width: 100%;
+      height: 4px;
+      background-color: #e74c3c;
+    }
+  }
+}
+
 .sidebar {
   background-color: #F3F3F3;
   flex-shrink: 0;
+
+  @include desktop-lowest() {
+    background-color: #404497;
+  }
+
+  @include desktop-lowest() {
+    transition: right 0.5s;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: -320px;
+    min-height: 100vh
+  }
+
+  &__appear {
+    right: 0px;
+  }
 
   &__flex {
     min-width: 150px;
@@ -14,6 +75,10 @@
     justify-content: space-between;
     box-sizing: border-box;
 
+    @include desktop-lowest() {
+      min-width: 320px;
+    }
+
     @include desktop-middle() {
       padding: 40px 40px;
     }
@@ -22,11 +87,24 @@
       padding: 25px;
     }
     
+    @include desktop-lowest() {
+      min-height: 100vh;
+    }
+
+    @include tablet-middle() {
+      min-height: 100vh;
+      min-width: 290px;
+    }
+
   }
 
   &__logo {
     display: flex;
     justify-content: center;
+
+    @include desktop-lowest() {
+      visibility: hidden;
+    }
   }
 
   &__links {
@@ -43,16 +121,20 @@
     text-decoration: none;
     cursor: pointer;
 
+    @include desktop-lowest() {
+      color: #FFFFFF;
+    }
+
     &:not(:last-child) {
       margin-bottom: 60px;
     }
 
     &:hover {
-      color: black;
+      color: #FEC246;
     }
 
     &_active {
-      color: black;
+      color: #FEC246;
 
       &::before {
         content: '';
@@ -60,7 +142,7 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: black;
+        background-color: #FEC246;
         position: absolute;
         transform: translate(-30px, 5px);
       }
