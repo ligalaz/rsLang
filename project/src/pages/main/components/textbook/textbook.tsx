@@ -87,7 +87,7 @@ function Textbook() {
       await updateUserWord({
         id: userId,
         wordId: word.id,
-        difficulty: "new",
+        difficulty: "seen",
         optional: word.userWord?.optional?.toDto(),
       });
       dispatch(removeById(word.id));

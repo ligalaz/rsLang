@@ -5,21 +5,51 @@ import { RootState, useAppSelector } from "../../../../store/store";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link, useLocation } from "react-router-dom";
+import {
+  useGetNewUserWordsMutation,
+  useGetUserStatisticsMutation,
+} from "../../../../services/statistics-service";
+import { IAuth } from "../../../../interfaces/auth";
+import { Statistic } from "../../../../interfaces/statistic";
+import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
+import { Word } from "../../../../interfaces/word";
 
 function Personal() {
-  const name: string = useAppSelector(
-    (state: RootState) => state.authState.auth?.name
-  ) as string;
+  const auth: IAuth = useAppSelector(
+    (state: RootState) => state.authState?.auth
+  );
+
+  const statistics: Statistic = useAppSelector(
+    (state: RootState) => state.statisticsState?.statistics
+  );
   const location = useLocation();
   const [isTextbookRoute, setRoute] = useState<boolean>(
     location.pathname.includes("textbook")
   );
 
+  const words: Word[] = useAppSelector(
+    (state: RootState) => state.statisticsState?.newWords || []
+  );
+  const today = getStartOfDayDate();
+  const audioWords = words.filter((a: Word) => a.userWord?.optional?.audioCall);
+  const sprintWords = words.filter((a: Word) => a.userWord?.optional?.sprint);
+  const learnedWords = words.filter(
+    (a: Word) => a.userWord?.optional?.learnedDate === today
+  );
+
+  const [getNewUserWords] = useGetNewUserWordsMutation();
+  const [getUserStatistics] = useGetUserStatisticsMutation();
+
   useEffect(() => {
     setRoute(location.pathname.includes("textbook"));
   }, [location.pathname]);
 
-  const percentage = 66;
+  useEffect(() => {
+    if (auth) {
+      getUserStatistics(auth.userId);
+      getNewUserWords(auth.userId);
+    }
+  }, []);
 
   return (
     <div className="personal">
@@ -27,12 +57,67 @@ function Personal() {
         <div className="personal__upper">
           <Icon type="icon" />
         </div>
-        <div className="personal__title">{name ?? "Student1"}</div>
+        <div className="personal__title">{auth?.name ?? "Student1"}</div>
+        {auth && (
+          <>
+            <div className="personal__games">
+              <div className="personal__column">
+                <div className="personal__game-hidden">game</div>
+                <div className="personal__descr">In a row</div>
+                <div className="personal__descr">accuracy</div>
+                <div className="personal__descr">New words</div>
+              </div>
+
+              <div className="personal__column personal__column-info">
+                <div className="personal__game-title">AudioCall</div>
+                <div className="personal__strick">
+                  {statistics?.optional?.audioCall?.maxSeria ?? 0}
+                </div>
+                <div className="personal__percent">
+                  {statistics?.audioCallPercent || 0}%
+                </div>
+                <div className="presonal__all">{audioWords.length}</div>
+              </div>
+
+              <div className="personal__column personal__column-info">
+                <div className="personal__game-title">Sprint</div>
+                <div className="personal__strick">
+                  {statistics?.optional?.sprint?.maxSeria ?? 0}
+                </div>
+
+                <div className="personal__percent">
+                  {statistics?.sprintPercent || 0}%
+                </div>
+                <div className="personal__all">{sprintWords.length}</div>
+              </div>
+            </div>
+            <div className="personal__statistics">
+              <div className="personal__statistics-descr">
+                <div className="personal__statistics-learned">Learnt today</div>
+                <div className="personal__statistics-percentage">Accuracy</div>
+                <div className="personal__statistics-all">new words</div>
+              </div>
+
+              <div className="personal__statistics-descr personal__statistics-descr2">
+                <div className="personal__statistics-learned">
+                  {learnedWords.length}
+                </div>
+                <div className="personal__statistics-percentage">
+                  {statistics?.gamesPercent || 0}%
+                </div>
+                <div className="personal__statistics-all">{words.length}</div>
+              </div>
+            </div>
+          </>
+        )}
         <div className="personal__progress">
           <div className="personal__success">Progress</div>
         </div>
         <div className="personal__diagram">
-          <CircularProgressbar value={percentage} text={`${percentage}%`} />
+          <CircularProgressbar
+            value={statistics?.learnPercent || 0}
+            text={`${statistics?.learnPercent || 0}%`}
+          />
         </div>
         {isTextbookRoute && (
           <div className="personal__games">
