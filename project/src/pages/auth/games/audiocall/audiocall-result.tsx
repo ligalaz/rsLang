@@ -1,14 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { IWord } from "../../../../interfaces/word";
-import CloseBtnComponent from "../close-btn-component";
-
-import {
-  endGame,
-  gameStep,
-  startGame,
-  resetGame,
-} from "../../../../store/audiocall-slice";
+import { settingsDown } from "../../../../store/audiocall-settings-slice";
+import { resetGame, restartGame } from "../../../../store/audiocall-slice";
 import { AppDispatch } from "../../../../store/store";
 import AudioCallRepeater from "./audiocall-repeater";
 import "./audiocall-result.scss";
@@ -47,11 +41,19 @@ const AudiocallResult = () => {
         </div>
       </div>
       <div className="audiocall__modal-btns">
-        <button className="modal__orange-btn">Restart</button>
+        <button
+          onClick={() => {
+            dispatch(restartGame());
+          }}
+          className="modal__orange-btn"
+        >
+          Restart
+        </button>
         <button className="modal__blue-btn">Statistic</button>
         <button
           onClick={() => {
             dispatch(resetGame());
+            dispatch(settingsDown());
           }}
           className="modal__blue-btn"
         >

@@ -6,13 +6,12 @@ import { useGetWordsMutation } from "../../../../services/words-service";
 import {
   settingsUp,
   changeAnswer,
-  settingsDown,
+  setTrueRaw,
 } from "../../../../store/audiocall-settings-slice";
 import {
   endGame,
   gameStep,
   startGame,
-  resetGame,
 } from "../../../../store/audiocall-slice";
 import {
   AppDispatch,
@@ -55,7 +54,7 @@ const AudioCallPage = (props?: unknown) => {
   const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
 
-  const { group, page, maxGroup, maxPage, allGameWords, isAnswer } =
+  const { group, page, maxGroup, maxPage, allGameWords, isAnswer, trueRow } =
     useAppSelector(
       (state: RootState) => state.audioCallSettingsReducer,
       shallowEqual
@@ -75,9 +74,12 @@ const AudioCallPage = (props?: unknown) => {
   const [pageValue, setPage] = useState(String(page));
   const [trueGameAnswer, setTrue] = useState([]);
   const [falseGameAnswer, setFalse] = useState([]);
+  const [trueWordRow, setRow] = useState(0);
 
   const nextWordButton = useRef(null);
   const dontKnowWordButton = useRef(null);
+  const groupBlock = useRef(null);
+  const pageBlock = useRef(null);
 
   useEffect(() => {
     if (auth?.userId) {
@@ -108,6 +110,11 @@ const AudioCallPage = (props?: unknown) => {
         },
         false
       );
+      groupBlock.current.disabled = true;
+      pageBlock.current.disabled = true;
+    } else {
+      groupBlock.current.disabled = false;
+      pageBlock.current.disabled = false;
     }
     if (currentStep === allGameWords) {
       dispatch(endGame());
@@ -115,9 +122,32 @@ const AudioCallPage = (props?: unknown) => {
   }, [currentWord]);
 
   useEffect(() => {
+    const url = window.location.href;
+    const queries = url.slice(-5).match(/\d+/gi) || [];
+    if (queries.length) {
+      groupBlock.current.disabled = true;
+      pageBlock.current.disabled = true;
+      const [group, page] = queries;
+      setGroup(group);
+      setPage(page);
+      getWords({
+        group: +group,
+        page: +page,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    setRow(0);
     setTrue([]);
     setFalse([]);
   }, [isGameEnded]);
+
+  useEffect(() => {
+    if (isAnswer) {
+      nextWordButton.current.focus();
+    }
+  }, [isAnswer]);
 
   function changeSelect(flag: boolean) {
     if (flag) {
@@ -134,9 +164,15 @@ const AudioCallPage = (props?: unknown) => {
     if (isAttemptCorrect) {
       target.classList.add("game-true");
       setTrue(trueGameAnswer.concat(currentWord));
+      setRow(trueWordRow + 1);
+      currentStep === 9
+        ? dispatch(setTrueRaw({ trueRow: trueWordRow + 1 }))
+        : null;
     } else {
       target.classList.add("game-false");
       setFalse(falseGameAnswer.concat(currentWord));
+      dispatch(setTrueRaw({ trueRow: trueWordRow }));
+      setRow(0);
     }
     await updateUserWordStatistic(isAttemptCorrect);
     dispatch(changeAnswer({ isAnswer: true }));
@@ -246,6 +282,19 @@ const AudioCallPage = (props?: unknown) => {
     dispatch(changeAnswer({ isAnswer: false }));
   }
 
+  function skipWord() {
+    setFalse(falseGameAnswer.concat(currentWord));
+    dispatch(setTrueRaw({ trueRow: trueWordRow }));
+    setRow(0);
+    dispatch(
+      gameStep({
+        dataBox: words,
+        trueAnswer: trueGameAnswer,
+        falseAnswer: falseGameAnswer,
+      })
+    );
+  }
+
   console.log("statistics", statistics?.learnedWords);
   console.log("statistics", statistics?.optional?.audioCall);
 
@@ -293,6 +342,7 @@ const AudioCallPage = (props?: unknown) => {
           <form className="settings-form">
             <label htmlFor="gamelevel">level</label>
             <select
+              ref={groupBlock}
               value={groupValue}
               onChange={changeSelect.bind(this, true)}
               id="gamelevel"
@@ -303,6 +353,7 @@ const AudioCallPage = (props?: unknown) => {
             </select>
             <label htmlFor="gamepage">page</label>
             <select
+              ref={pageBlock}
               value={pageValue}
               onChange={changeSelect.bind(this, false)}
               id="gamepage"
@@ -350,7 +401,11 @@ const AudioCallPage = (props?: unknown) => {
         </div>
         <div className="audiocall__row-toggle">
           <div className="audiocall__btn-container">
-            {!isGameStarted ? null : isAnswer ? (
+            {!isGameStarted ? (
+              <div className="btn-preload ">
+                Press the play button to start the game
+              </div>
+            ) : isAnswer ? (
               <button
                 className="audiocall__btn-container-item btn-next"
                 ref={nextWordButton}
@@ -362,7 +417,7 @@ const AudioCallPage = (props?: unknown) => {
               <button
                 className="audiocall__btn-container-item"
                 ref={dontKnowWordButton}
-                onClick={() => resetBeforeNextRound()}
+                onClick={() => skipWord()}
               >
                 {`I don't know`}
               </button>
