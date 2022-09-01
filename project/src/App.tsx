@@ -7,8 +7,7 @@ import RegistrationPage from "./pages/auth/registration/registration";
 import MainPage from "./pages/main/main";
 import Textbook from "./pages/main/components/textbook/textbook";
 import AboutUs from "./pages/main/components/about-us/about-us";
-import Home from "./pages/main/components/Home/home";
-import Promo from "./pages/main/components/Promo/promo";
+import Home from "./pages/main/components/home/home";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
@@ -57,7 +56,6 @@ function App() {
           <Route path="audiocall" element={<AudioCallPage />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
-            <Route path="promo" element={<Promo />} />
             <Route path="textbook/:group/:page" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
           </Route>

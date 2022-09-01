@@ -14,6 +14,7 @@ import classNames from "classnames";
 import { useUpdateUserStatisticsMutation } from "../../../../services/statistics-service";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
 import { IStatistic } from "../../../../interfaces/statistic";
+import { AudioService } from "../../../../utils/audio-service";
 
 export interface IPopUp {
   key: string | number;
@@ -49,6 +50,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         },
       })
     }
+    AudioService.stop();
   }, [info])
 
   async function markAsHard(): Promise<void> {
@@ -102,9 +104,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         <div className="popup__sound">
           <Icon
             type="sound"
-            url={API_BASE_URL + "/" + info.audio}
-            audioExample={API_BASE_URL + "/" + info.audioMeaning}
-            audioMeaning={API_BASE_URL + "/" + info.audioExample}
+            onClick={() => AudioService.play(info.audio, info.audioMeaning, info.audioExample)}
           />
         </div>
         <div className="popup__container">

@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../../../../config";
 import { Word } from "../../../../interfaces/word";
 import classNames from "classnames";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
-
+import { AudioService } from "../../../../utils/audio-service";
 export interface ICardProps {
   info: Word;
   togglePopup?: MouseEventHandler<HTMLElement>;
@@ -56,7 +56,7 @@ function Card({ info, togglePopup, removeWord, isAuth, group }: ICardProps) {
           })}
         >
           <a className="card__control-option">
-            <Icon url={API_BASE_URL + "/" + info.audio} type="sound" />
+            <Icon onClick={() => AudioService.play(info.audio)} type="sound" />
           </a>
           <a className="card__control-option" onClick={togglePopup}>
             <Icon type="info" />
