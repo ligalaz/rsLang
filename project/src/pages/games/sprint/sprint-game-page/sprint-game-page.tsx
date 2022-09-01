@@ -6,20 +6,24 @@ import Timer from "../components/timer/timer";
 import tick from "../../../../assets/sound/tick.mp3";
 import cross from "../../../../assets/sound/cross.mp3";
 import "../../../main/components/games-promo/game-card/sprint-card/sprint-card.scss";
+import SelectionOfParameters from "../components/selection-of-parameters/selection-of-parameters";
+import { SELECTION_DATA } from "../../../../config";
 import CloseBtn from "../components/close-btn/close-btn";
-import AudioBtn from "../components/audio-btn/audio-btn";
+import AudioBtn from "../components/audio/audio-btn";
 import ProgressLabels from "../components/progress-labels/progress-labels";
+import GameResultPage from "../game-result-page/game-result-page";
 import "./sprint-game-page.scss";
 
 const timerDetails = {
   delay: 1000,
-  initial: 60,
+  initial: 2,
   className: "sprint-timer sprint-game__sprint-timer",
 };
 
 const SprintGamePage = (): JSX.Element => {
   const audio = new Audio();
-  const { gameStep, changeGameScore, getData, showResults } = useActions();
+  const { gameStep, changeGameScore, getData, setLevel, setGameState } =
+    useActions();
   const {
     gameData,
     score,
@@ -27,6 +31,7 @@ const SprintGamePage = (): JSX.Element => {
     isResultsShown,
     currentWord,
     trueAnswersCount,
+    isGameStarted,
   } = useAppSelector((state) => state.sprintState);
 
   const { data, isLoading } = useGetWordsQuery({ group: Number(level) - 1 });
@@ -85,7 +90,7 @@ const SprintGamePage = (): JSX.Element => {
       ) : (
         <>
           <header className="header">
-            <CloseBtn isDisabled={isResultsShown} />
+            <CloseBtn isDisabled={!isGameStarted} />
           </header>
           <main className="main">
             <section className="sprint-game">
@@ -94,35 +99,28 @@ const SprintGamePage = (): JSX.Element => {
                 <ProgressLabels />
               </div>
               <div className="sprint-game__selects">
-                <label className="label">
-                  level
-                  <select
-                    value={level}
-                    className="select select--disabled"
-                    disabled
-                  >
-                    <option>{level}</option>
-                  </select>
-                </label>
-                <label className="label sprint-game__label">
-                  page
-                  <select
-                    value={level}
-                    className="select select--disabled"
-                    disabled
-                  >
-                    <option>{level}</option>
-                  </select>
-                </label>
+                {SELECTION_DATA.map((selection) => {
+                  return (
+                    <SelectionOfParameters
+                      key={selection.label}
+                      selectionDetails={selection}
+                      isDisabled={true}
+                      value={selection.label === "level" ? level : level}
+                      setValue={selection.label === "level" && setLevel}
+                    />
+                  );
+                })}
                 <AudioBtn
-                  className={!sound && "circle__audio--inactive"}
-                  isDisabled={isResultsShown}
-                  setSound={() => !isResultsShown && setSound(!sound)}
+                  className={`sprint-game__audio ${
+                    !sound && "circle__audio--inactive"
+                  }`}
+                  isDisabled={!isGameStarted}
+                  setSound={() => !isGameStarted && setSound(!sound)}
                 />
               </div>
               <Timer
                 timerDetails={timerDetails}
-                endTimer={() => showResults()}
+                endTimer={() => setGameState()}
               />
               <div className="sprint-game__text">
                 {currentWord.wordTranslate}
@@ -132,10 +130,10 @@ const SprintGamePage = (): JSX.Element => {
               </div>
               <div className="sprint-game__btn-container">
                 <button
-                  disabled={isResultsShown}
+                  disabled={!isGameStarted}
                   onClick={() => handleGameStep(false)}
                   className={`sprint-game__btn sprint-game__btn--no ${
-                    isResultsShown && "sprint-game__btn--disabled"
+                    !isGameStarted && "sprint-game__btn--disabled"
                   }`}
                 >
                   неверно
@@ -146,10 +144,10 @@ const SprintGamePage = (): JSX.Element => {
                   />
                 </div>
                 <button
-                  disabled={isResultsShown}
+                  disabled={!isGameStarted}
                   onClick={() => handleGameStep(true)}
                   className={`sprint-game__btn sprint-game__btn--yes ${
-                    isResultsShown && "sprint-game__btn--disabled"
+                    !isGameStarted && "sprint-game__btn--disabled"
                   }`}
                 >
                   верно
@@ -159,6 +157,7 @@ const SprintGamePage = (): JSX.Element => {
           </main>
         </>
       )}
+      {!isGameStarted && <GameResultPage />}
     </div>
   );
 };

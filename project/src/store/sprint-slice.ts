@@ -5,6 +5,7 @@ interface SprintState {
   isGameStarted: boolean;
   isResultsShown: boolean;
   level: string;
+  page: string;
   currentWord: {
     word: string;
     wordTranslate: string;
@@ -21,6 +22,7 @@ const initialState: SprintState = {
   isGameStarted: false,
   isResultsShown: false,
   level: "1",
+  page: "1",
   currentWord: {
     word: "",
     wordTranslate: "",
@@ -43,11 +45,11 @@ export const sprintSlice = createSlice({
     setLevel: (state, { payload }: { payload: string }) => {
       state.level = payload;
     },
-    startGame: (state) => {
-      state.isGameStarted = true;
+    setGameState: (state) => {
+      state.isGameStarted = !state.isGameStarted;
     },
     showResults: (state) => {
-      state.isResultsShown = true;
+      state.isResultsShown = !state.isResultsShown;
     },
     resetGame: (state) => {
       return { ...initialState, level: state.level };

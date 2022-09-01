@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { useActions } from "../../../../hooks/actions";
-import { TUTORIAL_SECTION_COUNT } from "../../../../config";
 import { useAppSelector } from "../../../../store/store";
 
 const GameInitialPage = (): JSX.Element => {
-  let count = TUTORIAL_SECTION_COUNT;
-
   const { level } = useAppSelector((state) => state.sprintState);
-  const { startGame, setLevel } = useActions();
+  const { setGameState, setLevel } = useActions();
 
   return (
     <>
@@ -19,10 +16,10 @@ const GameInitialPage = (): JSX.Element => {
           className="level__list"
           onChange={(event) => setLevel(event.target.value)}
         >
-          {[...new Array(TUTORIAL_SECTION_COUNT)]
-            .map(() => (
-              <option key={count--} className="level__item">
-                {count}
+          {[...new Array(6)]
+            .map((_, index) => (
+              <option key={index} className="level__item">
+                {index}
               </option>
             ))
             .reverse()}
@@ -30,7 +27,7 @@ const GameInitialPage = (): JSX.Element => {
       </label>
       <button
         onClick={() => {
-          startGame();
+          setGameState();
         }}
       >
         Start Game

@@ -1,5 +1,5 @@
 import React from "react";
-import AudioBtn from "../../../../../games/sprint/components/audio-btn/audio-btn";
+import AudioBtn from "../../../../../games/sprint/components/audio/audio-btn";
 import "./audio-call-card.scss";
 
 const AudioCallCard = (): JSX.Element => {

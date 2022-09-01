@@ -1,0 +1,34 @@
+.answer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+
+  padding-bottom: 0.6rem;
+
+  &__word-container {
+    display: flex;
+    align-items: center;
+    column-gap: 1.55rem; 
+  }
+
+  &__transcription {
+    justify-self: center;
+  }
+
+  &__translation {
+    justify-self: end;
+  }
+}
+
+.circle__audio--small {
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.answers__count {
+  padding: 0 0.7rem;
+  margin: 0 0.7rem;
+
+  color: var(--btn-text-color);
+  border-radius: 0.5rem;
+}
