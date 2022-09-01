@@ -1,31 +1,24 @@
 import { IWord } from "./word";
 
 export interface IUserWord {
-  difficulty: "seen" | "new" | "normal" | "hard";
-  optional?: IUserWordOptions;
+  difficulty: "seen" | "learned" | "hard";
+  optional?: UserWordOptions;
 }
 
 interface IAudioCall {
   attempts: number;
-  mistakes: number;
+  guesses: number;
 }
 
 interface ISprint {
   attempts: number;
-  mistakes: number;
-}
-
-export interface IUserWordOptions {
-  learnedDate?: string;
-  firstSeenDate?: string;
-  audioCall?: IAudioCall;
-  sprint?: ISprint;
+  guesses: number;
 }
 
 export interface UserWordResponse {
   id: string;
   wordId: string;
-  difficulty?: "seen" | "new" | "normal" | "hard";
+  difficulty?: "seen" | "learned" | "hard";
   optional?: IUserWordOptions;
 }
 
@@ -39,7 +32,7 @@ export interface IAggreagedWordsTotal {
 }
 
 export class UserWord {
-  public difficulty: "seen" | "new" | "normal" | "hard";
+  public difficulty: "seen" | "learned" | "hard";
   public optional: UserWordOptions;
 
   public static fromServer(dto: IUserWord): UserWord {
@@ -55,10 +48,19 @@ export class UserWord {
   }
 }
 
+export interface IUserWordOptions {
+  learnedDate?: string;
+  firstSeenDate?: string;
+  strick?: number;
+  audioCall?: IAudioCall;
+  sprint?: ISprint;
+}
+
 export class UserWordOptions {
   learnedDate?: string;
   firstSeenDate?: string;
   audioCall?: IAudioCall;
+  strick: number;
   sprint?: ISprint;
 
   public static fromServer(dto: IUserWordOptions): UserWordOptions {
@@ -68,8 +70,10 @@ export class UserWordOptions {
     const instance: UserWordOptions = new UserWordOptions();
 
     instance.learnedDate = dto.learnedDate;
+    instance.firstSeenDate = dto.firstSeenDate;
     instance.audioCall = dto.audioCall;
     instance.sprint = dto.sprint;
+    instance.strick = dto.strick;
 
     return instance;
   }
@@ -80,7 +84,10 @@ export class UserWordOptions {
       result.learnedDate = this.learnedDate;
     }
     if (this.firstSeenDate) {
-      result.firstSeenDate = this.learnedDate;
+      result.firstSeenDate = this.firstSeenDate;
+    }
+    if (this.strick) {
+      result.strick = this.strick;
     }
     if (this.audioCall) {
       result.audioCall = this.audioCall;

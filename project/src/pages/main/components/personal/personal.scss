@@ -4,6 +4,10 @@
   background: #FAFAFA;
   flex-shrink: 0;
 
+  &__game-hidden {
+    visibility: hidden;
+  }
+
   &__wrapper {
     min-width: 452px;
     padding: 70px 54px;
@@ -14,19 +18,19 @@
     box-sizing: border-box;
 
     @include desktop-highest() {
-      padding: 40px 45px;
+      padding: 40px 40px;
       width: 320px;
       min-width: auto;
     }
 
     @include desktop-middle() {
-      padding: 40px 40px;
+      padding: 40px 30px;
       width: 260px;
     }
 
     @include desktop-lower() {
-      padding: 30px;
-      width: 220px;
+      padding: 40px 30px;
+      width: 260px;
     }
   }
 
@@ -69,13 +73,19 @@
   }
 
   &__success{
-    margin: 30px 0 8px;
     font-family: Montserrat;
     font-weight: 700;
     color: #7d7d7d;
     font-size: 1.4rem;
   }
 
+  &__column > * {
+    padding: 5px 0px;
+  }
+
+  &__column-info {
+    text-align: center;
+  } 
 
   &__words-flex {
     display: flex;
@@ -114,13 +124,15 @@
 
   &__games {
     display: flex;
-    width: 100%;
+    flex-direction: row;
     justify-content: space-around;
+    width: 100%;
     border-top: 1px solid #b2b2b2;
+    justify-content: space-between;
+    padding:10px 0;
     
 
     @include desktop-highest() {
-      flex-direction: column;
     }
 
     @include desktop-middle() {
@@ -136,11 +148,24 @@
     font-weight: 700;
     font-size: 19px;
     line-height: 23px;
-    color: #FFFFFF;
+    color: black;
     padding: 12px;
     text-align: center;
     flex: 0 1 44%;
     margin: 10px 0;
+
+    @include desktop-highest() {
+      font-size: 16px;
+      flex: 0 1 48%;
+    }
+
+    @include desktop-middle() {
+      font-size: 13px;
+    }
+  }
+
+  &__row {
+    display: flex;
   }
 
   &__game1 {
@@ -149,6 +174,23 @@
 
   &__game2 {
     background: #F56748;
+  }
+
+  &__statistics {
+    font-size: 1.1rem;
+    width: 100%;
+    color: #7d7d7d;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 10px;
+
+    &-descr2 {
+    text-align: center;
+    }
+
+    &-descr > * {
+      padding: 5px 0;
+    }
   }
   
 }

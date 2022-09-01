@@ -1,4 +1,9 @@
-import { IUserWord, UserWord } from "./user-word";
+import {
+  IUserWord,
+  UserWord,
+  UserWordOptions,
+  UserWordResponse,
+} from "./user-word";
 
 export interface IWord {
   id?: string;
@@ -66,6 +71,18 @@ export class Word {
     instance.textMeaningTranslate = dto.textMeaningTranslate;
     instance.textExampleTranslate = dto.textExampleTranslate;
     instance.userWord = UserWord.fromServer(dto.userWord);
+
+    return instance;
+  }
+
+  public static fromUserWordResponse(dto: UserWordResponse) {
+    const instance: Word = new Word();
+
+    instance.id = dto.wordId;
+    instance.userWord = {
+      difficulty: dto.difficulty,
+      optional: UserWordOptions.fromServer(dto.optional),
+    };
 
     return instance;
   }

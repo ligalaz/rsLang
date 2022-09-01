@@ -52,8 +52,8 @@ const AudiocallResult = () => {
         <button className="modal__blue-btn">Statistic</button>
         <button
           onClick={() => {
-            dispatch(settingsDown());
             dispatch(resetGame());
+            dispatch(settingsDown());
           }}
           className="modal__blue-btn"
         >
