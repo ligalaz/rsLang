@@ -34,3 +34,21 @@
     @content;
   }
 }
+
+@mixin tablet-middle {
+  @media (max-width: $tablet-middle) {
+    @content;
+  }
+}
+
+@mixin tablet-lower {
+  @media (max-width: $tablet-lower) {
+    @content;
+  }
+}
+
+@mixin tablet-lowest {
+  @media (max-width: $tablet-lowest) {
+    @content;
+  }
+}

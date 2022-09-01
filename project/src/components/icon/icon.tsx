@@ -1,6 +1,4 @@
-import React from "react";
-import { AudioService } from "../../utils/audio-service";
-import { spell } from "../../utils/spell";
+import React, { MouseEventHandler } from "react";
 
 type IconType =
   | "settings"
@@ -11,25 +9,17 @@ type IconType =
   | "info"
   | "loading"
   | "sound"
-  | "basket";
+  | "basket"
+  | "button-loading";
 
 export interface IconProps {
   type: IconType;
   width?: number;
   height?: number;
-  url?: string;
-  audioExample?: string;
-  audioMeaning?: string;
+  onClick?: MouseEventHandler;
 }
 
-export function Icon({
-  type,
-  width,
-  height,
-  url,
-  audioExample,
-  audioMeaning,
-}: IconProps) {
+export function Icon({ type, width, height, onClick }: IconProps) {
   function getIcon() {
     switch (type) {
       case "info":
@@ -58,9 +48,7 @@ export function Icon({
       case "sound":
         return (
           <svg
-            onClick={() => {
-              spell(url, audioExample, audioMeaning);
-            }}
+            onClick={onClick}
             className="popup__svg"
             width="29"
             height="29"
@@ -419,7 +407,32 @@ export function Icon({
             </g>
           </svg>
         );
-
+      case "button-loading":
+        return (
+          <svg
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 100 100"
+            enableBackground="new 0 0 0 0"
+            xmlSpace="preserve"
+          >
+            <path
+              fill="#fff"
+              d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
+            >
+              <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="rotate"
+                dur="1s"
+                from="0 50 50"
+                to="360 50 50"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
+        );
       default:
         return null;
     }

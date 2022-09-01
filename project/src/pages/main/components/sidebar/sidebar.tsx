@@ -19,9 +19,7 @@ function Sidebar() {
       <div className="sidebar__flex">
         <div className="sidebar__upper">
           <div className="sidebar__logo">
-            <NavLink to="/main">
-              <Icon type="logo" />
-            </NavLink>
+            <Icon type="logo" />
           </div>
         </div>
         <div className="sidebar__links">
@@ -33,14 +31,6 @@ function Sidebar() {
             to="/main"
           >
             Home
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? "sidebar__link sidebar__link_active" : "sidebar__link"
-            }
-            to="/main/promo"
-          >
-            Promo
           </NavLink>
           <NavLink
             className={({ isActive }) =>
