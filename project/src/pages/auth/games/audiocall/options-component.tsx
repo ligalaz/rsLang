@@ -10,8 +10,8 @@ const OptionsComponent = (props: OptionsProps) => {
       {Array(props.counter)
         .fill(1)
         .map((_, idx) => (
-          <option value={idx + 1} key={idx + 1}>
-            {idx + 1}
+          <option value={idx} key={idx + 1}>
+            {idx}
           </option>
         ))}
     </>
