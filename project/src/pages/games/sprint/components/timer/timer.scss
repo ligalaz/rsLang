@@ -1,0 +1,24 @@
+.sprint-timer {
+  width:  5.3rem;
+
+  .CircularProgressbar-text {
+    fill: var(--gray-text-color);
+    font-size: 2.2rem;
+    font-weight: 500;
+    dominant-baseline: central;
+  }
+
+  .CircularProgressbar-path {
+    stroke: var(--gray-text-color);
+    stroke-width: 0.06rem;
+  }
+
+  .CircularProgressbar-trail {
+    stroke: transparent;
+    stroke-width: 0.06rem;
+  }
+}
+
+.sprint-game__sprint-timer {
+  margin-bottom: 4.4rem;
+}
