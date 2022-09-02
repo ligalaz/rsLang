@@ -1,16 +1,17 @@
 import React, { useState, FormEventHandler, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../../services/auth-service";
-
 import { ToastContainer } from "react-toastify";
+import Icon from "../../../components/icon/icon";
 import "../auth.scss";
+import classNames from "classnames";
 
 const RegistrationPage = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [createUser, { error, isError }] = useCreateUserMutation();
+  const [createUser, { isError, isLoading }] = useCreateUserMutation();
 
   const navigate = useNavigate();
 
@@ -23,8 +24,13 @@ const RegistrationPage = () => {
   };
 
   return (
-    <main id="top" className="main">
-      <div className="container main__container">
+    <main className="auth">
+      <div className="auth__logo">
+        <NavLink to="/main">
+          <Icon type="logo" />
+        </NavLink>
+      </div>
+      <div className="container auth__container">
         <div className="authorization-page">
           <div className="authorization-page__text">
             Start your study today!
@@ -36,7 +42,12 @@ const RegistrationPage = () => {
             <Link
               style={{ textDecoration: "none" }}
               to="/login"
-              className="authorization__btn authorization__btn no__link"
+              className={classNames(
+                "authorization__btn authorization__btn no__link",
+                {
+                  authorization__btn_disabled: isLoading,
+                }
+              )}
               type="button"
             >
               Sign in
@@ -54,6 +65,7 @@ const RegistrationPage = () => {
                 placeholder="your name"
                 onChange={(event) => setName(event.target.value)}
                 value={name}
+                disabled={isLoading}
               />
               <input
                 className="form__input"
@@ -61,6 +73,7 @@ const RegistrationPage = () => {
                 placeholder="your e-mail"
                 onChange={(event) => setEmail(event.target.value)}
                 value={email}
+                disabled={isLoading}
               />
               <input
                 className="form__input"
@@ -68,13 +81,15 @@ const RegistrationPage = () => {
                 placeholder="your password"
                 onChange={(event) => setPassword(event.target.value)}
                 value={password}
+                disabled={isLoading}
               />
-              <button className="round-btn form__round-btn" type="submit">
-                OK
+              <button
+                className="round-btn form__round-btn"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? <Icon type="button-loading"></Icon> : "OK"}
               </button>
-              <>
-                <ToastContainer />
-              </>
             </form>
           </section>
         </div>

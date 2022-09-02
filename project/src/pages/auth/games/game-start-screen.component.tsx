@@ -11,13 +11,13 @@ const GameStartScreen = (props: IStartScreenProps) => {
   const [timeStart, setTimeStart] = useState(5);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setTimeStart((timeStart: number) => (timeStart >= 1 ? timeStart - 1 : 0));
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = window.setInterval(() => {
+  //     setTimeStart((timeStart: number) => (timeStart >= 1 ? timeStart - 1 : 0));
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   if (timeStart === 0) {
     props.gameName === "sprint"

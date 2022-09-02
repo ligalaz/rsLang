@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "./App.scss";
 import AudioCallPage from "./pages/auth/games/audiocall/audiocall";
 import GameStartScreen from "./pages/auth/games/game-start-screen.component";
+import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -55,9 +56,9 @@ function App() {
             }
           />
           <Route path="audiocall" element={<AudioCallPage />} />
+          <Route path="sprint" element={<SprintGamePage />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
-            <Route path="promo" element={<Promo />} />
             <Route path="textbook/:group/:page" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
           </Route>

@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  overflow: hidden;
   animation: modal-visible 2s ease-in-out;
   -webkit-animation: modal-visible 2s ease-in-out;
 }
@@ -21,7 +21,7 @@
   box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.05);
   border-radius: 23px;
   padding: 0 50px;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 table {

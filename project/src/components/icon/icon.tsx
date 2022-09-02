@@ -1,6 +1,4 @@
-import React from "react";
-import { AudioService } from "../../utils/audio-service";
-import { spell } from "../../utils/spell";
+import React, { MouseEventHandler } from "react";
 
 type IconType =
   | "settings"
@@ -9,30 +7,23 @@ type IconType =
   | "logo"
   | "icon"
   | "greetings"
+  | "speaker"
   | "info"
   | "loading"
   | "sound"
   | "burger-sidebar"
   | "burger-sidebar-opened"
-  | "basket";
+  | "basket"
+  | "button-loading";
 
 export interface IconProps {
   type: IconType;
   width?: number;
   height?: number;
-  url?: string;
-  audioExample?: string;
-  audioMeaning?: string;
+  onClick?: MouseEventHandler;
 }
 
-export function Icon({
-  type,
-  width,
-  height,
-  url,
-  audioExample,
-  audioMeaning,
-}: IconProps) {
+export function Icon({ type, width, height, onClick }: IconProps) {
   function getIcon() {
     switch (type) {
       case "burger-sidebar-opened":
@@ -179,9 +170,7 @@ export function Icon({
       case "sound":
         return (
           <svg
-            onClick={() => {
-              spell(url, audioExample, audioMeaning);
-            }}
+            onClick={onClick}
             className="popup__svg"
             width="29"
             height="29"
@@ -557,6 +546,56 @@ export function Icon({
                 fill="#E28241"
               />
             </g>
+          </svg>
+        );
+      case "button-loading":
+        return (
+          <svg
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 100 100"
+            enableBackground="new 0 0 0 0"
+            xmlSpace="preserve"
+          >
+            <path
+              fill="#fff"
+              d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
+            >
+              <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="rotate"
+                dur="1s"
+                from="0 50 50"
+                to="360 50 50"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
+        );
+      case "speaker":
+        return (
+          <svg
+            className="speaker-icon"
+            width={width ?? 26}
+            height={height ?? 25}
+            viewBox="0 0 26 25"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.7979 0.836987C15.4971 0.684149 15.136 0.714693 14.8653 0.928678L6.92274 6.8288H1.56757C1.05616 6.8288 0.665039 7.22623 0.665039 7.74595V17.9565C0.665039 18.4762 1.05616 18.8736 1.56757 18.8736H6.92274L14.8352 24.7737C14.9856 24.896 15.1661 24.9571 15.3767 24.9571C15.5271 24.9571 15.6474 24.9266 15.7979 24.8654C16.0987 24.7126 16.2792 24.4069 16.2792 24.0401V1.66238C16.2793 1.3261 16.0987 0.989825 15.7979 0.836987ZM6.32104 17.0393H2.47016V8.66303H6.32104V17.0393ZM14.4742 22.2363L8.12616 17.4979V8.20446L14.4742 3.46601V22.2363Z"
+              fill="white"
+            />
+            <path
+              d="M19.7093 16.6112C21.2436 15.9387 22.1462 14.5324 22.1462 12.8511C22.1462 11.1698 21.2436 9.76349 19.7093 9.09094C19.258 8.87695 18.7165 9.09094 18.5059 9.54951C18.2953 10.0081 18.5059 10.5583 18.9572 10.7723C19.8296 11.1698 20.311 11.934 20.311 12.8817C20.311 13.8294 19.8296 14.5936 18.9572 14.9911C18.5059 15.205 18.2953 15.7553 18.5059 16.2139C18.6563 16.5502 18.9872 16.7641 19.3182 16.7641C19.4686 16.7029 19.5889 16.6724 19.7093 16.6112Z"
+              fill="white"
+            />
+            <path
+              d="M19.8296 5.6978C19.3483 5.60611 18.8669 5.91179 18.7766 6.43151C18.6864 6.92062 18.9872 7.40974 19.4987 7.50149C21.9958 7.99061 23.8009 10.2528 23.8009 12.8819C23.8009 15.511 21.9958 17.7426 19.4987 18.2623C19.0174 18.354 18.6864 18.8432 18.7766 19.3323C18.8669 19.7603 19.2279 20.066 19.6491 20.066C19.7093 20.066 19.7695 20.066 19.8296 20.0354C23.1691 19.3323 25.5759 16.3364 25.5759 12.8514C25.5759 9.36627 23.1691 6.33982 19.8296 5.6978Z"
+              fill="white"
+            />
           </svg>
         );
 

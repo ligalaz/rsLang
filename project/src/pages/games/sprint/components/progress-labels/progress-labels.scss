@@ -1,0 +1,16 @@
+.progress {
+  display: flex;
+  column-gap: 0.6rem;
+
+  &__item {
+    width: 1.7rem;
+    height: 1.7rem;
+  
+    background-color: var(--gray-text-color);
+    border-radius: 50%;
+  
+    &--active {
+      background-color: var(--yes-btn-color);
+    }
+  }
+}

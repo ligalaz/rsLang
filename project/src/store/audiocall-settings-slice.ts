@@ -8,6 +8,7 @@ interface IAudioCallSettings {
   allGameWords?: number;
   allPlayWords?: number;
   isAnswer?: boolean;
+  trueRow?: number;
 }
 
 const initialState: IAudioCallSettings = {
@@ -18,6 +19,7 @@ const initialState: IAudioCallSettings = {
   allGameWords: 10,
   allPlayWords: 5,
   isAnswer: false,
+  trueRow: 0,
 };
 
 export const audioCallSettingsSlice = createSlice({
@@ -31,6 +33,12 @@ export const audioCallSettingsSlice = createSlice({
     changeAnswer(state, action: PayloadAction<IAudioCallSettings>) {
       state.isAnswer = action.payload.isAnswer;
     },
+    setTrueRaw(state, action: PayloadAction<IAudioCallSettings>) {
+      if (state.trueRow < action.payload.trueRow) {
+        state.trueRow = action.payload.trueRow;
+        localStorage.setItem("trueRow", String(state.trueRow));
+      }
+    },
     settingsDown(state) {
       return initialState;
     },
@@ -38,5 +46,5 @@ export const audioCallSettingsSlice = createSlice({
 });
 
 export default audioCallSettingsSlice.reducer;
-export const { settingsUp, settingsDown, changeAnswer } =
+export const { settingsUp, settingsDown, changeAnswer, setTrueRaw } =
   audioCallSettingsSlice.actions;

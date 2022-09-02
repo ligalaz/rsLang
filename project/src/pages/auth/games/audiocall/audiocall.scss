@@ -231,3 +231,23 @@ progress {
     height: 28px;
   }
 }
+
+.btn-preload {
+  border-radius: 5px;
+  padding-top: 7px;
+  border: none;
+  background: #6550de;
+  width: 200px;
+  height: 50px;
+  text-align: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
+}

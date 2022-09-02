@@ -11,15 +11,16 @@
     outline-offset: 0.6rem;
   }
 
-  &__sound-icon {
-    display: flex;
-    width: 3.3rem;
-    height: 3.3rem;
+  &__circle {
+    width: 3.34rem;
+    height: 3.34rem;
 
-    background-color: #6550de;
-    background-image: url('../../../../../../assets/img/speaker.png');
-    background-repeat: no-repeat;
-    background-position: 50%;
-    border-radius: 50%;
+    cursor: default;
+
+    &:hover {
+      background-color: var(--yes-btn-color);
+    }
   }
+
+
 }
