@@ -1,8 +1,7 @@
 import React from "react";
 import Title from "../title/title";
 import { IWord } from "../../../../../interfaces/word";
-import { API_BASE_URL } from "../../../../../config";
-import { spell } from "../../../../../utils/spell";
+import { AudioService } from "../../../../../utils/audio-service";
 import AudioBtn from "../audio/audio-btn";
 import "./result-block.scss";
 
@@ -39,7 +38,7 @@ const ResultBlock = ({
           <div className="answer__word-container">
             <AudioBtn
               className="circle__audio--small"
-              setSound={() => spell(API_BASE_URL + "/" + audio)}
+              setSound={() => AudioService.play(audio)}
             />
             <div>{word}</div>
           </div>
