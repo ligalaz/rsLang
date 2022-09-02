@@ -1,6 +1,6 @@
-@import '../../../../styles/responsive-media';
+@import '../../../../styles/_responsive-media.scss';
 
-.header {
+.hat {
   display: none;
   position: absolute;
   top: 0px;
@@ -75,26 +75,26 @@
     justify-content: space-between;
     box-sizing: border-box;
 
-    @include desktop-lowest() {
-      min-width: 320px;
-    }
-
-    @include desktop-middle() {
-      padding: 40px 40px;
+    @include desktop-highest() {
+      padding: 54px;
     }
 
     @include desktop-lower() {
-      padding: 25px;
+      padding: 54px 35px;
     }
     
     @include desktop-lowest() {
       min-height: 100vh;
+      min-width: 320px;
     }
+
 
     @include tablet-middle() {
       min-height: 100vh;
       min-width: 290px;
     }
+
+   
 
   }
 
@@ -111,6 +111,10 @@
     max-width: 120px;
     display: flex;
     flex-direction: column;
+
+    @include desktop-lowest() {
+      transform: translate(10px, -42px);
+    }
   }
 
   &__link {
@@ -123,6 +127,7 @@
 
     @include desktop-lowest() {
       color: #FFFFFF;
+      font-size: 24px;
     }
 
     &:not(:last-child) {
@@ -130,11 +135,15 @@
     }
 
     &:hover {
-      color: #FEC246;
+      color: black;
+
+      @include desktop-lowest() {
+        color: #FEC246;
+      }
     }
 
     &_active {
-      color: #FEC246;
+      color: black;
 
       &::before {
         content: '';
@@ -142,9 +151,18 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: #FEC246;
+        background-color: black;
         position: absolute;
         transform: translate(-30px, 5px);
+      }
+
+      @include desktop-lowest() {
+        color: #FEC246;
+        
+        &::before {
+          background-color: #FEC246;
+          transform: translate(-30px, 11px);
+        }
       }
     }
   }

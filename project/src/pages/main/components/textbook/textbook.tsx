@@ -119,7 +119,7 @@ function Textbook() {
         <div className="page__descr">TextBook</div>
         <div className="page__line"></div>
         <div className="chapter">
-          {new Array(userId ? 7 : 6).fill(0).map((_, index) => (
+          {new Array(6).fill(0).map((_, index) => (
             <Link
               key={`chapter__${index}`}
               to={`../textbook/${index}/0`}
@@ -133,6 +133,20 @@ function Textbook() {
               {index != 6 ? `Group ${index + 1}` : `Difficuilt words`}
             </Link>
           ))}
+          {userId && (
+            <Link
+              key={"chapter__6"}
+              to={`../textbook/6/0`}
+              className={`chapter__link chapter__link6 ${
+                +window.location.href.split("/")[5] === 6
+                  ? "chapter__link_active"
+                  : ""
+              }`}
+              type="button"
+            >
+              Difficuilt words
+            </Link>
+          )}
         </div>
       </div>
 

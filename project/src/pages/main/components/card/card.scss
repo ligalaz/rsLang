@@ -104,7 +104,10 @@
     @include mobile-inbetween() {
       flex-direction: column;
       padding: 20px 0px;
+      border-radius: 15px;
     }
+
+   
   }
 
   &__word {
@@ -175,10 +178,15 @@
     @include mobile-inbetween() {
       flex-direction: row;
       align-self: auto;
-      width: 40%;
+      width: 50%;
       margin-top: 10px;
       margin-bottom: -10px;
       justify-content: space-between;
+    }
+
+    @include mobile-lower() {
+      // width 120px or 170px are good
+      width: 160px;
     }
 
     &_no-badge {

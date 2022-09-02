@@ -46,6 +46,7 @@ function PaginatedItems({ itemsPerPage, setPage }: IPaginatedItemsProps) {
         previousLabel="<"
         onPageChange={handlePageClick}
         pageRangeDisplayed={1}
+        marginPagesDisplayed={1}
         pageCount={pageCount}
         renderOnZeroPageCount={null}
         containerClassName={"pagination"}

@@ -133,7 +133,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
               <div className="popup__text">{info.textMeaningTranslate}</div>
             </div>
             <div className="popup__bottom-right">
-              <div className="popup__text">{info.transcription}</div>
+              <div className="popup__text popup__transcription">{info.transcription}</div>
             </div>
           </div>
         </div>

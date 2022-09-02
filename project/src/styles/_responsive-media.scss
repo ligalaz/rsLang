@@ -29,6 +29,12 @@
   }
 }
 
+@mixin desktop-under {
+  @media (max-width: $desktop-under) {
+    @content;
+  }
+}
+
 @mixin tablet-upper {
   @media (max-width: $tablet-upper) {
     @content;
@@ -40,8 +46,6 @@
     @content;
   }
 }
-
-
 
 @mixin tablet-lower {
   @media (max-width: $tablet-lower) {
@@ -55,8 +59,20 @@
   }
 }
 
+@mixin mobile-upper {
+  @media (max-width: $mobile-upper) {
+    @content;
+  }
+}
+
 @mixin mobile-inbetween {
   @media (max-width: $mobile-inbetween) {
+    @content;
+  }
+}
+
+@mixin mobile-lower {
+  @media (max-width: $mobile-lower) {
     @content;
   }
 }

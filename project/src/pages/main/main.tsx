@@ -13,10 +13,10 @@ const MainPage = () => {
     setColor(location.pathname.split("/")[3]);
   }, [location.pathname]);
   return (
-    <div className="main">
+    <div className="main-four">
       <Sidebar />
-      <div className={`main__wrapper main__bg-filter-${color}`}>
-        <div className="main__middle">
+      <div className={`main-four__wrapper main-four__bg-filter-${color}`}>
+        <div className="main-four__middle">
           <Greetings />
           <Outlet />
         </div>

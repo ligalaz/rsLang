@@ -10,10 +10,15 @@
     position: initial;
   }
 
+  @include tablet-lower() {
+    margin-bottom: 30px;
+  }
+
   &_with-border {
     padding: 20px;
     border: 1px solid #B2B2B2;
     border-radius: 4px;
+
   }
 
   &__descr {
@@ -22,6 +27,10 @@
     color: #7D7D7D;
     margin-bottom: 5px;
     text-align: right;
+
+    @include mobile-upper() {
+      text-align: center;
+    }
   }
   
   &__line {

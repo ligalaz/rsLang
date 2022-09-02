@@ -56,11 +56,14 @@ function Personal() {
       <div className="personal">
         <div className="personal__wrapper">
           <div className="personal__upper">
-            <Icon type="icon" />
+            <div className="personal__info">
+              <Icon type="icon" />
+            </div>
+            <div className="personal__title">{auth?.name ?? "Student1"}</div>
           </div>
-          <div className="personal__title">{auth?.name ?? "Student1"}</div>
           {auth && (
-            <>
+            <div className="personal__center">
+              <div className="personal__center-title">Daily statistics</div>
               <div className="personal__games">
                 <div className="personal__column">
                   <div className="personal__game-hidden">game</div>
@@ -94,9 +97,7 @@ function Personal() {
               </div>
               <div className="personal__statistics">
                 <div className="personal__statistics-descr">
-                  <div className="personal__statistics-learned">
-                    Learnt today
-                  </div>
+                  <div className="personal__statistics-learned">Learnt</div>
                   <div className="personal__statistics-percentage">
                     Accuracy
                   </div>
@@ -113,38 +114,38 @@ function Personal() {
                   <div className="personal__statistics-all">{words.length}</div>
                 </div>
               </div>
-            </>
+            </div>
           )}
           <div className="personal__progress">
             <div className="personal__success">Progress</div>
-          </div>
-          <div className="personal__diagram">
-            <CircularProgressbar
-              value={statistics?.learnPercent || 0}
-              text={`${statistics?.learnPercent || 0}%`}
-            />
-          </div>
-          {isTextbookRoute && (
-            <div className="personal__games">
-              <Link
-                style={{ textDecoration: "none" }}
-                to="/registration"
-                className="personal__game personal__game1"
-                type="button"
-              >
-                Sprint
-              </Link>
-
-              <Link
-                style={{ textDecoration: "none" }}
-                to="/registration"
-                className="personal__game personal__game2"
-                type="button"
-              >
-                Audio call
-              </Link>
+            <div className="personal__diagram">
+              <CircularProgressbar
+                value={statistics?.learnPercent || 0}
+                text={`${statistics?.learnPercent || 0}%`}
+              />
             </div>
-          )}
+            {isTextbookRoute && (
+              <div className="personal__buttons">
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/registration"
+                  className="personal__game personal__game1"
+                  type="button"
+                >
+                  Sprint
+                </Link>
+
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/registration"
+                  className="personal__game personal__game2"
+                  type="button"
+                >
+                  Audio call
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 @import "../../styles/responsive-media";
 @import "./components/styles/main-page-title.scss";
 
-.main {
+.main-four {
   display: flex;
   height: 100%;
 
@@ -54,8 +54,8 @@
     margin: 0 auto;
     max-width: 892px;
 
-    @include desktop-lower() {
-      padding: 60px 20px;
+    @include desktop-highest() {
+      padding: 54px 20px;
     }
 
     @include desktop-lowest() {
@@ -64,6 +64,10 @@
 
     @include desktop-lowest() {
       padding: 149px 40px 40px;
+    }
+
+    @include tablet-lower() {
+      padding: 139px 30px 30px;
     }
   }
 

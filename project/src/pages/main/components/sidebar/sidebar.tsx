@@ -20,8 +20,8 @@ function Sidebar() {
     <>
       <div
         onClick={() => setStatisticsFlag((prev) => !prev)}
-        className={classNames("header__burger", {
-          "header__burger-rotate": statisticsFlag,
+        className={classNames("hat__burger", {
+          "hat__burger-rotate": statisticsFlag,
         })}
       >
         <Icon
@@ -30,7 +30,7 @@ function Sidebar() {
           }`}
         />
       </div>
-      <div className="header">
+      <div className="hat">
         <NavLink to="/main">
           <Icon type="logo" />
         </NavLink>

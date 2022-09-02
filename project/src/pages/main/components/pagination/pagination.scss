@@ -1,9 +1,16 @@
+@import '../../../../styles/_responsive-media.scss';
+
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 0px;
   
   margin: 50px 0 0;
+
+  @include mobile-lower() {
+    margin: 25px 0 0;
+  }
 
   a {
     width: 40px;
@@ -38,7 +45,7 @@
     margin: 0 10px;
   }
 
-  &__active {
+  &__active .pagination__a{
     background-color:#6550DE;
     color: #ffffff;
   }

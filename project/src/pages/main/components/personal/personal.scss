@@ -1,12 +1,4 @@
-@import '../../../../styles/responsive-media';
-
-html {
-
-  @include desktop-lower() {
-    font-size: 15px;
-  }
-
-}
+@import '../../../../styles/_responsive-media.scss';
 
 .personal {
   background: #FAFAFA;
@@ -30,9 +22,16 @@ html {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+    justify-content: space-between;
 
     @include desktop-highest() {
-      padding: 40px;
+      padding: 54px 40px;
+      width: 365px;
+      min-width: auto;
+    }
+
+    @include desktop-middle() {
+      padding: 54px 40px;
       width: 320px;
       min-width: auto;
     }
@@ -41,7 +40,10 @@ html {
       padding: 149px 40px 40px;
     }
 
-  }
+    @include tablet-middle() {
+      padding: 149px 30px 30px;
+      width: 290px;
+    }  }
 
   &__img {
     width:171px;
@@ -68,12 +70,29 @@ html {
     font-family: Montserrat;
     font-weight: 500;
     color: #b2b2b2;
-    font-size: 1.1rem
   }
 
   &__progress {
     width: 100%;
-    border-bottom: 1px solid #b2b2b2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__center {
+    width: 100%;
+
+    &-title {
+      font-family: Montserrat;
+      font-weight: 700;
+      color: #7d7d7d;
+      font-size: 26px;
+      border-bottom: 1px solid #b2b2b2;
+
+      @include desktop-highest() {
+        font-size: 23px;
+      }
+    }
   }
 
   &__counter {
@@ -86,7 +105,24 @@ html {
     font-family: Montserrat;
     font-weight: 700;
     color: #7d7d7d;
-    font-size: 1.4rem;
+    border-bottom: 1px solid #b2b2b2;
+    font-size: 26px;
+
+    @include desktop-highest() {
+      font-size: 23px;
+    }
+  }
+
+  &__column {
+    font-size: 20px;
+
+    @include desktop-highest() {
+      font-size: 18px;
+    }
+
+    @include desktop-middle() {
+      font-size: 16px;
+    }
   }
 
   &__column > * {
@@ -107,11 +143,11 @@ html {
   }
 
   &__diagram {
-    margin: 15px 0px;
-    width: 240px;
+    width: 70%;
+    margin: 15px auto;
     
     @include desktop-highest() {
-      width: 100%;
+      width: 90%;
     }
 
     @include desktop-middle() {
@@ -123,41 +159,40 @@ html {
     }
 
     @include desktop-lowest() {
-      width: 50%;
+      width: 80%;
     }
   }
 
-  &__upper {
-    width:200px;
+  
+
+  &__info {
+    width: 200px;
 
     @include desktop-highest() {
-      width:185px;
+      width:180px;
     }
 
     @include desktop-middle() {
       width:165px;
     }
-
-    @include desktop-lower() {
-      width:145px;
-    }
+  
   }
 
   &__games {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     width: 100%;
-    border-top: 1px solid #b2b2b2;
     justify-content: space-between;
-    padding:10px 0;
-    
+    font-size: 16px;
+    padding:5px 0;
+
 
     @include desktop-highest() {
+      padding:10px 0;
     }
 
     @include desktop-middle() {
-
+      padding: 25px 0;
     }
 
     @include desktop-lower() {
@@ -181,7 +216,7 @@ html {
     }
 
     @include desktop-middle() {
-      font-size: 13px;
+      font-size: 15px;
     }
   }
 
@@ -198,12 +233,20 @@ html {
   }
 
   &__statistics {
-    font-size: 1.1rem;
+    font-size: 20px;
     width: 100%;
     color: #7d7d7d;
     display: flex;
     justify-content: space-around;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+
+    @include desktop-highest() {
+      font-size: 18px;
+    }
+
+    @include desktop-highest() {
+      font-size: 16px;
+    }
 
     &-descr2 {
     text-align: center;
@@ -212,6 +255,14 @@ html {
     &-descr > * {
       padding: 5px 0;
     }
+  }
+
+  &__buttons {
+    border-top: 1px solid #b2b2b2;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
   }
   
 }

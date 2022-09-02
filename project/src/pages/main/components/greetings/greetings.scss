@@ -1,3 +1,4 @@
+@import '../../../../styles/_responsive-media.scss';
 
 .greetings {
 
@@ -19,6 +20,9 @@
     text-align: right;
   }
 
+  @include tablet-lower() {
+    height: 234px;
+  }
 
   
 }
