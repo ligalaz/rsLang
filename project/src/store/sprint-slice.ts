@@ -3,7 +3,7 @@ import { IWord } from "../interfaces/word";
 
 interface SprintState {
   isGameStarted: boolean;
-  isResultsShown: boolean;
+  isGameEnded: boolean;
   level: string;
   page: string;
   currentWord: {
@@ -20,7 +20,7 @@ interface SprintState {
 
 const initialState: SprintState = {
   isGameStarted: false,
-  isResultsShown: false,
+  isGameEnded: false,
   level: "1",
   page: "1",
   currentWord: {
@@ -45,14 +45,19 @@ export const sprintSlice = createSlice({
     setLevel: (state, { payload }: { payload: string }) => {
       state.level = payload;
     },
-    setGameState: (state) => {
-      state.isGameStarted = !state.isGameStarted;
+    setGameStart: (state) => {
+      state.isGameStarted = true;
     },
-    showResults: (state) => {
-      state.isResultsShown = !state.isResultsShown;
+    setGameEnd: (state) => {
+      state.isGameEnded = true;
+      state.isGameStarted = false;
     },
     resetGame: (state) => {
-      return { ...initialState, level: state.level };
+      return {
+        ...initialState,
+        level: state.level,
+        wordsData: state.wordsData,
+      };
     },
     gameStep: (state) => {
       const { wordsData } = state;

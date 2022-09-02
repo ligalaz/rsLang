@@ -33,7 +33,7 @@
 .circle--disabled {
   background-color: var(--gray-text-color);
 
-  cursor: default;
+  cursor: not-allowed;
 
   &::after,
   &::before {
@@ -47,7 +47,7 @@
     &::before {
       background-color: var(--btn-text-color);
 
-      cursor: default;
+      cursor: not-allowed;
     }
   }
 }

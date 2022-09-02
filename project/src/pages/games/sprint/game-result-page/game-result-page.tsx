@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useActions } from "../../../../hooks/actions";
 import { useAppSelector } from "../../../../store/store";
 import ResultBlock from "../components/result-block/result-block";
@@ -10,8 +10,8 @@ const GameResultPage = (): JSX.Element => {
   const { trueAnswers, falseAnswers, score } = useAppSelector(
     (state) => state.sprintState
   );
-  const { resetGame, setGameState } = useActions();
-  const [className, setClassName] = useState("");
+
+  const { resetGame, setGameStart } = useActions();
 
   const results = [
     {
@@ -29,14 +29,9 @@ const GameResultPage = (): JSX.Element => {
   ];
 
   return (
-    <div className={`overlay ${className}`}>
+    <div className="overlay">
       <div className="results">
-        <CloseBtn
-          className="results__circle"
-          close={() => {
-            setClassName("overlay--close-animated");
-          }}
-        />
+        <CloseBtn className="results__circle" />
         <div className="results-popup">
           <div className="results-popup__header">
             <Title className="results-popup__title">Results</Title>
@@ -60,14 +55,19 @@ const GameResultPage = (): JSX.Element => {
         <div className="btn-container">
           <button
             onClick={async () => {
-              resetGame();
+              await resetGame();
+              setGameStart();
             }}
             className="btn btn--color_red"
           >
             Restart
           </button>
-          <button className="btn">Statistic</button>
-          <button onClick={() => resetGame()} className="btn">
+          <button
+            onClick={() => {
+              resetGame();
+            }}
+            className="btn"
+          >
             New Game
           </button>
         </div>

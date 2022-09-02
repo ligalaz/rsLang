@@ -16,7 +16,7 @@
   &--disabled {
     background-color: var(--gray-text-color);
 
-    cursor: default;
+    cursor: not-allowed;
     
     &:hover {
       background-color: var(--gray-text-color);

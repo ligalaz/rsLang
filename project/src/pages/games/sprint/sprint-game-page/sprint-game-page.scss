@@ -58,6 +58,7 @@
   
     font-weight: 700;
     text-transform: uppercase;
+    text-align: center;
   
     &--english {
       color: var(--gray-text-color);
@@ -125,7 +126,7 @@
     &--disabled {
       background-color: var(--gray-text-color);
 
-      cursor: default;
+      cursor: not-allowed;
 
       &:hover {
         background-color: var(--gray-text-color);
@@ -158,4 +159,39 @@
   display: flex;
   justify-content: flex-end;
   padding: 3.5rem 4.7rem;
+
+  &__play-btn {
+    margin-bottom: 0;
+    margin-right: 1.2rem;
+  }
+}
+
+.play-btn {
+  &::before {
+    transition: 0.5s;
+  }
+
+  &:hover {
+    &::before {
+      background: var(--hover-btn-color);
+    }
+  }
+
+  &--disabled {
+    background: #efefef;
+
+    &:disabled {
+      opacity: 1;
+    }
+
+    &:hover {
+      &::before {
+        background: var(--gray-text-color);
+      }
+    }
+
+    &::before {
+      background: var(--gray-text-color);
+    }
+  }
 }

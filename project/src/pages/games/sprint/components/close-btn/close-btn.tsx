@@ -1,23 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router";
+import { useActions } from "../../../../../hooks/actions";
 import "./close-btn.scss";
 
 interface CloseBtnDetails {
   className?: string;
   isDisabled?: boolean;
-  close?: () => void;
 }
 
-const CloseBtn = ({
-  isDisabled,
-  className,
-  close,
-}: CloseBtnDetails): JSX.Element => {
+const CloseBtn = ({ isDisabled, className }: CloseBtnDetails): JSX.Element => {
+  const navigate = useNavigate();
+  const { resetGame } = useActions();
+
   return (
     <div
       className={`circle circle__cross circle__cross--closed ${className} ${
         isDisabled && "circle--disabled"
       }`}
-      onClick={() => close()}
+      onClick={() => {
+        resetGame();
+        navigate("/main", { replace: true });
+      }}
     />
   );
 };

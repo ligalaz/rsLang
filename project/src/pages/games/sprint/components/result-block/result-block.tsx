@@ -1,6 +1,8 @@
 import React from "react";
 import Title from "../title/title";
 import { IWord } from "../../../../../interfaces/word";
+import { API_BASE_URL } from "../../../../../config";
+import { spell } from "../../../../../utils/spell";
 import AudioBtn from "../audio/audio-btn";
 import "./result-block.scss";
 
@@ -32,10 +34,13 @@ const ResultBlock = ({
           {headerComponents.slice(-1).join(" ")}
         </>
       </Title>
-      {answers.map(({ id, word, wordTranslate, transcription }) => (
+      {answers.map(({ id, word, wordTranslate, transcription, audio }) => (
         <div className="answer" key={id}>
           <div className="answer__word-container">
-            <AudioBtn className="circle__audio--small" />
+            <AudioBtn
+              className="circle__audio--small"
+              setSound={() => spell(API_BASE_URL + "/" + audio)}
+            />
             <div>{word}</div>
           </div>
           <div className="answer__transcription">{transcription}</div>
