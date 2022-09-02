@@ -100,7 +100,21 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           hard: info?.userWord?.difficulty === "hard",
           normal: info?.userWord?.difficulty === "learned",
         })}
-      >
+      > 
+         <button
+          disabled={!number}
+          onClick={() => clickPage(-1)}
+          className="popup__arrow popup__arrow-prev"
+        >
+          <Icon type="pagination-left" />
+        </button>
+        <button
+          disabled={!condition}
+          onClick={() => clickPage(1)}
+          className="popup__arrow popup__arrow-next"
+        >
+          <Icon type="pagination-right" />
+        </button>
         <div className="popup__sound">
           <Icon
             type="sound"
@@ -130,7 +144,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
                 className="popup__text"
                 dangerouslySetInnerHTML={{ __html: info.textMeaning }}
               ></div>
-              <div className="popup__text">{info.textMeaningTranslate}</div>
+              <div className="popup__text popup__text-last">{info.textMeaningTranslate}</div>
             </div>
             <div className="popup__bottom-right">
               <div className="popup__text popup__transcription">{info.transcription}</div>
@@ -140,6 +154,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
       </div>
 
       <div className="popup__buttons">
+
         <button
           disabled={!number}
           onClick={() => clickPage(-1)}
@@ -169,6 +184,8 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         >
           Next
         </button>
+
+       
       </div>
 
       <></>

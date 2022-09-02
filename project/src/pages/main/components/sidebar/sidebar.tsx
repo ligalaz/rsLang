@@ -18,6 +18,9 @@ function Sidebar() {
   const dispatch = useAppDispatch();
   return (
     <>
+      <NavLink className="logo-link" to="/main">
+        <Icon type="logo" />
+      </NavLink>{" "}
       <div
         onClick={() => setStatisticsFlag((prev) => !prev)}
         className={classNames("hat__burger", {
@@ -30,12 +33,7 @@ function Sidebar() {
           }`}
         />
       </div>
-      <div className="hat">
-        <NavLink to="/main">
-          <Icon type="logo" />
-        </NavLink>
-      </div>
-
+      <div className="hat"></div>
       <aside
         className={classNames("sidebar", {
           sidebar__appear: statisticsFlag,

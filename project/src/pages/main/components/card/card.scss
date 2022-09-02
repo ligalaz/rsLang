@@ -149,6 +149,11 @@
     @include tablet-upper() {
       margin-left: 30px;
     }
+
+    @include mobile-inbetween() {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   &__title {
@@ -191,6 +196,10 @@
 
     &_no-badge {
       align-self: self-start;
+
+      @include mobile-inbetween() {
+        align-self: auto;
+      }
     }
 
     & > *:not(:last-child) {

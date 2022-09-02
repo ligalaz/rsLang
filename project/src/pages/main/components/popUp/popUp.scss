@@ -106,6 +106,11 @@
     @include tablet-middle() {
       margin-bottom: 25px;
     }
+
+    @include mobile-inbetween() {
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
   }
 
   &__sound {
@@ -124,6 +129,11 @@
     @include tablet-lower() {
       top: 20px;
       left: 24px;
+    }
+
+    @include mobile-lower() {
+      top: 11px;
+      left: 11px;
     }
 
     & path {
@@ -179,6 +189,16 @@
       line-height: 24px;
     }
 
+    @include tablet-lowest() {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    @include mobile-inbetween() {
+      font-size: 16px;
+      line-height: 21px;
+    }
+
     & > b {
       color: #000000;
     }
@@ -203,6 +223,13 @@
     & > i {
       color: #000000;
     }
+   
+    &-last {
+
+      @include mobile-inbetween() {
+        margin-top: 5px;
+      }
+    }
   }
 
   &__container {
@@ -211,6 +238,10 @@
 
     @include tablet-middle() {
       margin: 0 15px;
+    }
+
+    @include mobile-inbetween() {
+      margin: 0px;
     }
   }
   
@@ -226,12 +257,20 @@
     border: 0;
     cursor: pointer;
 
+    @include tablet-middle() {
+      flex: 0 1 48%;
+    }
+
     &:not(:last-child) {
       margin-right: 15px;
     }
 
     &-next,&-prev {
       background-color: #F56748;
+
+      @include tablet-middle() {
+        display: none;
+      }
     }
 
     &-unknown {
@@ -266,4 +305,29 @@
     }
   }
 
+  &__arrow {
+    display: none;
+    position: absolute;
+    font-size: 46px;
+    color:#F56748;
+    top:0px;
+
+    @include tablet-middle() {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      height:80px;
+      top: calc(50% - 25px);
+    }
+
+    &-prev {
+      left: -40px;
+    }
+
+    &-next {
+      right: -40px;
+    }
+  }
 }
