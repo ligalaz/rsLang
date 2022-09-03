@@ -8,14 +8,7 @@
   overflow: hidden;
   position: relative;
 
-  @include tablet-upper() {
-    padding: 5%;
-    padding-top: 0;
-  }
-
   @include tablet-lowest() {
-    padding: 10%;
-    padding-top: 0;
     overflow-y: auto;
   }
 
@@ -28,6 +21,7 @@
 
     @include tablet-upper() {
       height: auto;
+      padding-bottom: 70px;
     }
 
     @include tablet-lowest() {

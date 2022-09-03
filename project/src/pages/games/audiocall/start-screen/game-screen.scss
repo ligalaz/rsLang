@@ -93,6 +93,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
     }
 
     .row-counter {
@@ -104,6 +105,11 @@
       -ms-border-radius: 50%;
       -o-border-radius: 50%;
       background: $elem-btn;
+
+      &:hover {
+        animation: btn-up-down 0.5s linear;
+        -webkit-animation: btn-up-down 0.5s linear;
+      }
 
       & p {
         font-family: "Montserrat";
@@ -176,4 +182,25 @@
 
 label {
   margin-right: 10px;
+}
+
+@keyframes btn-up-down {
+  from {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-5deg);
+  }
+  40% {
+    transform: rotate(5deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+  80% {
+    transform: rotate(5deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }

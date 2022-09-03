@@ -21,6 +21,7 @@ import OptionsComponent from "../components/audiocall-select/options-component";
 import CloseBtnComponent from "../components/audiocall-close-btn/close-btn-component";
 
 import "./game-screen.scss";
+import { nextTick } from "process";
 
 export interface IStartScreenProps {
   gameName?: "sprint" | "audiocall";
@@ -42,6 +43,7 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
   );
 
   const [timeStart, setTimeStart] = useState(5);
+  const [paused, setPaused] = useState(false);
   const [groupValue, setGroup] = useState(String(group));
   const [pageValue, setPage] = useState(String(page));
 
@@ -52,17 +54,18 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
   const groupBlock = useRef(null);
   const pageBlock = useRef(null);
 
+  const timer = () => {
+    if (paused) return;
+    setTimeStart((timeStart: number) => (timeStart >= 1 ? timeStart - 1 : 0));
+  };
+
   useEffect(() => {
     if (isTimerStart) {
-      const interval = window.setInterval(() => {
-        setTimeStart((timeStart: number) =>
-          timeStart >= 1 ? timeStart - 1 : 0
-        );
-      }, 1000);
+      const interval = window.setInterval(() => timer(), 1000);
 
       return () => clearInterval(interval);
     }
-  }, [isTimerStart]);
+  });
 
   useEffect(() => {
     !timeStart ? dispatch(startGame({ dataBox: words })) : null;
@@ -89,8 +92,6 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
       groupBlock.current.disabled = true;
       pageBlock.current.disabled = true;
     }
-    window.localStorage.setItem("saveGroup", `0`);
-    window.localStorage.setItem("savePage", `0`);
   }, []);
 
   useEffect(() => {
@@ -115,17 +116,8 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
   function changeSelect(flag: boolean) {
     if (flag) {
       setGroup((event.target as HTMLSelectElement).value);
-
-      window.localStorage.setItem(
-        "saveGroup",
-        (event.target as HTMLSelectElement).value
-      );
     } else {
       setPage((event.target as HTMLSelectElement).value);
-      window.localStorage.setItem(
-        "savePage",
-        (event.target as HTMLSelectElement).value
-      );
     }
     dispatch(settingsUp({ page: +pageValue, group: +groupValue }));
   }
@@ -148,9 +140,9 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
         {!isTimerStart ? (
           <>
             <div className="start-screen__row-action">
-              <button className="play-btn" onClick={() => dispatch(timerUp())}>
-                Play
-              </button>
+              <div onClick={() => dispatch(timerUp())} className="row-counter">
+                <p>GO!</p>
+              </div>
             </div>
             <div className="start-screen__row-form">
               <form className="settings-form">
@@ -180,11 +172,43 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
             </div>
           </>
         ) : (
-          <div className="start-screen__row-action">
-            <div className="row-counter">
-              <p>{timeStart}</p>
+          <>
+            <div className="start-screen__row-action">
+              <div
+                onClick={() => {
+                  console.log(paused);
+                  setPaused(!paused);
+                }}
+                className="row-counter"
+              >
+                <p>{paused ? "Paused" : timeStart}</p>
+              </div>
             </div>
-          </div>
+            <div className="start-screen__row-form">
+              <form className="settings-form">
+                <label htmlFor="gamelevel">level</label>
+                <select
+                  disabled
+                  value={groupValue}
+                  id="gamelevel"
+                  name="unittype"
+                  required
+                >
+                  <OptionsComponent counter={maxGroup} />
+                </select>
+                <label htmlFor="gamepage">page</label>
+                <select
+                  disabled
+                  value={pageValue}
+                  id="gamepage"
+                  name="type"
+                  required
+                >
+                  <OptionsComponent counter={maxPage} />
+                </select>
+              </form>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -34,6 +34,7 @@ import GameResultPage from "../game-result-page/audiocall-result";
 import "./audiocall.scss";
 import tick from "../../../../assets/sound/tick.mp3";
 import cross from "../../../../assets/sound/cross.mp3";
+import { is } from "immer/dist/internal";
 
 const AudioCallPage = (props?: unknown) => {
   const auth: IAuth = useAppSelector(
@@ -66,6 +67,7 @@ const AudioCallPage = (props?: unknown) => {
   const [falseGameAnswer, setFalse] = useState([]);
   const [trueWordRow, setRow] = useState(0);
   const [alpha, setAlpha] = useState(0.8);
+  const gameElements = useRef();
 
   const nextWordButton = useRef(null);
   const dontKnowWordButton = useRef(null);
@@ -85,6 +87,34 @@ const AudioCallPage = (props?: unknown) => {
     if (currentStep === allGameWords) {
       dispatch(endGame());
     }
+
+    if (currentWord) {
+      const answers = (gameElements.current as Element).children;
+      document.onkeydown = (event) => {
+        switch (event.code) {
+          case "Digit0":
+            skipWord();
+            break;
+          case "Digit1":
+            checker(answers[0] as HTMLButtonElement);
+            break;
+          case "Digit2":
+            checker(answers[1] as HTMLButtonElement);
+            break;
+          case "Digit3":
+            checker(answers[2] as HTMLButtonElement);
+            break;
+          case "Digit4":
+            checker(answers[3] as HTMLButtonElement);
+            break;
+          case "Digit5":
+            checker(answers[4] as HTMLButtonElement);
+            break;
+          default:
+            break;
+        }
+      };
+    }
   }, [currentWord]);
 
   useEffect(() => {
@@ -92,16 +122,23 @@ const AudioCallPage = (props?: unknown) => {
     setRow(0);
     setTrue([]);
     setFalse([]);
+    document.onkeydown = null;
   }, [isGameEnded]);
 
   useEffect(() => {
     if (isAnswer) {
       nextWordButton.current.focus();
     }
+    isAnswer
+      ? (document.onkeydown = (event) => {
+          if (event.code === "ArrowRight") {
+            resetBeforeNextRound();
+          }
+        })
+      : null;
   }, [isAnswer]);
 
-  function checkTrueAnswer(event: React.MouseEvent) {
-    const target = event.target as HTMLButtonElement;
+  function checker(target: HTMLButtonElement) {
     const isAttemptCorrect: boolean = target.id === currentWord.id;
     if (isAttemptCorrect) {
       audioService({ audio: "" }, false, tick);
@@ -120,6 +157,11 @@ const AudioCallPage = (props?: unknown) => {
     }
     updateUserWordStatistic(isAttemptCorrect);
     dispatch(changeAnswer({ isAnswer: true }));
+  }
+
+  function checkTrueAnswer(event: React.MouseEvent | React.KeyboardEvent) {
+    const target = event.target as HTMLButtonElement;
+    checker(target);
   }
 
   function updateUserWordStatistic(isAttemptCorrect: boolean): void {
@@ -267,28 +309,6 @@ const AudioCallPage = (props?: unknown) => {
               </div>
             </div>
             <div className="audiocall__row-control">
-              <form className="row-view__settings-form">
-                <label htmlFor="gamelevel">level</label>
-                <select
-                  disabled
-                  value={window.localStorage.getItem("saveGroup")}
-                  id="gamelevel"
-                  name="unittype"
-                  required
-                >
-                  <OptionsComponent counter={maxGroup} />
-                </select>
-                <label htmlFor="gamepage">page</label>
-                <select
-                  disabled
-                  value={window.localStorage.getItem("savePage")}
-                  id="gamepage"
-                  name="type"
-                  required
-                >
-                  <OptionsComponent counter={maxPage} />
-                </select>
-              </form>
               <progress
                 style={{
                   width: "100%",
@@ -299,9 +319,12 @@ const AudioCallPage = (props?: unknown) => {
               ></progress>
             </div>
             <div className="audiocall__row-playground">
-              <div className="audiocall__row-playground-word-repeater__row">
+              <div
+                ref={gameElements}
+                className="audiocall__row-playground-word-repeater__row"
+              >
                 {!isAnswer
-                  ? gameBox.map((item) => (
+                  ? gameBox.map((item, idx: number) => (
                       <button
                         onClick={checkTrueAnswer}
                         className="game-element"
