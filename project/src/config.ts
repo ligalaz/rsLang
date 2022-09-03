@@ -1,6 +1,4 @@
 export const API_BASE_URL = "https://react-learnwords-example.herokuapp.com";
-export const TELEGRAM_BASE_URL = "https://t.me/";
-export const LINKEDIN_BASE_URL = "https://www.linkedin.com/";
 export const AUTH_KEY = "auth";
 
 export const SELECTION_DATA = [
@@ -13,3 +11,9 @@ export const SELECTION_DATA = [
     optionCount: 30,
   },
 ];
+
+export const CONTACTS_BASE_URLS = {
+  linkedin: "https://www.linkedin.com/",
+  github: "https://github.com/",
+  telegram: "https://t.me/",
+};

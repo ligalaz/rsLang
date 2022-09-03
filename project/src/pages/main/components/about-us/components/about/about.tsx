@@ -1,7 +1,6 @@
 import React from "react";
-import Icon from "../../../../../../components/icon/icon";
-import { TELEGRAM_BASE_URL, LINKEDIN_BASE_URL } from "../../../../../../config";
-import { Link } from "react-router-dom";
+import { CONTACTS_BASE_URLS } from "../../../../../../config";
+import { ContactsIcon } from "../../../../../../components/icon/contacts-icon";
 import "./about.scss";
 
 interface AboutDetails {
@@ -11,13 +10,16 @@ interface AboutDetails {
     job: string;
     about: string;
     avatar: string;
-    linkedin?: string;
-    telegram?: string;
+    contacts: {
+      linkedin?: string;
+      telegram?: string;
+      github: string;
+    };
   };
 }
 
 const About = ({ aboutPerson }: AboutDetails) => {
-  const { name, job, about, avatar, linkedin, telegram } = aboutPerson;
+  const { name, job, about, avatar, contacts } = aboutPerson;
 
   return (
     <div className="about__column">
@@ -31,22 +33,22 @@ const About = ({ aboutPerson }: AboutDetails) => {
       <div className="about__descr">
         <div className="about__title">
           {name}
-          <a
-            href={`${TELEGRAM_BASE_URL}${telegram}`}
-            rel="noreferrer"
-            target="_blank"
-          >
-            <Icon type="telegram" />
-          </a>
-          {linkedin && (
-            <a
-              href={`${TELEGRAM_BASE_URL}${linkedin}`}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <Icon type="linkedin" />
-            </a>
-          )}
+          <div className="about__contacts">
+            {Object.entries(contacts).map(([key, value]) => (
+              <a
+                key={key}
+                href={`${
+                  Object.entries(CONTACTS_BASE_URLS).find(
+                    ([contact]) => contact === key
+                  )[1]
+                }${value}`}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <ContactsIcon id={key} />
+              </a>
+            ))}
+          </div>
         </div>
         <div className="about__line"></div>
         <div className="about__job">{job}</div>
