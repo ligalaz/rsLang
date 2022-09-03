@@ -13,8 +13,8 @@ import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
-import AudioCallPage from "./pages/auth/games/audiocall/audiocall";
-import GameStartScreen from "./pages/auth/games/game-start-screen.component";
+import AudioCallPage from "./pages/games/audiocall/audiocall-game-page/audiocall";
+import GameStartScreen from "./pages/games/audiocall/start-screen/game-start-screen.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -54,7 +54,7 @@ function App() {
               )
             }
           />
-          <Route path="audiocall" element={<AudioCallPage />} />
+          <Route path="main/audiocall" element={<AudioCallPage />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
             <Route path="promo" element={<Promo />} />

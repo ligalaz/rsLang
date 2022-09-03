@@ -2,8 +2,8 @@ import { API_BASE_URL } from "../config";
 
 export interface IAudioSource {
   audio: string;
-  audioExample: string;
-  audioMeaning: string;
+  audioExample?: string;
+  audioMeaning?: string;
 }
 
 export const audioService = (
