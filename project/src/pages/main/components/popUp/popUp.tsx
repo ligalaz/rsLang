@@ -118,7 +118,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         <div className="popup__sound">
           <Icon
             type="sound"
-            onClick={() => AudioService.play(info.audio, info.audioMeaning, info.audioExample)}
+            onClick={() => AudioService.play([info.audio, info.audioMeaning, info.audioExample])}
           />
         </div>
         <div className="popup__container">

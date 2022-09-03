@@ -1,7 +1,6 @@
 import React, { useState, FormEventHandler, FormEvent } from "react";
 import { useSignInMutation } from "../../../services/auth-service";
 import { Link, NavLink } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import Icon from "../../../components/icon/icon";
 import "../auth.scss";
 import classNames from "classnames";
@@ -25,12 +24,12 @@ const LoginPage = () => {
           <Icon type="logo" />
         </NavLink>
       </div>
-      <div className="container auth__container">
+      <div className="auth__container">
         <div className="authorization-page">
           <div className="authorization-page__text">
             Start your study today!
           </div>
-          <h2 className="title authorization-page__title">
+          <h2 className="authorization-page__title">
             learning languages is easy!
           </h2>
           <section className="authorization">
