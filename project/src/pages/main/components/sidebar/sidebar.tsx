@@ -9,6 +9,7 @@ import {
 import "./sidebar.scss";
 import { logout } from "../../../../store/auth-slice";
 import classNames from "classnames";
+import { getCurrentScreen } from "../../../../utils/win-def-size";
 
 function Sidebar() {
   const [statisticsFlag, setStatisticsFlag] = useState(false);
@@ -16,11 +17,18 @@ function Sidebar() {
     (state: RootState) => !!state.authState.auth
   );
   const dispatch = useAppDispatch();
+
+  console.log(getCurrentScreen(true));
   return (
     <>
-      <NavLink className="logo-link" to="/main">
-        <Icon type="logo" />
-      </NavLink>{" "}
+      {!(statisticsFlag && getCurrentScreen(statisticsFlag) < 500) && (
+        <NavLink className="logo-link" to="/main">
+          <Icon type="logo" />
+        </NavLink>
+      )}
+
+      {statisticsFlag && <div className="burger-overlay"></div>}
+
       <div
         onClick={() => setStatisticsFlag((prev) => !prev)}
         className={classNames("hat__burger", {
@@ -106,9 +114,7 @@ function Sidebar() {
                 onClick={() => dispatch(logout())}
                 className="sidebar__link sidebar__footer-flex "
               >
-                <Icon
-                  type={`${statisticsFlag ? "log-out-burger" : "log-out"}`}
-                />
+                <Icon type={"log-out"} />
                 <span className="sidebar__link-text">Log Out</span>
               </div>
             ) : (
@@ -116,9 +122,7 @@ function Sidebar() {
                 className="sidebar__link sidebar__footer-flex"
                 to="/login"
               >
-                <Icon
-                  type={`${statisticsFlag ? "log-out-burger" : "log-out"}`}
-                />
+                <Icon type={"log-out"} />
                 <span className="sidebar__link-text">Log In</span>
               </NavLink>
             )}

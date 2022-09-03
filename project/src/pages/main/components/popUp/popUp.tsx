@@ -106,14 +106,14 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           onClick={() => clickPage(-1)}
           className="popup__arrow popup__arrow-prev"
         >
-          <Icon type="pagination-left" />
+          <Icon type={`${number ? "pagination-left" : "pagination-left-disabled"}`} />
         </button>
         <button
           disabled={!condition}
           onClick={() => clickPage(1)}
           className="popup__arrow popup__arrow-next"
         >
-          <Icon type="pagination-right" />
+          <Icon  type={`${condition ? "pagination-right" : "pagination-right-disabled"}`} />
         </button>
         <div className="popup__sound">
           <Icon
@@ -123,9 +123,23 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
         </div>
         <div className="popup__container">
           <div className="popup__top">
-            <div className="popup__top-left popup__title">
-              {info.word} - {info.wordTranslate}
-            </div>
+            <div className="popup__top-left">
+              <div className="popup__title">
+                {info.word} - {info.wordTranslate} 
+              </div>
+              <div className="popup__statistics">
+              {(info.userWord?.optional?.audioCall ||
+                info.userWord?.optional?.sprint) && "[" + 
+                ((info.userWord?.optional?.audioCall?.guesses ?? 0) +
+                (info.userWord?.optional?.sprint?.guesses ?? 0)) +
+                "/" +
+                ((info.userWord?.optional?.audioCall?.attempts ?? 0) +
+                (info.userWord?.optional?.sprint?.attempts ?? 0)) + "]"}
+              </div>
+              </div>
+
+              
+            
             <div className="popup__top-right">
               <div
                 className="popup__image"
