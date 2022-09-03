@@ -1,3 +1,5 @@
+@import '../../../../../../styles/constants';
+
 .sprint {
   column-gap: 0.79rem;
 
@@ -6,7 +8,7 @@
   &__delim {
     width: 1.09rem;
 
-    border-bottom: 0.06rem solid var(--promo-game-decor-color);
+    border-bottom: 0.06rem solid $promo-game-decor-color;
   }
 }
 
@@ -31,7 +33,7 @@
       width: 2.17rem;
       height: 0.28rem;
   
-      background: var(--promo-game-decor-color);
+      background: $promo-game-decor-color;
       border-radius: 3.44rem;
     }
   
@@ -52,7 +54,7 @@
       position: absolute;
       display: block;
   
-      background-color: var(--promo-game-decor-color);
+      background-color: $promo-game-decor-color;
       content: "";
   
       border-radius: 3.44rem;

@@ -1,0 +1,87 @@
+@import '../../../../../../styles/constants';
+
+.about {
+
+  &__column {
+    display: flex;
+    margin-bottom: 0.9rem
+  }
+  
+  &__title {
+    display: flex;
+    column-gap: 0.3rem;
+    margin-top: 1.04rem;
+    margin-bottom: 0.6rem;
+
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    color: #000000;
+  }
+
+  &__line {
+    width: 100%;
+    margin-bottom: 0.45rem;
+
+    border-bottom: 0.06rem solid $header-line-color;
+  }
+
+  &__avatar {
+    overflow: hidden;
+    flex: 0 0 11.38rem;
+    height: 11.38rem;
+    border-radius: 50%;
+  }
+
+  &__avatar-img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__job {
+    margin-bottom: 1.3rem;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    color: $gray-main-text-color;
+  }
+
+  &__text {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: $gray-main-text-color;
+    text-align: justify;
+  }
+
+  &__descr {
+    margin-left: 23px;
+  }
+}
+
+.telegram-icon {
+  fill: $main-purple-color;
+
+  border-radius: 0.3rem;
+
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  &:hover {
+    fill: $hover-btn-color;
+  }
+}
+
+.linkedin-icon {
+  fill: $main-purple-color;
+
+  border-radius: 0.3rem;
+
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  &:hover {
+    fill: $hover-btn-color;
+  }
+}

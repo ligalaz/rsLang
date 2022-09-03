@@ -1,13 +1,15 @@
+@import '../../../../../../styles/constants';
+
 .audio-call {
   background-color: #ffcfcf;
 
   &__sound {
     padding: 0.4rem;
 
-    border: 0.06rem solid var(--promo-game-decor-color);
+    border: 0.06rem solid $promo-game-decor-color;
     border-radius: 50%;
 
-    outline: 0.13rem solid var(--promo-game-decor-color);
+    outline: 0.13rem solid $promo-game-decor-color;
     outline-offset: 0.6rem;
   }
 
@@ -18,7 +20,7 @@
     cursor: default;
 
     &:hover {
-      background-color: var(--yes-btn-color);
+      background-color: $main-purple-color;
     }
   }
 

@@ -1,15 +1,17 @@
+@import '../../../../../styles/constants';
+
 .sprint-timer {
   width:  5.3rem;
 
   .CircularProgressbar-text {
-    fill: var(--gray-text-color);
+    fill: $gray-text-color;
     font-size: 2.2rem;
     font-weight: 500;
     dominant-baseline: central;
   }
 
   .CircularProgressbar-path {
-    stroke: var(--gray-text-color);
+    stroke: $gray-text-color;
     stroke-width: 0.06rem;
   }
 
