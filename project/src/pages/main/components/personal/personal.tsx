@@ -128,7 +128,8 @@ function Personal() {
               <div className="personal__buttons">
                 <Link
                   style={{ textDecoration: "none" }}
-                  to="/registration"
+                  to="../sprint"
+                  replace={true}
                   className="personal__game personal__game1"
                   type="button"
                 >
@@ -137,7 +138,8 @@ function Personal() {
 
                 <Link
                   style={{ textDecoration: "none" }}
-                  to="/registration"
+                  to="../audiocall"
+                  replace={true}
                   className="personal__game personal__game2"
                   type="button"
                 >

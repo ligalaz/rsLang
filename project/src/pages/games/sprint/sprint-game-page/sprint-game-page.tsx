@@ -183,7 +183,6 @@ const SprintGamePage = (): JSX.Element => {
   }
 
   const handleGameStep = (isRightBtn: boolean) => {
-    console.log("currentword", gameData.at(-1));
     const isTrueAnswer = isRightBtn
       ? gameData.at(-1).wordTranslate === currentWord.wordTranslate
       : gameData.at(-1).wordTranslate !== currentWord.wordTranslate;
@@ -255,9 +254,6 @@ const SprintGamePage = (): JSX.Element => {
       );
     }
   }, [currentStep]);
-  console.log(isUserStatisticsSuccess);
-  console.log("statistics", statistics);
-  console.log(auth.userId);
 
   return (
     <div className="container">

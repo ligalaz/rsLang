@@ -308,8 +308,6 @@ const AudioCallPage = (props?: unknown) => {
     );
   }
 
-  console.log(statistics);
-  console.log(auth.userId);
   return (
     <div className="audiocall-body">
       <div className="audiocall__row">

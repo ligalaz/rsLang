@@ -50,7 +50,7 @@ export const statisticsService = createApi({
         method: HTTPMethods.GET,
         params: {
           filter: `{"userWord.optional.firstSeenDate": "${getStartOfDayDate()}"}`,
-          // wordsPerPage: 3600,
+          wordsPerPage: 3600,
         },
       }),
       transformResponse: (response) => {

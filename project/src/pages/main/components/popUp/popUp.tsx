@@ -44,7 +44,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
   const [updateUserStatistics, { data }] = useUpdateUserStatisticsMutation();
   
   useEffect(() => {
-    dispatch(updateStoreStatistics(data))
+    dispatch(updateStoreStatistics())
   }, [data]);
 
   useEffect(() => {
