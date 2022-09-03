@@ -9,6 +9,7 @@ interface IAudioCallSettings {
   allPlayWords?: number;
   isAnswer?: boolean;
   trueRow?: number;
+  isTimerStart?: boolean;
 }
 
 const initialState: IAudioCallSettings = {
@@ -20,6 +21,7 @@ const initialState: IAudioCallSettings = {
   allPlayWords: 5,
   isAnswer: false,
   trueRow: 0,
+  isTimerStart: false,
 };
 
 export const audioCallSettingsSlice = createSlice({
@@ -29,6 +31,9 @@ export const audioCallSettingsSlice = createSlice({
     settingsUp(state, action: PayloadAction<IAudioCallSettings>) {
       state.group = action.payload.group;
       state.page = action.payload.page;
+    },
+    timerUp(state) {
+      state.isTimerStart = true;
     },
     changeAnswer(state, action: PayloadAction<IAudioCallSettings>) {
       state.isAnswer = action.payload.isAnswer;
@@ -46,5 +51,5 @@ export const audioCallSettingsSlice = createSlice({
 });
 
 export default audioCallSettingsSlice.reducer;
-export const { settingsUp, settingsDown, changeAnswer, setTrueRaw } =
+export const { settingsUp, settingsDown, changeAnswer, setTrueRaw, timerUp } =
   audioCallSettingsSlice.actions;
