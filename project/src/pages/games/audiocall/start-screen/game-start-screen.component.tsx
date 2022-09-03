@@ -85,6 +85,7 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
           wordsPerPage: 20,
         },
       });
+      dispatch(settingsUp({ page: +page, group: +group }));
       groupBlock.current.disabled = true;
       pageBlock.current.disabled = true;
     }
