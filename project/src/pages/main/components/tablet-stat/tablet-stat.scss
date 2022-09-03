@@ -1,0 +1,244 @@
+@import '../../../../styles/_responsive-media.scss';
+
+.tabletstat {
+  background: #FAFAFA;
+  height: 100%;
+
+  &__wrapper {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-between;
+    width: 100%;
+
+    @include tablet-lowest() {
+      padding: 20px;
+    }
+  }
+
+  &__img {
+    width: 171px;
+    height: 171px;
+    background-color: orange;
+    border-radius: 50%;
+  }
+
+  &__title {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+
+    @media (max-width: 650px) {
+      font-size: 25px;
+    }
+
+    @include tablet-lowest() {
+      font-size: 22px;
+    }
+  }
+
+  &__city {
+    font-family: Montserrat;
+    font-size: 1.1rem;
+    color: #b2b2b2;
+    text-align: center;
+  }
+
+  &__descr {
+    font-family: Montserrat;
+    font-weight: 500;
+    color: #b2b2b2;
+  }
+
+  &__progress {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__center {
+    width: 100%;
+    margin: 10px 0;
+
+    &-title {
+      font-family: Montserrat;
+      font-weight: 700;
+      color: #7d7d7d;
+      border-bottom: 1px solid #b2b2b2;
+      font-size: 23px;
+
+      @media (max-width: 650px) {
+        font-size: 20px;
+      }
+
+      @include mobile-upper() {
+        font-size: 17px;
+      }
+    }
+  }
+
+  &__center-content {
+    display: flex;
+  }
+
+  &__counter {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 1.8rem
+  }
+
+  &__success{
+    font-family: Montserrat;
+    font-weight: 700;
+    color: #7d7d7d;
+    border-bottom: 1px solid #b2b2b2;
+    font-size: 23px;
+
+    @media (max-width: 650px) {
+      font-size: 20px;
+    }
+
+    @include mobile-upper() {
+      font-size: 17px;
+    }
+  }
+
+  &__column {
+    font-size: 20px;
+
+    @media (max-width: 650px) {
+      font-size: 17px;
+    }
+
+    @include mobile-upper() {
+      font-size: 15px;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+    }
+  }
+
+  &__column > * {
+    padding: 5px 0px;
+  }
+
+  &__column-info {
+    text-align: center;
+  } 
+
+  &__words-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__counter {
+    text-align: center;
+  }
+
+  &__diagram {
+    width: 25vh;
+    min-width: 100px;
+    margin: 15px auto;
+  }
+
+  &__info {
+    width:21vh;
+    min-width:120px;
+    margin: auto;
+  }
+
+  &__games {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 20px;
+    padding: 10px 0;
+
+    @media (max-width: 650px) {
+      padding: 10px 0 5px;
+    }
+
+    @media (max-width: 550px) {
+      padding: 5px 0 0px;
+    }
+  }
+
+  &__game {
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 23px;
+    color: black;
+    padding: 12px;
+    text-align: center;
+    flex: 0 1 44%;
+    margin: 10px 0;
+    font-size: 15px;
+
+    &-hidden {
+      visibility: hidden;
+    }
+  }
+
+  &__row {
+    display: flex;
+  }
+
+  &__game1 {
+    background: #6550DE;
+  }
+
+  &__game2 {
+    background: #F56748;
+  }
+
+  &__statistics {
+    font-size: 20px;
+    width: 100%;
+    color: #7d7d7d;
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 5px;
+    padding: 10px 0;
+    align-items: center;
+    flex: 75%;
+
+    @media (max-width: 650px) {
+      font-size: 17px;
+      padding: 10px 0 5px;
+    }
+
+    @media (max-width: 550px) {
+      font-size: 15px;
+      padding: 5px 0 0px;
+      flex: 65%;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+    }
+
+    &-descr2 {
+      text-align: center;
+      width: 25px;
+    }
+
+    &-descr > * {
+      padding: 5px 0;
+    }
+  }
+
+  &__buttons {
+    border-top: 1px solid #b2b2b2;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

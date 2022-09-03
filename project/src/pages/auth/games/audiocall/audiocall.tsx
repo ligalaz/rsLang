@@ -37,7 +37,8 @@ import {
   useCreateUserWordMutation,
 } from "../../../../services/user-words-service";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
-import { IStatistic } from "../../../../interfaces/statistic";
+import { Statistic } from "../../../../interfaces/statistic";
+import { updateUserStatistics as updateStoreStatistics } from "../../../../store/statistics-slice";
 import { UserWordResponse } from "../../../../interfaces/user-word";
 
 const AudioCallPage = (props?: unknown) => {
@@ -49,7 +50,8 @@ const AudioCallPage = (props?: unknown) => {
   const dispatch: AppDispatch = useDispatch();
   const [getWords] = useGetWordsMutation();
   const [getAggregatedWords] = useGetUserWordsMutation();
-  const [getUserStatistics] = useGetUserStatisticsMutation();
+  const [getUserStatistics, { isSuccess: isUserStatisticsSuccess }] =
+    useGetUserStatisticsMutation();
   const [updateUserStatistics] = useUpdateUserStatisticsMutation();
   const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
@@ -66,7 +68,7 @@ const AudioCallPage = (props?: unknown) => {
     (state: RootState) => state.wordsState.words || []
   );
 
-  const statistics: IStatistic = useAppSelector(
+  const statistics: Statistic = useAppSelector(
     (state: RootState) => state.statisticsState?.statistics
   );
 
@@ -80,6 +82,15 @@ const AudioCallPage = (props?: unknown) => {
   const dontKnowWordButton = useRef(null);
   const groupBlock = useRef(null);
   const pageBlock = useRef(null);
+
+  useEffect(() => {
+    if (auth?.userId) {
+      updateUserStatistics({
+        userId: userId,
+        request: { ...statistics },
+      });
+    }
+  }, [statistics]);
 
   useEffect(() => {
     if (auth?.userId) {
@@ -235,31 +246,32 @@ const AudioCallPage = (props?: unknown) => {
     }
 
     if (!currentWord.userWord) {
-      await createUserWord(request);
+      createUserWord(request);
     } else {
-      await updateUserWord(request);
+      updateUserWord(request);
     }
 
-    await updateUserStatistics({
-      userId: userId,
-      request: {
-        learnedWords:
-          (statistics?.learnedWords || 0) +
-          (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
-        optional: {
-          ...statistics?.optional,
-          audioCall: {
-            seria: isAttemptCorrect ? seria + 1 : 0,
-            maxSeria:
-              isAttemptCorrect && seria + 1 > maxSeria ? seria + 1 : maxSeria,
-            [getStartOfDayDate()]: {
-              attempts: statisticsAttempts + 1,
-              guesses: statisticsGuesses + +isAttemptCorrect,
+    dispatch(
+      updateStoreStatistics(
+        Statistic.fromDto({
+          learnedWords:
+            (statistics?.learnedWords || 0) +
+            (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
+          optional: {
+            ...statistics?.optional,
+            audioCall: {
+              seria: isAttemptCorrect ? seria + 1 : 0,
+              maxSeria:
+                isAttemptCorrect && seria + 1 > maxSeria ? seria + 1 : maxSeria,
+              [getStartOfDayDate()]: {
+                attempts: statisticsAttempts + 1,
+                guesses: statisticsGuesses + +isAttemptCorrect,
+              },
             },
           },
-        },
-      },
-    });
+        })
+      )
+    );
   }
 
   function resetBeforeNextRound() {
@@ -285,6 +297,7 @@ const AudioCallPage = (props?: unknown) => {
   function skipWord() {
     setFalse(falseGameAnswer.concat(currentWord));
     dispatch(setTrueRaw({ trueRow: trueWordRow }));
+    updateUserWordStatistic(false);
     setRow(0);
     dispatch(
       gameStep({
@@ -294,9 +307,6 @@ const AudioCallPage = (props?: unknown) => {
       })
     );
   }
-
-  console.log("statistics", statistics?.learnedWords);
-  console.log("statistics", statistics?.optional?.audioCall);
 
   return (
     <div className="audiocall-body">

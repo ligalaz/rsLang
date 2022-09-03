@@ -43,8 +43,10 @@ const SprintGamePage = (): JSX.Element => {
     score,
     level,
     currentWord,
+    trueAnswers,
     trueAnswersCount,
     isGameStarted,
+    falseAnswers,
     isGameEnded,
   } = useAppSelector((state) => state.sprintState);
 
@@ -130,6 +132,8 @@ const SprintGamePage = (): JSX.Element => {
     }
   }, [currentStep]);
 
+  console.log("true", trueAnswers);
+  console.log("false", falseAnswers);
   return (
     <div className="container">
       <header className="header">
