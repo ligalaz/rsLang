@@ -1,12 +1,7 @@
-:root {
-  --btn-text-color: #fff;
-  --hover-btn-color: #fec246;
-  --promo-game-decor-color: #fff;
-}
-
 .game-card {
   width: 16.6rem;
   height: 15.3rem;
+  color: #000;
 
   &__promo {
     display: flex;

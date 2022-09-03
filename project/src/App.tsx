@@ -8,13 +8,13 @@ import MainPage from "./pages/main/main";
 import Textbook from "./pages/main/components/textbook/textbook";
 import AboutUs from "./pages/main/components/about-us/about-us";
 import Home from "./pages/main/components/Home/home";
-import Promo from "./pages/main/components/Promo/promo";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
+
 import AudioCallPage from "./pages/games/audiocall/audiocall-game-page/audiocall";
-import GameStartScreen from "./pages/games/audiocall/start-screen/game-start-screen.component";
+import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -27,8 +27,6 @@ function App() {
       dispatch(authService.endpoints.token.initiate(auth.userId));
     }
   }, []);
-
-  const gameChoise = true;
 
   return (
     <BrowserRouter>
@@ -44,20 +42,10 @@ function App() {
             path="login"
             element={!auth ? <LoginPage /> : <Navigate to="main" replace />}
           />
-          <Route
-            path="game-screen"
-            element={
-              !gameChoise ? (
-                <GameStartScreen gameName="audiocall" />
-              ) : (
-                <GameStartScreen gameName="sprint" />
-              )
-            }
-          />
-          <Route path="main/audiocall" element={<AudioCallPage />} />
+          <Route path="audiocall" element={<AudioCallPage />} />
+          <Route path="sprint" element={<SprintGamePage />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
-            <Route path="promo" element={<Promo />} />
             <Route path="textbook/:group/:page" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
           </Route>

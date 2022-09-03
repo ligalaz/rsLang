@@ -1,7 +1,7 @@
-@import "../../components/responsive/responsive-media";
+@import "../../../../styles/responsive-media";
 
 .card {
-  margin-bottom: 13px;
+  margin-bottom: 15px;
   position: relative;
 
   &::before {
@@ -100,6 +100,14 @@
     background-color: #ffffff;
     border: 1px solid #B2B2B2;
     border-radius: 4px;
+
+    @include mobile-inbetween() {
+      flex-direction: column;
+      padding: 20px 0px;
+      border-radius: 15px;
+    }
+
+   
   }
 
   &__word {
@@ -107,6 +115,10 @@
     font-size: 1.5rem;
     margin-bottom: 11px;
     color: #000000;
+
+    @include mobile-inbetween() {
+      text-align: center;
+    }
   }
 
   &__img-container {
@@ -137,6 +149,11 @@
     @include tablet-upper() {
       margin-left: 30px;
     }
+
+    @include mobile-inbetween() {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   &__title {
@@ -152,6 +169,10 @@
     font-size: 1rem;
     line-height: 1.2rem;
     color: #7D7D7D;
+
+    @include mobile-inbetween() {
+      text-align: center;
+    }
   }
 
   &__controls {
@@ -159,8 +180,26 @@
     flex-direction: column;
     align-self: self-end;
 
+    @include mobile-inbetween() {
+      flex-direction: row;
+      align-self: auto;
+      width: 50%;
+      margin-top: 10px;
+      margin-bottom: -10px;
+      justify-content: space-between;
+    }
+
+    @include mobile-lower() {
+      // width 120px or 170px are good
+      width: 160px;
+    }
+
     &_no-badge {
       align-self: self-start;
+
+      @include mobile-inbetween() {
+        align-self: auto;
+      }
     }
 
     & > *:not(:last-child) {

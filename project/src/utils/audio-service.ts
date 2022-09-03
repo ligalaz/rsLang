@@ -1,6 +1,8 @@
+import { API_BASE_URL } from "../config";
+
 export class AudioService {
   public static audio: HTMLAudioElement;
-  public static async play(urls: string[]): Promise<void> {
+  public static async play(...urls: string[]): Promise<void> {
     AudioService.stop();
     try {
       // eslint-disable-next-line no-empty
@@ -25,7 +27,7 @@ export class AudioService {
 
   public static createAudio(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      AudioService.audio = new Audio(url);
+      AudioService.audio = new Audio(API_BASE_URL + "/" + url);
       AudioService.audio.play();
       AudioService.audio.addEventListener(
         "ended",

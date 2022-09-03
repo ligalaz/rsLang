@@ -19,7 +19,7 @@ const games = [
   },
 ];
 
-const GamesPromo = () => {
+const GamesPromo = (): JSX.Element => {
   return (
     <ul className="games-promo">
       {games.map((game) => (

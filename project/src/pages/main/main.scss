@@ -1,13 +1,13 @@
-@import "./components/responsive/responsive-media";
+@import "../../styles/responsive-media";
 @import "./components/styles/main-page-title.scss";
 
-.main {
-  
+.main-four {
   display: flex;
   height: 100%;
 
   &__wrapper {
     flex-grow: 1;
+
 
     @supports (overflow: overlay) {
       overflow: hidden overlay;
@@ -20,7 +20,7 @@
     background-image: url('../../assets/img/background.jpg');
     background-size: cover;
     background-blend-mode: color-dodge;
-    background-color: #ffffff;
+    background-color: #FAFAFA;
 
     scrollbar-width: thin;
     scrollbar-color: #e6e8eb #c1c7cd;
@@ -54,12 +54,20 @@
     margin: 0 auto;
     max-width: 892px;
 
-    @include desktop-lower() {
-      padding: 60px 20px;
+    @include desktop-highest() {
+      padding: 54px 20px;
     }
 
     @include desktop-lowest() {
-      padding: 40px 20px;
+      padding: 40px 40px;
+    }
+
+    @include desktop-lowest() {
+      padding: 149px 40px 40px;
+    }
+
+    @include tablet-lower() {
+      padding: 139px 30px 30px;
     }
   }
 

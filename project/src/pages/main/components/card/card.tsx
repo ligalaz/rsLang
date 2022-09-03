@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../../../../config";
 import { Word } from "../../../../interfaces/word";
 import classNames from "classnames";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
-
+import { AudioService } from "../../../../utils/audio-service";
 export interface ICardProps {
   info: Word;
   togglePopup?: MouseEventHandler<HTMLElement>;
@@ -36,15 +36,6 @@ function Card({ info, togglePopup, removeWord, isAuth, group }: ICardProps) {
         ></div>
         <div className="card__center">
           <div className="card__word">{info.word}</div>
-          <div className="card__word">
-            {(info.userWord?.optional?.audioCall ||
-              info.userWord?.optional?.sprint) &&
-              (info.userWord?.optional?.audioCall?.guesses ?? 0) +
-                (info.userWord?.optional?.sprint?.guesses ?? 0) +
-                "/" +
-                ((info.userWord?.optional?.audioCall?.attempts ?? 0) +
-                  (info.userWord?.optional?.sprint?.attempts ?? 0))}
-          </div>
           <div
             className="card__text"
             dangerouslySetInnerHTML={{ __html: info.textMeaning }}
@@ -56,7 +47,7 @@ function Card({ info, togglePopup, removeWord, isAuth, group }: ICardProps) {
           })}
         >
           <a className="card__control-option">
-            <Icon url={API_BASE_URL + "/" + info.audio} type="sound" />
+            <Icon onClick={() => AudioService.play(info.audio)} type="sound" />
           </a>
           <a className="card__control-option" onClick={togglePopup}>
             <Icon type="info" />

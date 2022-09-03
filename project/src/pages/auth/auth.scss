@@ -1,3 +1,5 @@
+@import '../../styles/responsive-media';
+
 $dark-purple-color: #404497;
 $auth-btn-text: #fff;
 $auth-active-btn: #000;
@@ -5,37 +7,80 @@ $auth-form: #b2b2b2;
 $auth-btn: #6550de;
 $auth-hover-btn: #fec246;
 
-.main__container {
-  max-width: 100%;
-  margin: 0 auto;
+.auth {
   height: 100%;
-  padding: 0 9.6rem 0;
-  overflow-y: hidden;
-  background-image: url("../../assets/img/start-page-bg.jpg.png");
-  background-position: right;
-  background-size: contain;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  &__container {
+    width: 100%;
+    height: 100%;
+    padding: 0 7%;
+    overflow-y: hidden;
+    background-image: url("../../assets/img/start-page-bg.jpg.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include tablet-lower() {
+      padding: 50px;
+      background-image: url("../../assets/img/background-small.svg");
+      background-position: bottom;
+      background-size: auto 140px;
+      background-repeat: repeat-x;
+    }
+
+    @include tablet-lowest() {
+      padding: 30px;
+    }
+  }
+
+  &__logo {
+    position: absolute;
+    top: 60px;
+    left: 60px;
+
+    @include tablet-lower() {
+      top: 50px;
+      left: 50px;
+    }
+
+    @include tablet-lowest() {
+      top: 30px;
+      left: 30px;
+    }
+  }
 }
 
 .authorization-page {
-  width: 39%;
+  width: 40%;
+
+  @include tablet-lower() {
+    width: 100%;
+  }
 
   &__text {
     margin-top: 2rem;
     margin-bottom: 0.9rem;
     font-size: 1.2rem;
     line-height: 1.5rem;
+
+    @include tablet-lowest() {
+      margin-top: 0;
+    }
   }
 
   &__title {
     margin-bottom: 2rem;
     font-weight: 700;
-    font-size: 2.97rem;
-    line-height: 3.5rem;
+    font-size: 2.5rem;
+    line-height: 3rem;
     text-transform: uppercase;
+
+    @include tablet-lowest() {
+      font-size: 2rem;
+      line-height: 2.8rem;
+    }
   }
 }
 
@@ -60,6 +105,10 @@ $auth-hover-btn: #fec246;
   &--active {
     color: $auth-active-btn;
   }
+
+  &_disabled {
+    pointer-events: none;
+  }
 }
 
 .form {
@@ -76,7 +125,12 @@ $auth-hover-btn: #fec246;
     font-size: 1.4rem;
     line-height: 1.72rem;
     border: 0.06rem solid $auth-form;
+
+    @include tablet-lower() {
+      width: 100%;
+    }
   }
+
   &__round-btn {
     margin-top: 1rem;
   }
@@ -97,6 +151,12 @@ $auth-hover-btn: #fec246;
   background-color: $auth-btn;
   border: none;
   border-radius: 50%;
+
+  @include tablet-lower() {
+    width: 90px;
+    height: 90px;
+    font-size: 16px;
+  }
 
   cursor: pointer;
 

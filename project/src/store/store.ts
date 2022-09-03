@@ -7,6 +7,7 @@ import { aggregatedWordsService } from "../services/aggregated-words-service";
 import { statisticsService } from "../services/statistics-service";
 import wordsReducer from "./words-slice";
 import authReducer from "./auth-slice";
+import sprintReducer from "./sprint-slice";
 import audioCallSettingsReducer from "./audiocall-settings-slice";
 import audioCallReducer from "./audiocall-slice";
 import statisticsReducer from "./statistics-slice";
@@ -22,6 +23,7 @@ export const rootReducer = combineReducers({
   audioCallReducer,
   audioCallSettingsReducer,
   statisticsState: statisticsReducer,
+  sprintState: sprintReducer,
 });
 export const setupStore = () => {
   return configureStore({
