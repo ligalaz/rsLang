@@ -98,7 +98,15 @@ export const audioCallSlice = createSlice({
       );
     },
     resetGame(state) {
-      return initialState;
+      state.isGameEnded = false;
+      state.isGameStarted = false;
+      state.dataBox = [];
+      state.gameBox = [];
+      state.playedBox = [];
+      state.currentWord = null;
+      state.trueAnswer = [];
+      state.falseAnswer = [];
+      state.currentStep = 0;
     },
   },
 });

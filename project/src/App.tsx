@@ -7,13 +7,13 @@ import RegistrationPage from "./pages/auth/registration/registration";
 import MainPage from "./pages/main/main";
 import Textbook from "./pages/main/components/textbook/textbook";
 import AboutUs from "./pages/main/components/about-us/about-us";
-import Home from "./pages/main/components/home/home";
+import Home from "./pages/main/components/Home/home";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
-import AudioCallPage from "./pages/auth/games/audiocall/audiocall";
-import GameStartScreen from "./pages/auth/games/game-start-screen.component";
+
+import AudioCallPage from "./pages/games/audiocall/audiocall-game-page/audiocall";
 import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
 
 function App() {
@@ -28,8 +28,6 @@ function App() {
     }
   }, []);
 
-  const gameChoise = true;
-
   return (
     <BrowserRouter>
       <div className="app">
@@ -43,16 +41,6 @@ function App() {
           <Route
             path="login"
             element={!auth ? <LoginPage /> : <Navigate to="main" replace />}
-          />
-          <Route
-            path="game-screen"
-            element={
-              !gameChoise ? (
-                <GameStartScreen gameName="audiocall" />
-              ) : (
-                <GameStartScreen gameName="sprint" />
-              )
-            }
           />
           <Route path="audiocall" element={<AudioCallPage />} />
           <Route path="sprint" element={<SprintGamePage />} />

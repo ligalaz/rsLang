@@ -1,3 +1,4 @@
+@import "../../audiocall-variables.scss";
 .__close-btn {
   position: relative;
   width: 60px;
@@ -7,10 +8,19 @@
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  background: #e5e5e5;
+  background: $cross-bg;
   border: none;
   cursor: pointer;
-  z-index: 100;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background: $cross-hover;
+    transition: 0.3s ease-in-out;
+    -webkit-transition: 0.3s ease-in-out;
+    -moz-transition: 0.3s ease-in-out;
+    -ms-transition: 0.3s ease-in-out;
+    -o-transition: 0.3s ease-in-out;
+  }
 
   &-item {
     top: 27.5px;
@@ -18,7 +28,7 @@
     position: absolute;
     width: 35px;
     height: 5px;
-    background: #6550de;
+    background: $elem-btn;
     border-radius: 55px;
   }
   & .first-item {
