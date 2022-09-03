@@ -10,6 +10,7 @@
     @include tablet-lower() {
       flex-direction: column;
       align-items: center;
+      margin-bottom: 5rem;
     }
   }
   

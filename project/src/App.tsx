@@ -7,7 +7,7 @@ import RegistrationPage from "./pages/auth/registration/registration";
 import MainPage from "./pages/main/main";
 import Textbook from "./pages/main/components/textbook/textbook";
 import AboutUs from "./pages/main/components/about-us/about-us";
-import Home from "./pages/main/components/Home/home";
+import Home from "./pages/main/components/home/home";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
