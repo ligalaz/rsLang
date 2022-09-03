@@ -11,7 +11,10 @@ import { IWord } from "../../../../interfaces/word";
 import { useGetUserStatisticsMutation } from "../../../../services/statistics-service";
 import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import { useGetWordsMutation } from "../../../../services/words-service";
-import { settingsUp } from "../../../../store/audiocall-settings-slice";
+import {
+  settingsUp,
+  timerUp,
+} from "../../../../store/audiocall-settings-slice";
 import { startGame } from "../../../../store/audiocall-slice";
 
 import OptionsComponent from "../components/audiocall-select/options-component";
@@ -33,7 +36,7 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
 
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const { group, page, maxGroup, maxPage } = useAppSelector(
+  const { group, page, maxGroup, maxPage, isTimerStart } = useAppSelector(
     (state: RootState) => state.audioCallSettingsReducer,
     shallowEqual
   );
@@ -50,12 +53,20 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
   const pageBlock = useRef(null);
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      setTimeStart((timeStart: number) => (timeStart >= 1 ? timeStart - 1 : 0));
-    }, 1000);
+    if (isTimerStart) {
+      const interval = window.setInterval(() => {
+        setTimeStart((timeStart: number) =>
+          timeStart >= 1 ? timeStart - 1 : 0
+        );
+      }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [isTimerStart]);
+
+  useEffect(() => {
+    !timeStart ? dispatch(startGame({ dataBox: words })) : null;
+  }, [timeStart]);
 
   useEffect(() => {
     const url = window.location.href;
@@ -66,9 +77,13 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
       const [group, page] = queries;
       setGroup(group);
       setPage(page);
-      getWords({
-        group: +group,
-        page: +page,
+      getAggregatedWords({
+        userId,
+        params: {
+          group: +group,
+          page: +page,
+          wordsPerPage: 20,
+        },
       });
       groupBlock.current.disabled = true;
       pageBlock.current.disabled = true;
@@ -129,13 +144,10 @@ const GameStartScreen = ({ gameName, words }: IStartScreenProps) => {
             your skills in interesting games.
           </p>
         </div>
-        {timeStart === 0 ? (
+        {!isTimerStart ? (
           <>
             <div className="start-screen__row-action">
-              <button
-                className="play-btn"
-                onClick={() => dispatch(startGame({ dataBox: words }))}
-              >
+              <button className="play-btn" onClick={() => dispatch(timerUp())}>
                 Play
               </button>
             </div>
