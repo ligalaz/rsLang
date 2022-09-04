@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IWord } from "../interfaces/word";
-
+import { gameStep } from "./audiocall-slice";
 interface SprintState {
+  timer: number;
+  delay: number;
+  timerCircle: number;
   isGameStarted: boolean;
   isGameEnded: boolean;
-  level: string;
-  page: string;
   currentWord: {
     word: string;
     wordTranslate: string;
   };
   wordsData: IWord[];
+  filterWordsData: IWord[];
   gameData: IWord[];
   trueAnswers: IWord[];
   trueAnswersCount: number;
@@ -19,15 +21,17 @@ interface SprintState {
 }
 
 const initialState: SprintState = {
+  timer: 60,
+  delay: 1000,
+  timerCircle: 100,
   isGameStarted: false,
   isGameEnded: false,
-  level: "1",
-  page: "1",
   currentWord: {
     word: "",
     wordTranslate: "",
   },
   wordsData: [],
+  filterWordsData: [],
   gameData: [],
   trueAnswers: [],
   trueAnswersCount: 0,
@@ -35,53 +39,59 @@ const initialState: SprintState = {
   score: 0,
 };
 
+const getRandNumber = (max = 1, min = 0): number => {
+  return Math.floor(min + Math.random() * (max + 1 - min));
+};
+
 export const sprintSlice = createSlice({
   name: "sprint",
   initialState,
   reducers: {
-    getData: (state, { payload }: { payload: IWord[] }) => {
-      state.wordsData = payload;
-    },
-    setLevel: (state, { payload }: { payload: string }) => {
-      state.level = payload;
-    },
-    setGameStart: (state) => {
-      state.isGameStarted = true;
-    },
     setGameEnd: (state) => {
       state.isGameEnded = true;
-      state.isGameStarted = false;
     },
     resetGame: (state) => {
-      return {
-        ...initialState,
-        level: state.level,
-        wordsData: state.wordsData,
-      };
+      return initialState;
     },
     gameStep: (state) => {
-      const { wordsData } = state;
+      const { filterWordsData, isGameEnded } = state;
 
-      const getRandNumber = (max = 1, min = 0): number => {
-        return Math.floor(min + Math.random() * (max + 1 - min));
-      };
+      if (!isGameEnded) {
+        const rightAnswerStates = Boolean(getRandNumber());
+        const rand = getRandNumber(filterWordsData.length - 1);
 
-      const rightAnswerStates = Boolean(getRandNumber());
+        const randWordData = filterWordsData.at(rand);
+        state.filterWordsData = [
+          ...filterWordsData.slice(0, rand),
+          ...filterWordsData.slice(rand + 1),
+        ];
 
-      const randWordNumber = getRandNumber(wordsData.length - 1);
-      const randWordData = wordsData.at(randWordNumber);
-      state.gameData.push(randWordData);
+        state.gameData.push(randWordData);
 
-      let { wordTranslate } = randWordData;
+        let { wordTranslate } = randWordData;
 
-      if (!rightAnswerStates) {
-        wordTranslate = [
-          ...wordsData.slice(0, randWordNumber),
-          ...wordsData.slice(randWordNumber + 1),
-        ].at(getRandNumber(wordsData.length - 2)).wordTranslate;
+        if (!rightAnswerStates) {
+          const { filterWordsData } = state;
+          wordTranslate = filterWordsData.at(
+            getRandNumber(filterWordsData.length - 1)
+          ).wordTranslate;
+        }
+
+        state.currentWord = { word: randWordData.word, wordTranslate };
       }
-
-      state.currentWord = { word: randWordData.word, wordTranslate };
+    },
+    startGame: (state, { payload }: { payload: IWord[] }) => {
+      state.isGameStarted = true;
+      state.wordsData = payload;
+      state.filterWordsData = payload;
+    },
+    restartGame: (state) => {
+      return {
+        ...initialState,
+        wordsData: state.wordsData,
+        filterWordsData: state.wordsData,
+        isGameStarted: true,
+      };
     },
     changeGameScore: (state, { payload }: { payload: boolean }) => {
       const wordData = state.gameData.at(-1);

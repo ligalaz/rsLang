@@ -50,6 +50,8 @@
 
     &:hover {
       background-color: var(--hover-btn-color);
+      animation: btn-up-down 0.5s linear;
+      -webkit-animation: btn-up-down 0.5s linear;
     }
   }
 }

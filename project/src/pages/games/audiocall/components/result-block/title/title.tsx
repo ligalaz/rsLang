@@ -7,7 +7,7 @@ interface TitleDetails {
 }
 
 const Title = ({ className, children }: TitleDetails): JSX.Element => {
-  return <h2 className={`title ${className}`}>{children}</h2>;
+  return <h2 className={`results-title ${className}`}>{children}</h2>;
 };
 
 export default Title;

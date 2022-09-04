@@ -105,8 +105,6 @@
     border: none;
     outline: none;
   
-    cursor: pointer;
-  
     transition: 0.5s;
   
     &--no {
@@ -121,15 +119,17 @@
   
     &:hover {
       background-color: var(--hover-btn-color);
+
+      cursor: pointer;
     }
 
     &--disabled {
       background-color: var(--gray-text-color);
 
-      cursor: not-allowed;
-
       &:hover {
         background-color: var(--gray-text-color);
+
+        cursor: not-allowed;
       }
     }
   }
@@ -140,7 +140,7 @@
 }
 
 .circle--animated {
-  animation: indicator 0.8s forwards;
+  animation: indicator 0.5s forwards;
 }
 
 @keyframes indicator {

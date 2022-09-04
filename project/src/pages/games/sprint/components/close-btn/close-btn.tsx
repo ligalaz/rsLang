@@ -10,7 +10,7 @@ interface CloseBtnDetails {
 
 const CloseBtn = ({ isDisabled, className }: CloseBtnDetails): JSX.Element => {
   const navigate = useNavigate();
-  const { resetGame } = useActions();
+  const { resetGame, settingsDown } = useActions();
 
   return (
     <div
@@ -19,6 +19,7 @@ const CloseBtn = ({ isDisabled, className }: CloseBtnDetails): JSX.Element => {
       }`}
       onClick={() => {
         resetGame();
+        settingsDown();
         navigate("/main", { replace: true });
       }}
     />

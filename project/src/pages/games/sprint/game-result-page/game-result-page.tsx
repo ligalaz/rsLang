@@ -11,17 +11,17 @@ const GameResultPage = (): JSX.Element => {
     (state) => state.sprintState
   );
 
-  const { resetGame, setGameStart } = useActions();
+  const { resetGame, restartGame, gameStep, settingsDown } = useActions();
 
   const results = [
     {
-      answers: Array.from(new Set(trueAnswers)),
+      answers: trueAnswers,
       header: "I know :)",
       titleClassName: "results-popup__title title--true",
       titleChildClassName: "answers__count--true",
     },
     {
-      answers: Array.from(new Set(falseAnswers)),
+      answers: falseAnswers,
       header: "I don't know :(",
       titleClassName: "results-popup__title title--false",
       titleChildClassName: "answers__count--false",
@@ -55,16 +55,17 @@ const GameResultPage = (): JSX.Element => {
         <div className="btn-container">
           <button
             onClick={async () => {
-              await resetGame();
-              setGameStart();
+              await restartGame();
+              gameStep();
             }}
             className="btn btn--color_red"
           >
             Restart
           </button>
           <button
-            onClick={() => {
-              resetGame();
+            onClick={async () => {
+              await resetGame();
+              settingsDown();
             }}
             className="btn"
           >

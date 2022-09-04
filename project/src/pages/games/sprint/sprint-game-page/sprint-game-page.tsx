@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAppSelector, RootState } from "../../../../store/store";
 import { useActions } from "../../../../hooks/actions";
-import { useGetWordsMutation } from "../../../../services/words-service";
-import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import Timer from "../components/timer/timer";
 import tick from "../../../../assets/sound/tick.mp3";
 import cross from "../../../../assets/sound/cross.mp3";
 import "../../../main/components/games-promo/game-card/sprint-card/sprint-card.scss";
-import SelectionOfParameters from "../components/selection-of-parameters/selection-of-parameters";
-import { SELECTION_DATA } from "../../../../config";
 import CloseBtn from "../components/close-btn/close-btn";
 import AudioBtn from "../components/audio/audio-btn";
 import ProgressLabels from "../components/progress-labels/progress-labels";
@@ -16,12 +12,7 @@ import GameResultPage from "../game-result-page/game-result-page";
 import { Word } from "../../../../interfaces/word";
 import { IAuth } from "../../../../interfaces/auth";
 import "./sprint-game-page.scss";
-
-const timerDetails = {
-  delay: 1000,
-  initial: 60,
-  className: "sprint-timer sprint-game__sprint-timer",
-};
+import SprintGameStartScreen from "../start-screen/sprint-game-start-screen";
 
 const SprintGamePage = (): JSX.Element => {
   const audio = new Audio();
@@ -30,47 +21,33 @@ const SprintGamePage = (): JSX.Element => {
     (state: RootState) => state.authState?.auth
   );
 
+  const { gameStep, changeGameScore, setGameEnd } = useActions();
   const {
-    gameStep,
-    changeGameScore,
-    getData,
-    setLevel,
-    setGameStart,
-    setGameEnd,
-  } = useActions();
-  const {
+    timer,
+    delay,
+    timerCircle,
     gameData,
     score,
-    level,
     currentWord,
     trueAnswersCount,
     isGameStarted,
     isGameEnded,
   } = useAppSelector((state) => state.sprintState);
 
-  const [getWords, { isLoading, isSuccess }] = useGetWordsMutation();
-  const [
-    getAggregatedWords,
-    {
-      isLoading: isAggregatedWordsLoading,
-      isSuccess: isAggregatedWordsSuccess,
-    },
-  ] = useGetUserWordsMutation();
+  const incorrectButtonRef = useRef(null);
+  const correctButtonRef = useRef(null);
+  const indicatorRef = useRef(null);
+
   const words: Word[] = useAppSelector(
     (state: RootState) => state.wordsState.words || []
   );
-
-  const isLoadingData = isLoading || isAggregatedWordsLoading;
-  const isDisabledBtn = !isGameStarted || isGameEnded || isLoadingData;
-  const isDisabledThroughoutGame = isGameStarted || isGameEnded;
-  const isDisabledStartGame = isGameStarted && !isLoadingData;
 
   const [currentStep, setCurrentStep] = useState(0);
   const [indicatorClassName, setIndicatorClassName] = useState("");
 
   const [sound, setSound] = useState(true);
 
-  const handleGameStep = (isRightBtn: boolean) => {
+  const handleGameState = (isRightBtn: boolean) => {
     const isTrueAnswer = isRightBtn
       ? gameData.at(-1).wordTranslate === currentWord.wordTranslate
       : gameData.at(-1).wordTranslate !== currentWord.wordTranslate;
@@ -81,44 +58,7 @@ const SprintGamePage = (): JSX.Element => {
     sound ? audio.play() : audio.pause();
 
     setCurrentStep(currentStep + 1);
-    gameStep();
   };
-
-  document.onkeydown = (event) => {
-    if (isDisabledStartGame) {
-      if (event.code === "ArrowRight") {
-        handleGameStep(true);
-      }
-      if (event.code === "ArrowLeft") {
-        handleGameStep(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (isGameStarted) {
-      if (auth?.userId) {
-        getAggregatedWords({
-          userId: auth.userId,
-          params: {
-            group: +level - 1,
-            wordsPerPage: 20,
-          },
-        });
-      } else {
-        getWords({
-          group: +level - 1,
-        });
-      }
-    }
-  }, [level, isGameStarted]);
-
-  useEffect(() => {
-    if (isSuccess || isAggregatedWordsSuccess) {
-      getData(words);
-      gameStep();
-    }
-  }, [isSuccess, isAggregatedWordsSuccess]);
 
   useEffect(() => {
     if (currentStep) {
@@ -130,95 +70,135 @@ const SprintGamePage = (): JSX.Element => {
     }
   }, [currentStep]);
 
+  const handleKeyboardEvents = (event: KeyboardEvent) => {
+    const { code, repeat } = event;
+
+    if (!isGameEnded && !repeat) {
+      if (code === "ArrowRight") {
+        handleGameState(true);
+      }
+      if (code === "ArrowLeft") {
+        handleGameState(false);
+      }
+    }
+  };
+
+  document.onkeydown = handleKeyboardEvents;
+
+  const correctButton = correctButtonRef.current;
+  const incorrectButton = incorrectButtonRef.current;
+  const indicator = indicatorRef.current;
+
+  const toggleButtonsState = () => {
+    correctButton.disabled = !correctButton.disabled;
+    incorrectButton.disabled = !incorrectButton.disabled;
+    correctButton.classList.toggle("sprint-game__btn--disabled");
+    incorrectButton.classList.toggle("sprint-game__btn--disabled");
+  };
+
+  useEffect(() => {
+    isGameStarted && gameStep();
+  }, [isGameStarted]);
+
+  const handleAnimateStart = (event: AnimationEvent) => {
+    if (event.animationName === "indicator" && !isGameEnded) {
+      toggleButtonsState();
+      document.onkeydown = null;
+    }
+  };
+
+  const handleAnimateEnd = (event: AnimationEvent) => {
+    if (event.animationName === "indicator") {
+      if (isGameEnded) {
+        indicator.removeEventListener(
+          "animationstart",
+          handleAnimateStart,
+          false
+        );
+        indicator.removeEventListener("animationend", handleAnimateEnd, false);
+      }
+      gameStep();
+      toggleButtonsState();
+    }
+  };
+
+  useEffect(() => {
+    if (indicator instanceof HTMLElement) {
+      indicator.addEventListener("animationstart", handleAnimateStart, false);
+      indicator.addEventListener("animationend", handleAnimateEnd, false);
+    }
+  }, [indicator, isGameEnded]);
+
   return (
-    <div className="container">
-      <header className="header">
-        <button
-          disabled={isDisabledThroughoutGame}
-          className={`play-btn header__play-btn ${
-            isDisabledThroughoutGame && "play-btn--disabled"
-          }`}
-          onClick={() => {
-            setGameStart();
-          }}
-        >
-          Play
-        </button>
-        <CloseBtn isDisabled={isGameEnded} />
-      </header>
-      <main className="main">
-        <section className="sprint-game">
-          <div className="sprint-game__header">
-            <span className="sprint-game__score">{score}</span>
-            <ProgressLabels />
-          </div>
-          <div className="sprint-game__selects">
-            {SELECTION_DATA.slice(0, 1).map((selection) => {
-              return (
-                <SelectionOfParameters
-                  key={selection.label}
-                  selectionDetails={selection}
-                  isDisabled={isDisabledThroughoutGame}
-                  value={selection.label === "level" ? level : level}
-                  setValue={selection.label === "level" && setLevel}
+    <>
+      {!isGameStarted ? (
+        <SprintGameStartScreen gameName="sprint" words={words} />
+      ) : (
+        <div className="container">
+          <CloseBtn isDisabled={isGameEnded} />
+          <main className="main">
+            <section className="sprint-game">
+              <div className="sprint-game__header">
+                <span className="sprint-game__score">{score}</span>
+                <ProgressLabels />
+              </div>
+              <div className="sprint-game__selects">
+                <AudioBtn
+                  className={`sprint-game__audio ${
+                    !sound && "circle__audio--inactive"
+                  }`}
+                  isDisabled={isGameEnded}
+                  setSound={() => !isGameEnded && setSound(!sound)}
                 />
-              );
-            })}
-            <AudioBtn
-              className={`sprint-game__audio ${
-                !sound && "circle__audio--inactive"
-              }`}
-              isDisabled={isDisabledBtn}
-              setSound={() => isDisabledStartGame && setSound(!sound)}
-            />
-          </div>
-          {isDisabledThroughoutGame && (
-            <Timer
-              timerDetails={timerDetails}
-              endTimer={() => setGameEnd()}
-              isStarted={isDisabledStartGame}
-            />
-          )}
-          {isLoadingData && <div>...Loading</div>}
-          {!isLoadingData && isDisabledThroughoutGame && (
-            <div className="sprint-game__text">
-              {currentWord.wordTranslate}
-              <span className="sprint-game__text--english">
-                {currentWord.word}
-              </span>
-            </div>
-          )}
-          <div className="sprint-game__btn-container">
-            <button
-              disabled={isDisabledBtn}
-              onClick={() => handleGameStep(false)}
-              className={`sprint-game__btn sprint-game__btn--no ${
-                isDisabledBtn && "sprint-game__btn--disabled"
-              }`}
-            >
-              неверно
-            </button>
-            <div className="sprint-game__answer-indicator">
-              <div
-                className={`circle sprint-game__circle ${indicatorClassName}`}
+              </div>
+              <Timer
+                initial={timer}
+                delay={delay}
+                timerCircle={timerCircle}
+                className="sprint-timer sprint-game__sprint-timer"
+                endTimer={() => setGameEnd()}
               />
-            </div>
-            <button
-              disabled={isDisabledBtn}
-              onClick={() => handleGameStep(true)}
-              className={`sprint-game__btn sprint-game__btn--yes ${
-                isDisabledBtn && "sprint-game__btn--disabled"
-              }`}
-            >
-              верно
-            </button>
-          </div>
-        </section>
-      </main>
-      {isGameEnded && <GameResultPage />}
-    </div>
+              <div className="sprint-game__text">
+                {currentWord.wordTranslate}
+                <span className="sprint-game__text--english">
+                  {currentWord.word}
+                </span>
+              </div>
+              <div className="sprint-game__btn-container">
+                <button
+                  onClick={() => handleGameState(false)}
+                  disabled={isGameEnded}
+                  className={`sprint-game__btn sprint-game__btn--no ${
+                    isGameEnded && "sprint-game__btn--disabled"
+                  }`}
+                  ref={incorrectButtonRef}
+                >
+                  incorrect
+                </button>
+                <div className="sprint-game__answer-indicator">
+                  <div
+                    ref={indicatorRef}
+                    className={`circle sprint-game__circle ${indicatorClassName}`}
+                  />
+                </div>
+                <button
+                  onClick={() => handleGameState(true)}
+                  disabled={isGameEnded}
+                  className={`sprint-game__btn sprint-game__btn--yes ${
+                    isGameEnded && "sprint-game__btn--disabled"
+                  }`}
+                  ref={correctButtonRef}
+                >
+                  correct
+                </button>
+              </div>
+            </section>
+          </main>
+          {isGameEnded && <GameResultPage />}
+        </div>
+      )}
+    </>
   );
 };
 
 export default SprintGamePage;
-// {!isGameStarted && <GameResultPage />}

@@ -7,14 +7,13 @@ import RegistrationPage from "./pages/auth/registration/registration";
 import MainPage from "./pages/main/main";
 import Textbook from "./pages/main/components/textbook/textbook";
 import AboutUs from "./pages/main/components/about-us/about-us";
-import Home from "./pages/main/components/Home/home";
+import Home from "./pages/main/components/home/home";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "./App.scss";
 
 import AudioCallPage from "./pages/games/audiocall/audiocall-game-page/audiocall";
-import GameStartScreen from "./pages/games/audiocall/start-screen/game-start-screen.component";
 import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
 
 function App() {

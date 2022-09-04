@@ -9,6 +9,7 @@ import wordsReducer from "./words-slice";
 import authReducer from "./auth-slice";
 import sprintReducer from "./sprint-slice";
 import audioCallSettingsReducer from "./audiocall-settings-slice";
+import sprintSettingsReducer from "./sprint-settings-slice";
 import audioCallReducer from "./audiocall-slice";
 import statisticsReducer from "./statistics-slice";
 
@@ -24,6 +25,7 @@ export const rootReducer = combineReducers({
   audioCallSettingsReducer,
   statisticsState: statisticsReducer,
   sprintState: sprintReducer,
+  sprintSettingsState: sprintSettingsReducer,
 });
 export const setupStore = () => {
   return configureStore({
