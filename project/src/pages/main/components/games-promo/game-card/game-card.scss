@@ -1,3 +1,5 @@
+@import '../../../../../styles/constants';
+
 .game-card {
   width: 16.6rem;
   height: 15.3rem;
@@ -36,7 +38,7 @@
     padding: 0.8rem 0.5rem;
     align-self: flex-end;
 
-    color: var(--btn-text-color);
+    color: $btn-text-color;
     font-weight: 700;
     font-size: 0.8rem;
     line-height: 0.99rem;
@@ -49,7 +51,7 @@
     transition: 0.5s;
 
     &:hover {
-      background-color: var(--hover-btn-color);
+      background-color: $hover-btn-color;
     }
   }
 }

@@ -17,13 +17,13 @@ const GameResultPage = (): JSX.Element => {
     {
       answers: Array.from(new Set(trueAnswers)),
       header: "I know :)",
-      titleClassName: "results-popup__title title--true",
+      titleClassName: "results-popup__title results-popup__title--true",
       titleChildClassName: "answers__count--true",
     },
     {
       answers: Array.from(new Set(falseAnswers)),
       header: "I don't know :(",
-      titleClassName: "results-popup__title title--false",
+      titleClassName: "results-popup__title results-popup__title--false",
       titleChildClassName: "answers__count--false",
     },
   ];

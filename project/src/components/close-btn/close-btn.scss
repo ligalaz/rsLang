@@ -1,10 +1,12 @@
+@import '../../../../../styles/constants';
+
 .circle__cross {
   
   &--closed {
     width: 3.7rem;
     height: 3.7rem;
 
-    background-color: var(--close-btn-color);
+    background-color: $close-btn-color;
 
     transition: 0.5s;
 
@@ -12,7 +14,7 @@
 
     &::after,
     &::before {
-      background-color: var(--yes-btn-color);
+      background-color: $main-purple-color;
 
       transition: 0.5s;
 
@@ -20,32 +22,32 @@
     }
 
     &:hover {
-      background-color: var(--yes-btn-color);
+      background-color: $main-purple-color;
 
       &::after,
       &::before {
-        background-color: var(--close-btn-color);
+        background-color: $close-btn-color;
       }
     }
   }
 }
 
 .circle--disabled {
-  background-color: var(--gray-text-color);
+  background-color: $disabled-bg-color;
 
   cursor: not-allowed;
 
   &::after,
   &::before {
-    background-color: var(--btn-text-color);
+    background-color: $btn-text-color;
   }
 
   &:hover {
-    background-color: var(--gray-text-color);
+    background-color: $disabled-bg-color;
 
     &::after,
     &::before {
-      background-color: var(--btn-text-color);
+      background-color: $btn-text-color;
 
       cursor: not-allowed;
     }

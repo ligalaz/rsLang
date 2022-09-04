@@ -1,3 +1,5 @@
+@import '../../../../styles/constants';
+
 .overlay {
   position: absolute;
   top: 0;
@@ -8,7 +10,7 @@
   align-items: center;
   justify-content: center;
   z-index: 15;
-  background-color: var(--overlay);
+  background-color: $overlay-color;
 
   animation: visible 1s;
 
@@ -54,12 +56,12 @@
   height: 45.5rem;
   padding: 5.5rem 4.5rem 2.8rem;
 
-  color: var(--gray-text-color);
+  color: $gray-text-color;
   font-weight: 500;
   font-size: 1.6rem;
   line-height: 1.9rem;
 
-  background-color: var(--result-bg);
+  background-color: $result-bg-color;
   border-radius: 1.4rem;
 
   box-shadow: 0.5rem 0.5rem 0.7rem rgba(0, 0, 0, 0.05);
@@ -70,12 +72,20 @@
 
   &__title {
     margin-bottom: 1.9rem;
+
+    &--true {
+      color: $main-purple-color;
+    }
+  
+    &--false {
+      color: $main-red-color;
+    }
   }
 
   &__score {
     padding-left: 0.5rem;
 
-    color: var(--yes-btn-color);
+    color: $main-purple-color;
     font-weight: 700;
   }
 
@@ -95,7 +105,7 @@
     }
     
     &::-webkit-scrollbar-thumb {
-      background-color: var(--yes-btn-color); 
+      background-color: $main-purple-color; 
       border-radius: 30px;
     }
 
@@ -126,8 +136,8 @@
   font-size: 1.6rem;
   line-height: 2rem;
 
-  background-color: var(--yes-btn-color);
-  color: var(--btn-text-color);
+  background-color: $main-purple-color;
+  color: $btn-text-color;
 
   border: none;
   outline: none;
@@ -137,30 +147,20 @@
   cursor: pointer;
 
   &:hover {
-    background-color: var(--hover-btn-color);
+    background-color: $hover-btn-color;
   }
 
   &--color_red {
-    background-color: var(--no-btn-color);
-  }
-}
-
-.title {
-  &--true {
-    color: var(--yes-btn-color);
-  }
-
-  &--false {
-    color: var(--no-btn-color);
+    background-color: $main-red-color;
   }
 }
 
 .answers__count {
   &--true {
-    background-color: var(--yes-btn-color);
+    background-color: $main-purple-color;
   }
 
   &--false {
-    background-color: var(--no-btn-color);
+    background-color: $main-red-color;
   }
 }

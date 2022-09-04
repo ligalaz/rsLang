@@ -12,3 +12,9 @@ export const SELECTION_DATA = [
     optionCount: 30,
   },
 ];
+
+export const CONTACTS_BASE_URLS = {
+  linkedin: "https://www.linkedin.com/",
+  github: "https://github.com/",
+  telegram: "https://t.me/",
+};
