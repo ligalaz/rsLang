@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { useActions } from "../../../../../hooks/actions";
+import { useActions } from "../../hooks/actions";
 import "./close-btn.scss";
 
 interface CloseBtnDetails {

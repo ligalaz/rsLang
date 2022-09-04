@@ -38,7 +38,7 @@ const ResultBlock = ({
           <div className="answer__word-container">
             <AudioBtn
               className="circle__audio--small"
-              setSound={() => AudioService.play(audio)}
+              setSound={() => AudioService.play([audio])}
             />
             <div>{word}</div>
           </div>

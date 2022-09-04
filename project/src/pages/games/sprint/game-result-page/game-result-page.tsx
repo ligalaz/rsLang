@@ -3,7 +3,7 @@ import { useActions } from "../../../../hooks/actions";
 import { useAppSelector } from "../../../../store/store";
 import ResultBlock from "../components/result-block/result-block";
 import Title from "../components/title/title";
-import CloseBtn from "../components/close-btn/close-btn";
+import CloseBtn from "../../../../components/close-btn/close-btn";
 import "./game-result-page.scss";
 
 const GameResultPage = (): JSX.Element => {

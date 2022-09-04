@@ -11,11 +11,10 @@ import Home from "./pages/main/components/home/home";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
-import "./App.scss";
-
 import AudioCallPage from "./pages/games/audiocall/audiocall-game-page/audiocall";
-import GameStartScreen from "./pages/games/audiocall/start-screen/game-start-screen.component";
 import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
+import SavannaGame from "./pages/games/savanna/savanna-game";
+import "./App.scss";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -44,8 +43,9 @@ function App() {
             element={!auth ? <LoginPage /> : <Navigate to="main" replace />}
           />
 
-          <Route path="main/audiocall" element={<AudioCallPage />} />
-          <Route path="main/sprint" element={<SprintGamePage />} />
+          <Route path="audiocall" element={<AudioCallPage />} />
+          <Route path="sprint" element={<SprintGamePage />} />
+          <Route path="savanna" element={<SavannaGame />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
             <Route path="textbook/:group/:page" element={<Textbook />} />

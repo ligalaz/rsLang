@@ -47,7 +47,10 @@ function Card({ info, togglePopup, removeWord, isAuth, group }: ICardProps) {
           })}
         >
           <a className="card__control-option">
-            <Icon onClick={() => AudioService.play(info.audio)} type="sound" />
+            <Icon
+              onClick={() => AudioService.play([info.audio])}
+              type="sound"
+            />
           </a>
           <a className="card__control-option" onClick={togglePopup}>
             <Icon type="info" />

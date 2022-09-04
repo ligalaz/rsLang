@@ -13,7 +13,11 @@ import { IAuth } from "../../../../interfaces/auth";
 import { Statistic } from "../../../../interfaces/statistic";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
 import { Word } from "../../../../interfaces/word";
-import classNames from "classnames";
+
+interface ITextbookRouteParams {
+  page?: string;
+  group: string;
+}
 
 function Personal() {
   const auth: IAuth = useAppSelector(
@@ -24,9 +28,7 @@ function Personal() {
     (state: RootState) => state.statisticsState?.statistics
   );
   const location = useLocation();
-  const [isTextbookRoute, setRoute] = useState<boolean>(
-    location.pathname.includes("textbook")
-  );
+  const [routeParams, setRouteParams] = useState<ITextbookRouteParams>(null);
 
   const words: Word[] = useAppSelector(
     (state: RootState) => state.statisticsState?.newWords || []
@@ -41,7 +43,16 @@ function Personal() {
   const [getUserStatistics] = useGetUserStatisticsMutation();
 
   useEffect(() => {
-    setRoute(location.pathname.includes("textbook"));
+    if (location.pathname.includes("textbook")) {
+      const pathes: string[] = location.pathname.split("/");
+      const params: ITextbookRouteParams = {
+        group: pathes[3],
+      };
+      if (pathes.length === 5) {
+        params.page = pathes[4];
+      }
+      setRouteParams(params);
+    }
   }, [location.pathname]);
 
   useEffect(() => {
@@ -124,11 +135,15 @@ function Personal() {
                 text={`${statistics?.learnPercent || 0}%`}
               />
             </div>
-            {isTextbookRoute && (
+            {routeParams && (
               <div className="personal__buttons">
                 <Link
                   style={{ textDecoration: "none" }}
-                  to="/registration"
+                  to={
+                    routeParams.page
+                      ? `/sprint?group=${routeParams.group}&page=${routeParams.page}`
+                      : `/sprint?group=${routeParams.group}`
+                  }
                   className="personal__game personal__game1"
                   type="button"
                 >
@@ -137,11 +152,27 @@ function Personal() {
 
                 <Link
                   style={{ textDecoration: "none" }}
-                  to="/registration"
+                  to={
+                    routeParams.page
+                      ? `/audiocall?group=${routeParams.group}&page=${routeParams.page}`
+                      : `/audiocall?group=${routeParams.group}`
+                  }
                   className="personal__game personal__game2"
                   type="button"
                 >
                   Audio call
+                </Link>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={
+                    routeParams.page
+                      ? `/savanna?group=${routeParams.group}&page=${routeParams.page}`
+                      : `/savanna?group=${routeParams.group}`
+                  }
+                  className="personal__game personal__game2"
+                  type="button"
+                >
+                  Savanna
                 </Link>
               </div>
             )}

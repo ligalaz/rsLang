@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { GetWordsRequest, IWord, Word } from "../interfaces/word";
-import { API_BASE_URL } from "../config";
+import { CUSTOM_API_BASE_URL } from "../config";
 import { ServerRoutes } from "../enums/server-routes";
 import { HTTPMethods } from "../enums/http-methods";
 
 export const wordsService = createApi({
   reducerPath: "words",
   baseQuery: fetchBaseQuery({
-    baseUrl: API_BASE_URL,
+    baseUrl: CUSTOM_API_BASE_URL,
   }),
   endpoints: (build) => ({
     getWords: build.mutation<Word[], GetWordsRequest>({

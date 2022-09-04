@@ -1,14 +1,29 @@
-@import "../../../../styles/responsive-media";
-@import "../audiocall-variables.scss";
+@import "../../styles/responsive-media";
+
+$repeater-bg: #6550de;
+$cross-bg: #e5e5e5;
+$play-bg: #ffffff;
+$btn-play-border: #b2b2b2;
+$next-btn-bg: #f56748;
+$elem-btn: #6550de;
+$uknown-btn-hover: #f56748;
+$cross-hover: #f56748;
+$words-text: #b2b2b2;
+$words-hover-text: #000000;
+$words-error-text: red;
+$words-active-text: #000000;
+$words-uknown-text: #000000;
+$words-uknown-hover-text: #ffffff;
+$play-btn-text: #7d7d7d;
+
 .start-screen {
-  width: 1920px;
-  height: 1024px;
-  background: url("../../../../assets/img/game_start-screen.jpeg") 50%;
+  width: 100%;
+  height: 100%;
+  background: url("../../assets/img/game_start-screen.jpeg") 50% no-repeat;
   background-size: cover;
   background-repeat: repeat-x;
   overflow: hidden;
   margin: 0 auto;
-  padding-top: 100px;
 
   @include tablet-upper() {
     padding-top: 10px;
@@ -16,53 +31,45 @@
 
   @include tablet-lowest() {
     padding-top: 10px;
+    background: url("../../assets/img/game_start-screen_mobile.jpg") 50% 100% no-repeat;
   }
 
   &__close {
-    position: relative;
-    left: 93%;
+    position: absolute;
+    right: 50px;
     top: 50px;
 
     @include tablet-upper() {
       top: 30px;
-      left: 85%;
+      right: 30px;
     }
+  }
+
+  &__wrapper {
+    margin: 100px auto 0;
+    max-width: 790px;
+    padding: 0 20px;
 
     @include tablet-lowest() {
-      top: 20px;
-      left: 77%;
+      margin: 70px auto 0;
     }
   }
 
   &__row {
-    margin-top: 5px;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     column-gap: 5%;
 
     @include tablet-lowest() {
       gap: 40px;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     &-text {
-      width: 535px;
       color: $words-active-text;
       font-family: "Montserrat";
-      margin-left: 7%;
-
-      @include tablet-upper() {
-        margin-left: 5%;
-        text-align: center;
-      }
-
-      @include tablet-lowest() {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 0;
-      }
 
       & h1 {
         font-weight: 700;
@@ -80,15 +87,10 @@
         font-weight: 400;
         font-size: 18px;
         line-height: 22px;
-
-        @include tablet-lowest() {
-          text-align: center;
-        }
       }
     }
 
     .start-screen__row-action {
-      width: 250px;
       height: 185px;
       display: flex;
       justify-content: center;
@@ -109,6 +111,8 @@
       &:hover {
         animation: btn-up-down 0.5s linear;
         -webkit-animation: btn-up-down 0.5s linear;
+        background-color: #FEC246;
+        transition: background-color 0.2s;
       }
 
       & p {
@@ -165,17 +169,14 @@
   -o-border-radius: 50%;
 }
 
-.start-screen__row-form {
-  position: relative;
-}
-
 .settings-form {
-  margin-bottom: 10px;
+  margin-top: 10px;
+
   @include tablet-lowest() {
-    color: $words-uknown-hover-text;
-    font-weight: bold;
+    margin-top: 20px;
   }
 }
+
 #gamelevel {
   margin-right: 25px;
 }
