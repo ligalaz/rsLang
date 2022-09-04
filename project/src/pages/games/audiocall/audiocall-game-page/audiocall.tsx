@@ -250,86 +250,90 @@ const AudioCallPage = (props?: unknown) => {
   }
 
   function updateUserWordStatistic(isAttemptCorrect: boolean): void {
-    const request: UserWordResponse = {
-      id: auth?.userId,
-      wordId: currentWord.id,
-    };
-    const seria: number = statistics?.optional?.audioCall?.seria || 0;
-    const maxSeria: number = statistics?.optional?.audioCall?.maxSeria || 0;
-    const wordStrick: number = currentWord.userWord?.optional?.strick || 0;
-    const wordAttempts: number =
-      currentWord.userWord?.optional?.audioCall?.attempts || 0;
-    const wordGuesses: number =
-      currentWord.userWord?.optional?.audioCall?.guesses || 0;
-    const statisticsAttempts: number =
-      statistics?.optional?.audioCall?.[getStartOfDayDate()]?.attempts || 0;
-    const statisticsGuesses: number =
-      statistics?.optional?.audioCall?.[getStartOfDayDate()]?.guesses || 0;
-    const shouldWordMarkAsLearned: boolean =
-      isAttemptCorrect &&
-      ((currentWord.userWord?.difficulty === "seen" && wordStrick == 1) ||
-        (currentWord.userWord?.difficulty === "hard" && wordStrick == 4));
-    const shouldWorkRemoveFromLearned: boolean =
-      !isAttemptCorrect && currentWord.userWord?.difficulty === "learned";
-
-    if (!currentWord.userWord) {
-      request.difficulty = "seen";
-      request.optional = {
-        firstSeenDate: getStartOfDayDate(),
-        strick: +isAttemptCorrect,
-        audioCall: {
-          attempts: 1,
-          guesses: +isAttemptCorrect,
-        },
+    if (auth) {
+      const request: UserWordResponse = {
+        id: auth?.userId,
+        wordId: currentWord.id,
       };
-    } else {
-      request.optional = {
-        ...currentWord.userWord.optional,
-        strick: isAttemptCorrect ? wordStrick + 1 : 0,
-        audioCall: {
-          attempts: wordAttempts + 1,
-          guesses: wordGuesses + +isAttemptCorrect,
-        },
-      };
+      const seria: number = statistics?.optional?.audioCall?.seria || 0;
+      const maxSeria: number = statistics?.optional?.audioCall?.maxSeria || 0;
+      const wordStrick: number = currentWord.userWord?.optional?.strick || 0;
+      const wordAttempts: number =
+        currentWord.userWord?.optional?.audioCall?.attempts || 0;
+      const wordGuesses: number =
+        currentWord.userWord?.optional?.audioCall?.guesses || 0;
+      const statisticsAttempts: number =
+        statistics?.optional?.audioCall?.[getStartOfDayDate()]?.attempts || 0;
+      const statisticsGuesses: number =
+        statistics?.optional?.audioCall?.[getStartOfDayDate()]?.guesses || 0;
+      const shouldWordMarkAsLearned: boolean =
+        isAttemptCorrect &&
+        ((currentWord.userWord?.difficulty === "seen" && wordStrick == 1) ||
+          (currentWord.userWord?.difficulty === "hard" && wordStrick == 4));
+      const shouldWorkRemoveFromLearned: boolean =
+        !isAttemptCorrect && currentWord.userWord?.difficulty === "learned";
 
-      if (shouldWordMarkAsLearned) {
-        request.difficulty = "learned";
-        request.optional.learnedDate = getStartOfDayDate();
-      } else if (shouldWorkRemoveFromLearned) {
+      if (!currentWord.userWord) {
         request.difficulty = "seen";
-        delete request?.optional?.learnedDate;
+        request.optional = {
+          firstSeenDate: getStartOfDayDate(),
+          strick: +isAttemptCorrect,
+          audioCall: {
+            attempts: 1,
+            guesses: +isAttemptCorrect,
+          },
+        };
       } else {
-        request.difficulty = currentWord.userWord.difficulty;
+        request.optional = {
+          ...currentWord.userWord.optional,
+          strick: isAttemptCorrect ? wordStrick + 1 : 0,
+          audioCall: {
+            attempts: wordAttempts + 1,
+            guesses: wordGuesses + +isAttemptCorrect,
+          },
+        };
+
+        if (shouldWordMarkAsLearned) {
+          request.difficulty = "learned";
+          request.optional.learnedDate = getStartOfDayDate();
+        } else if (shouldWorkRemoveFromLearned) {
+          request.difficulty = "seen";
+          delete request?.optional?.learnedDate;
+        } else {
+          request.difficulty = currentWord.userWord.difficulty;
+        }
       }
-    }
 
-    if (!currentWord.userWord) {
-      createUserWord(request);
-    } else {
-      updateUserWord(request);
-    }
+      if (!currentWord.userWord) {
+        createUserWord(request);
+      } else {
+        updateUserWord(request);
+      }
 
-    dispatch(
-      updateStoreStatistics(
-        Statistic.fromDto({
-          learnedWords:
-            (statistics?.learnedWords || 0) +
-            (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
-          optional: {
-            ...statistics?.optional,
-            audioCall: {
-              seria: isAttemptCorrect ? seria + 1 : 0,
-              maxSeria:
-                isAttemptCorrect && seria + 1 > maxSeria ? seria + 1 : maxSeria,
-              [getStartOfDayDate()]: {
-                attempts: statisticsAttempts + 1,
-                guesses: statisticsGuesses + +isAttemptCorrect,
+      dispatch(
+        updateStoreStatistics(
+          Statistic.fromDto({
+            learnedWords:
+              (statistics?.learnedWords || 0) +
+              (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
+            optional: {
+              ...statistics?.optional,
+              audioCall: {
+                seria: isAttemptCorrect ? seria + 1 : 0,
+                maxSeria:
+                  isAttemptCorrect && seria + 1 > maxSeria
+                    ? seria + 1
+                    : maxSeria,
+                [getStartOfDayDate()]: {
+                  attempts: statisticsAttempts + 1,
+                  guesses: statisticsGuesses + +isAttemptCorrect,
+                },
               },
             },
-          },
-        })
-      )
-    );
+          })
+        )
+      );
+    }
   }
 
   function resetBeforeNextRound() {
@@ -357,7 +361,6 @@ const AudioCallPage = (props?: unknown) => {
   function skipWord() {
     audioService({ audio: "" }, false, cross);
     setFalse(falseGameAnswer.concat(currentWord));
-    updateUserWordStatistic(false);
     dispatch(setTrueRaw({ trueRow: trueWordRow }));
     updateUserWordStatistic(false);
     setRow(0);
