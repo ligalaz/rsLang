@@ -24,7 +24,6 @@ function Textbook() {
   const { group, page } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const [updateUserWord, { isLoading: isUserWordUpdateLoading }] =
     useUpdateUserWordMutation();
 
@@ -111,7 +110,7 @@ function Textbook() {
       </>
     );
   }
-
+  console.log(screen);
   return (
     <>
       {popUp && gatherPopup(idPopUp)}

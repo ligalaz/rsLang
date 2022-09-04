@@ -21,7 +21,9 @@ const MainPage = () => {
           <Outlet />
         </div>
       </div>
-      <Personal />
+      <div className="main-four__personal">
+        <Personal />
+      </div>
     </div>
   );
 };

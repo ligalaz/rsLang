@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IStatistic, Statistic } from "../interfaces/statistic";
 import { UserWordOptions } from "../interfaces/user-word";
 import { Word } from "../interfaces/word";
@@ -18,17 +18,15 @@ const initialState: IStatisticState = {
 export const statisticsSlice = createSlice({
   initialState,
   name: "statistics",
-  reducers: {},
+  reducers: {
+    updateUserStatistics: (state, action: PayloadAction<Statistic>) => {
+      state.statistics = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(
         statisticsService.endpoints.getUserStatistics.matchFulfilled,
-        (state, { payload }) => {
-          state.statistics = payload;
-        }
-      )
-      .addMatcher(
-        statisticsService.endpoints.updateUserStatistics.matchFulfilled,
         (state, { payload }) => {
           state.statistics = payload;
         }
@@ -63,3 +61,5 @@ export const statisticsSlice = createSlice({
 });
 
 export default statisticsSlice.reducer;
+
+export const { updateUserStatistics } = statisticsSlice.actions;

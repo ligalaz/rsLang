@@ -4,7 +4,7 @@ import Icon from "../../../../components/icon/icon";
 import "./popUp.scss";
 import { API_BASE_URL } from "../../../../config";
 import { Word } from "../../../../interfaces/word";
-import { RootState, useAppSelector } from "../../../../store/store";
+import { AppDispatch, RootState, useAppSelector } from "../../../../store/store";
 import {
   useCreateUserWordMutation,
   useUpdateUserWordMutation,
@@ -15,6 +15,8 @@ import { useUpdateUserStatisticsMutation } from "../../../../services/statistics
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
 import { IStatistic } from "../../../../interfaces/statistic";
 import { AudioService } from "../../../../utils/audio-service";
+import { updateUserStatistics as updateStoreStatistics } from "../../../../store/statistics-slice";
+import { useDispatch } from "react-redux";
 
 export interface IPopUp {
   key: string | number;
@@ -35,9 +37,15 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
 
   const isAuth = !!auth;
 
+  const dispatch: AppDispatch = useDispatch();
+
   const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
-  const [updateUserStatistics] = useUpdateUserStatisticsMutation();
+  const [updateUserStatistics, { data }] = useUpdateUserStatisticsMutation();
+  
+  useEffect(() => {
+    dispatch(updateStoreStatistics())
+  }, [data]);
 
   useEffect(() => {
     if (!info.userWord && auth) {

@@ -1,9 +1,15 @@
 @import '../../../../../styles/constants';
+@import '../../../../../styles/responsive-media';
 
 .game-card {
-  width: 16.6rem;
-  height: 15.3rem;
+  width: 250px;
+  height: 250px;
   color: #000;
+
+  @include desktop-bottom() {
+    width: 300px;
+    height: 270px;
+  }
 
   &__promo {
     display: flex;

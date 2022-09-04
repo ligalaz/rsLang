@@ -14,7 +14,7 @@ import { Statistic } from "../../../../interfaces/statistic";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
 import { Word } from "../../../../interfaces/word";
 
-interface ITextbookRouteParams {
+export interface ITextbookRouteParams {
   page?: string;
   group: string;
 }
@@ -75,66 +75,76 @@ function Personal() {
           {auth && (
             <div className="personal__center">
               <div className="personal__center-title">Daily statistics</div>
-              <div className="personal__games">
-                <div className="personal__column">
-                  <div className="personal__game-hidden">game</div>
-                  <div className="personal__descr">In a row</div>
-                  <div className="personal__descr">accuracy</div>
-                  <div className="personal__descr">New words</div>
-                </div>
-
-                <div className="personal__column personal__column-info">
-                  <div className="personal__game-title">AudioCall</div>
-                  <div className="personal__strick">
-                    {statistics?.optional?.audioCall?.maxSeria ?? 0}
-                  </div>
-                  <div className="personal__percent">
-                    {statistics?.audioCallPercent || 0}%
-                  </div>
-                  <div className="presonal__all">{audioWords.length}</div>
-                </div>
-
-                <div className="personal__column personal__column-info">
-                  <div className="personal__game-title">Sprint</div>
-                  <div className="personal__strick">
-                    {statistics?.optional?.sprint?.maxSeria ?? 0}
+              <div className="personal__center-content">
+                <div className="personal__games">
+                  <div className="personal__column">
+                    <div className="personal__game-hidden">game</div>
+                    <div className="personal__descr">In a row</div>
+                    <div className="personal__descr">accuracy</div>
+                    <div className="personal__descr">New words</div>
                   </div>
 
-                  <div className="personal__percent">
-                    {statistics?.sprintPercent || 0}%
+                  <div className="personal__column personal__column-info">
+                    <div className="personal__game-title">AudioCall</div>
+                    <div className="personal__strick">
+                      {statistics?.optional?.audioCall?.maxSeria ?? 0}
+                    </div>
+                    <div className="personal__percent">
+                      {statistics?.audioCallPercent || 0}%
+                    </div>
+                    <div className="presonal__all">{audioWords.length}</div>
                   </div>
-                  <div className="personal__all">{sprintWords.length}</div>
-                </div>
-              </div>
-              <div className="personal__statistics">
-                <div className="personal__statistics-descr">
-                  <div className="personal__statistics-learned">Learnt</div>
-                  <div className="personal__statistics-percentage">
-                    Accuracy
-                  </div>
-                  <div className="personal__statistics-all">new words</div>
-                </div>
 
-                <div className="personal__statistics-descr personal__statistics-descr2">
-                  <div className="personal__statistics-learned">
-                    {learnedWords.length}
+                  <div className="personal__column personal__column-info">
+                    <div className="personal__game-title">Sprint</div>
+                    <div className="personal__strick">
+                      {statistics?.optional?.sprint?.maxSeria ?? 0}
+                    </div>
+
+                    <div className="personal__percent">
+                      {statistics?.sprintPercent || 0}%
+                    </div>
+                    <div className="personal__all">{sprintWords.length}</div>
                   </div>
-                  <div className="personal__statistics-percentage">
-                    {statistics?.gamesPercent || 0}%
+                </div>
+                <div className="personal__statistics">
+                  <div className="personal__statistics-descr">
+                    <div className="personal__game-hidden">game</div>
+                    <div className="personal__statistics-learned">Learnt</div>
+                    <div className="personal__statistics-percentage">
+                      Accuracy
+                    </div>
+                    <div className="personal__statistics-all">New words</div>
                   </div>
-                  <div className="personal__statistics-all">{words.length}</div>
+
+                  <div className="personal__statistics-descr personal__statistics-descr2">
+                    <div className="personal__game-hidden">game</div>
+                    <div className="personal__statistics-learned">
+                      {learnedWords.length}
+                    </div>
+                    <div className="personal__statistics-percentage">
+                      {statistics?.gamesPercent || 0}%
+                    </div>
+                    <div className="personal__statistics-all">
+                      {words.length}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           )}
           <div className="personal__progress">
-            <div className="personal__success">Progress</div>
-            <div className="personal__diagram">
-              <CircularProgressbar
-                value={statistics?.learnPercent || 0}
-                text={`${statistics?.learnPercent || 0}%`}
-              />
-            </div>
+            {auth && (
+              <>
+                <div className="personal__success">Progress</div>
+                <div className="personal__diagram">
+                  <CircularProgressbar
+                    value={statistics?.learnPercent || 0}
+                    text={`${statistics?.learnPercent || 0}%`}
+                  />
+                </div>
+              </>
+            )}
             {routeParams && (
               <div className="personal__buttons">
                 <Link

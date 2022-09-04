@@ -9,6 +9,8 @@
     z-index: 25;
     top: 24px;
     left: 25px;
+    // opacity: 0;
+    transition: 0.5s all ease-in;
   }
 }
 
@@ -121,10 +123,10 @@
     }
 
     @include mobile-inbetween() {
+      padding: 24px 35px;
       min-height: 100vh;
       min-width: 320px;
     }
-
   }
 
   &__logo {
@@ -133,6 +135,11 @@
 
     @include desktop-lowest() {
       visibility: hidden;
+    }
+
+    @include mobile-inbetween() {
+      visibility: visible;
+      transform: translate(-35px, 0px);
     }
   }
 

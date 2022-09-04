@@ -4,10 +4,12 @@
   background: #FAFAFA;
   flex-shrink: 0;
   transition: all 0.5s ease-in-out;
-
+  height: 100%;
 
   @include tablet-lower() {
-    display: none;
+    background: none;
+    width: 100%;
+    height: auto;
   }
 
   &__game-hidden {
@@ -43,7 +45,13 @@
     @include tablet-middle() {
       padding: 149px 30px 30px;
       width: 290px;
-    }  }
+    }
+
+    @include tablet-lower() {
+      padding: 0;
+      width: 100%;
+    }  
+  }
 
   &__img {
     width:171px;
@@ -57,7 +65,19 @@
     font-weight: 700;
     font-size: 2rem;
     text-align: center;
- 
+
+    @include tablet-lower() {
+      font-size: 25px;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 25px;
+    }
+
+    @include tablet-lowest() {
+      font-size: 22px;
+    }
+
   }
   &__city {
     font-family: Montserrat;
@@ -92,6 +112,25 @@
       @include desktop-highest() {
         font-size: 23px;
       }
+
+      @media (max-width: 650px) {
+        font-size: 20px;
+      }
+
+      @include mobile-upper() {
+        font-size: 17px;
+      }
+    }
+
+    &-content {
+      @include tablet-lower() {
+        display: flex;
+      }
+
+      @media (max-width: 650px) {
+        padding: 5px 0;
+      }
+
     }
   }
 
@@ -101,7 +140,7 @@
     font-size: 1.8rem
   }
 
-  &__success{
+  &__success {
     font-family: Montserrat;
     font-weight: 700;
     color: #7d7d7d;
@@ -110,6 +149,14 @@
 
     @include desktop-highest() {
       font-size: 23px;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 20px;
+    }
+
+    @include mobile-upper() {
+      font-size: 17px;
     }
   }
 
@@ -122,6 +169,27 @@
 
     @include desktop-middle() {
       font-size: 16px;
+    }
+
+    @include tablet-lower() {
+      font-size: 20px;
+      color: #7d7d7d;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 17px;
+    }
+
+    @include mobile-upper() {
+      font-size: 15px;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+    }
+
+    @media (max-width: 350px) {
+      font-size: 12px;
     }
   }
 
@@ -158,8 +226,21 @@
       width: 80%;
     }
 
-    @include desktop-lowest() {
-      width: 80%;
+    @include tablet-lower() {
+      width: 250px;
+      margin: 15px auto 0px;
+    }
+
+    @media (max-width: 650px) {
+      width: 225px;
+    }
+
+    @include tablet-lowest() {
+      width: 200px;
+    }  
+
+    @include mobile-upper() {
+      width: 175px;
     }
   }
 
@@ -169,11 +250,21 @@
     width: 200px;
 
     @include desktop-highest() {
-      width:180px;
+      width: 180px;
     }
 
     @include desktop-middle() {
-      width:165px;
+      width: 165px;
+    }
+    
+    @include tablet-lower() {
+      width: 150px;
+    }
+
+    @include mobile-inbetween() {
+      width: 28%;
+      min-width: 130px;
+      margin: 0 auto;
     }
   
   }
@@ -195,8 +286,15 @@
       padding: 25px 0;
     }
 
-    @include desktop-lower() {
+    @include tablet-lower() {
+      padding: 15px 0;
+    }
 
+    @media (max-width: 650px) {
+      padding: 0px;
+    }
+
+    @media (max-width: 550px) {
     }
   }
 
@@ -204,7 +302,7 @@
     font-weight: 700;
     font-size: 19px;
     line-height: 23px;
-    color: black;
+    color: #fff;
     padding: 12px;
     text-align: center;
     flex: 0 1 44%;
@@ -248,6 +346,33 @@
       font-size: 16px;
     }
 
+    @include tablet-lower() {
+      font-size: 20px;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 18px;
+      padding: 0;
+    }
+
+    @media (max-width: 550px) {
+      font-size: 15px;
+      flex: 65%;
+    }
+
+    @media (max-width: 450px) {
+      flex: 60%;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+      flex: 51%;
+    }
+
+    @media (max-width: 350px) {
+      font-size: 12px;
+    }    
+
     &-descr2 {
     text-align: center;
     }
@@ -260,7 +385,7 @@
   &__buttons {
     border-top: 1px solid #b2b2b2;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     justify-content: space-between;
   }

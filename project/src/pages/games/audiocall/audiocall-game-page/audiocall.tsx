@@ -35,7 +35,8 @@ import {
 } from "../../../../services/user-words-service";
 import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
-import { IStatistic } from "../../../../interfaces/statistic";
+import { Statistic } from "../../../../interfaces/statistic";
+import { updateUserStatistics as updateStoreStatistics } from "../../../../store/statistics-slice";
 import { UserWordResponse } from "../../../../interfaces/user-word";
 import GameResultPage from "../game-result-page/audiocall-result";
 import "./audiocall.scss";
@@ -53,7 +54,10 @@ const AudioCallPage = (props?: unknown) => {
 
   const userId = auth?.userId;
   const dispatch: AppDispatch = useDispatch();
-
+  const [getWords] = useGetWordsMutation();
+  const [getAggregatedWords] = useGetUserWordsMutation();
+  const [getUserStatistics, { isSuccess: isUserStatisticsSuccess }] =
+    useGetUserStatisticsMutation();
   const [updateUserStatistics] = useUpdateUserStatisticsMutation();
   const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
@@ -73,7 +77,7 @@ const AudioCallPage = (props?: unknown) => {
     (state: RootState) => state.wordsState.words || []
   );
 
-  const statistics: IStatistic = useAppSelector(
+  const statistics: Statistic = useAppSelector(
     (state: RootState) => state.statisticsState?.statistics
   );
 
@@ -87,12 +91,38 @@ const AudioCallPage = (props?: unknown) => {
   const [pageValue, setPage] = useState<number>(null);
   const [mode, setMode] = useState<"textbook" | "main">("main");
 
-  const [getWords] = useGetWordsMutation();
-  const [getAggregatedWords] = useGetUserWordsMutation();
-  const [getUserStatistics] = useGetUserStatisticsMutation();
-
   const nextWordButton = useRef(null);
   const dontKnowWordButton = useRef(null);
+  const groupBlock = useRef(null);
+  const pageBlock = useRef(null);
+
+  useEffect(() => {
+    if (auth?.userId) {
+      updateUserStatistics({
+        userId: userId,
+        request: { ...statistics },
+      });
+    }
+  }, [statistics]);
+
+  useEffect(() => {
+    if (auth?.userId) {
+      getAggregatedWords({
+        userId,
+        params: {
+          group: +groupValue,
+          page: +pageValue,
+          wordsPerPage: 20,
+        },
+      });
+      getUserStatistics(auth.userId);
+    } else {
+      getWords({
+        group: +groupValue,
+        page: +pageValue,
+      });
+    }
+  }, [groupValue, pageValue]);
 
   useEffect(() => {
     if (currentWord && currentStep < allGameWords) {
@@ -279,26 +309,27 @@ const AudioCallPage = (props?: unknown) => {
       updateUserWord(request);
     }
 
-    updateUserStatistics({
-      userId: userId,
-      request: {
-        learnedWords:
-          (statistics?.learnedWords || 0) +
-          (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
-        optional: {
-          ...statistics?.optional,
-          audioCall: {
-            seria: isAttemptCorrect ? seria + 1 : 0,
-            maxSeria:
-              isAttemptCorrect && seria + 1 > maxSeria ? seria + 1 : maxSeria,
-            [getStartOfDayDate()]: {
-              attempts: statisticsAttempts + 1,
-              guesses: statisticsGuesses + +isAttemptCorrect,
+    dispatch(
+      updateStoreStatistics(
+        Statistic.fromDto({
+          learnedWords:
+            (statistics?.learnedWords || 0) +
+            (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
+          optional: {
+            ...statistics?.optional,
+            audioCall: {
+              seria: isAttemptCorrect ? seria + 1 : 0,
+              maxSeria:
+                isAttemptCorrect && seria + 1 > maxSeria ? seria + 1 : maxSeria,
+              [getStartOfDayDate()]: {
+                attempts: statisticsAttempts + 1,
+                guesses: statisticsGuesses + +isAttemptCorrect,
+              },
             },
           },
-        },
-      },
-    });
+        })
+      )
+    );
   }
 
   function resetBeforeNextRound() {
@@ -328,6 +359,7 @@ const AudioCallPage = (props?: unknown) => {
     setFalse(falseGameAnswer.concat(currentWord));
     updateUserWordStatistic(false);
     dispatch(setTrueRaw({ trueRow: trueWordRow }));
+    updateUserWordStatistic(false);
     setRow(0);
     dispatch(changeAnswer({ isAnswer: true }));
   }

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector, RootState } from "../../../../store/store";
+import {
+  useAppSelector,
+  RootState,
+  AppDispatch,
+} from "../../../../store/store";
 import { useActions } from "../../../../hooks/actions";
 import { useGetWordsMutation } from "../../../../services/words-service";
 import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
@@ -16,6 +20,19 @@ import GameResultPage from "../game-result-page/game-result-page";
 import { Word } from "../../../../interfaces/word";
 import { IAuth } from "../../../../interfaces/auth";
 import "./sprint-game-page.scss";
+import { Statistic } from "../../../../interfaces/statistic";
+import { updateUserStatistics as updateStoreStatistics } from "../../../../store/statistics-slice";
+import {
+  useGetUserStatisticsMutation,
+  useUpdateUserStatisticsMutation,
+} from "../../../../services/statistics-service";
+import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
+import {
+  useCreateUserWordMutation,
+  useUpdateUserWordMutation,
+} from "../../../../services/user-words-service";
+import { UserWordResponse } from "../../../../interfaces/user-word";
+import { useDispatch } from "react-redux";
 
 const timerDetails = {
   delay: 1000,
@@ -29,7 +46,7 @@ const SprintGamePage = (): JSX.Element => {
   const auth: IAuth = useAppSelector(
     (state: RootState) => state.authState?.auth
   );
-
+  const dispatch: AppDispatch = useDispatch();
   const {
     gameStep,
     changeGameScore,
@@ -60,6 +77,12 @@ const SprintGamePage = (): JSX.Element => {
     (state: RootState) => state.wordsState.words || []
   );
 
+  const [getUserStatistics, { isSuccess: isUserStatisticsSuccess }] =
+    useGetUserStatisticsMutation();
+  const [updateUserStatistics] = useUpdateUserStatisticsMutation();
+  const [updateUserWord] = useUpdateUserWordMutation();
+  const [createUserWord] = useCreateUserWordMutation();
+
   const isLoadingData = isLoading || isAggregatedWordsLoading;
   const isDisabledBtn = !isGameStarted || isGameEnded || isLoadingData;
   const isDisabledThroughoutGame = isGameStarted || isGameEnded;
@@ -70,15 +93,107 @@ const SprintGamePage = (): JSX.Element => {
 
   const [sound, setSound] = useState(true);
 
+  const statistics: Statistic = useAppSelector(
+    (state: RootState) => state.statisticsState?.statistics
+  );
+
+  async function updateUserWordStatistic(
+    isAttemptCorrect: boolean
+  ): Promise<void> {
+    const request: UserWordResponse = {
+      id: auth?.userId,
+      wordId: gameData.at(-1).id,
+    };
+    const seria: number = statistics?.optional?.sprint?.seria || 0;
+    const maxSeria: number = statistics?.optional?.sprint?.maxSeria || 0;
+    const wordStrick: number = gameData.at(-1).userWord?.optional?.strick || 0;
+    const wordAttempts: number =
+      gameData.at(-1).userWord?.optional?.sprint?.attempts || 0;
+    const wordGuesses: number =
+      gameData.at(-1).userWord?.optional?.sprint?.guesses || 0;
+    const statisticsAttempts: number =
+      statistics?.optional?.sprint?.[getStartOfDayDate()]?.attempts || 0;
+    const statisticsGuesses: number =
+      statistics?.optional?.sprint?.[getStartOfDayDate()]?.guesses || 0;
+    const shouldWordMarkAsLearned: boolean =
+      isAttemptCorrect &&
+      ((gameData.at(-1).userWord?.difficulty === "seen" && wordStrick == 1) ||
+        (gameData.at(-1).userWord?.difficulty === "hard" && wordStrick == 4));
+    const shouldWorkRemoveFromLearned: boolean =
+      !isAttemptCorrect && gameData.at(-1).userWord?.difficulty === "learned";
+
+    if (!gameData.at(-1).userWord) {
+      request.difficulty = "seen";
+      request.optional = {
+        firstSeenDate: getStartOfDayDate(),
+        strick: +isAttemptCorrect,
+        sprint: {
+          attempts: 1,
+          guesses: +isAttemptCorrect,
+        },
+      };
+    } else {
+      request.optional = {
+        ...gameData.at(-1).userWord.optional,
+        strick: isAttemptCorrect ? wordStrick + 1 : 0,
+        sprint: {
+          attempts: wordAttempts + 1,
+          guesses: wordGuesses + +isAttemptCorrect,
+        },
+      };
+
+      if (shouldWordMarkAsLearned) {
+        request.difficulty = "learned";
+        request.optional.learnedDate = getStartOfDayDate();
+      } else if (shouldWorkRemoveFromLearned) {
+        request.difficulty = "seen";
+        delete request?.optional?.learnedDate;
+      } else {
+        request.difficulty = gameData.at(-1).userWord.difficulty;
+      }
+    }
+
+    if (!gameData.at(-1).userWord) {
+      createUserWord(request);
+    } else {
+      updateUserWord(request);
+    }
+
+    dispatch(
+      updateStoreStatistics(
+        Statistic.fromDto({
+          learnedWords:
+            (statistics?.learnedWords || 0) +
+            (+shouldWordMarkAsLearned - +shouldWorkRemoveFromLearned),
+          optional: {
+            ...statistics?.optional,
+            sprint: {
+              seria: isAttemptCorrect ? seria + 1 : 0,
+              maxSeria:
+                isAttemptCorrect && seria + 1 > maxSeria ? seria + 1 : maxSeria,
+              [getStartOfDayDate()]: {
+                attempts: statisticsAttempts + 1,
+                guesses: statisticsGuesses + +isAttemptCorrect,
+              },
+            },
+          },
+        })
+      )
+    );
+  }
+
   const handleGameStep = (isRightBtn: boolean) => {
     const isTrueAnswer = isRightBtn
       ? gameData.at(-1).wordTranslate === currentWord.wordTranslate
       : gameData.at(-1).wordTranslate !== currentWord.wordTranslate;
     setIndicatorClassName("");
     changeGameScore(isTrueAnswer);
-
     audio.src = isTrueAnswer ? tick : cross;
     sound ? audio.play() : audio.pause();
+
+    if (auth) {
+      updateUserWordStatistic(isTrueAnswer);
+    }
 
     setCurrentStep(currentStep + 1);
     gameStep();
@@ -96,6 +211,15 @@ const SprintGamePage = (): JSX.Element => {
   };
 
   useEffect(() => {
+    if (auth?.userId) {
+      updateUserStatistics({
+        userId: auth?.userId,
+        request: { ...statistics },
+      });
+    }
+  }, [statistics]);
+
+  useEffect(() => {
     if (isGameStarted) {
       if (auth?.userId) {
         getAggregatedWords({
@@ -105,6 +229,7 @@ const SprintGamePage = (): JSX.Element => {
             wordsPerPage: 20,
           },
         });
+        getUserStatistics(auth.userId);
       } else {
         getWords({
           group: +level - 1,

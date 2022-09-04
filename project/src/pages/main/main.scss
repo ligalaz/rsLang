@@ -71,6 +71,12 @@
     }
   }
 
+  &__personal {
+    @include tablet-lower() {
+      display: none;
+    }
+  }
+
   &__bg-filter-0 {
     background-color: #0a0b0e;
   }

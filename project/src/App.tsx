@@ -13,12 +13,14 @@ import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import AudioCallPage from "./pages/games/audiocall/audiocall-game-page/audiocall";
 import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
+import Personal from "./pages/main/components/personal/personal";
+import { useMediaQuery } from "usehooks-ts";
 import SavannaGame from "./pages/games/savanna/savanna-game";
 import "./App.scss";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
-
+  const isTablet = useMediaQuery("(max-width: 767px)");
   const auth: IAuth = useAppSelector(
     (state: RootState) => state.authState.auth
   ) as IAuth;
@@ -48,6 +50,12 @@ function App() {
           <Route path="savanna" element={<SavannaGame />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
+            <Route
+              path="personal"
+              element={
+                isTablet ? <Personal /> : <Navigate to="/main" replace />
+              }
+            />
             <Route path="textbook/:group/:page" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
           </Route>
