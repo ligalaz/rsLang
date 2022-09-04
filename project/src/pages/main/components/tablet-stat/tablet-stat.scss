@@ -122,6 +122,10 @@
     @media (max-width: 400px) {
       font-size: 13px;
     }
+
+    @media (max-width: 350px) {
+      font-size: 12px;
+    }
   }
 
   &__column > * {
@@ -220,8 +224,17 @@
       flex: 65%;
     }
 
+    @media (max-width: 450px) {
+      flex: 60%;
+    }
+
     @media (max-width: 400px) {
       font-size: 13px;
+      flex: 51%;
+    }
+
+    @media (max-width: 350px) {
+      font-size: 12px;
     }
 
     &-descr2 {
