@@ -10,9 +10,12 @@ import "./sidebar.scss";
 import { logout } from "../../../../store/auth-slice";
 import classNames from "classnames";
 import { getCurrentScreen } from "../../../../utils/win-def-size";
+import { useMediaQuery } from "usehooks-ts";
 
 function Sidebar() {
   const [statisticsFlag, setStatisticsFlag] = useState(false);
+  const screen = useMediaQuery("(max-width: 500px)");
+  const isDailyStatistics = useMediaQuery("(max-width: 767px)");
   const isAuth: boolean = useAppSelector(
     (state: RootState) => !!state.authState.auth
   );
@@ -20,11 +23,13 @@ function Sidebar() {
 
   return (
     <>
-      {!(statisticsFlag && getCurrentScreen(statisticsFlag) < 500) && (
-        <NavLink className="logo-link" to="/main">
-          <Icon type="logo" />
-        </NavLink>
-      )}
+      <NavLink
+        style={{ opacity: `${!(statisticsFlag && screen) ? "1" : "0"}` }}
+        className="logo-link"
+        to="/main"
+      >
+        <Icon type="logo" />
+      </NavLink>
 
       {statisticsFlag && <div className="burger-overlay"></div>}
 
@@ -50,7 +55,7 @@ function Sidebar() {
           <div className="sidebar__upper">
             <div className="sidebar__logo">
               <NavLink to="/main">
-                <Icon type="logo" />
+                <Icon type={`${screen ? "logo-white" : "logo"}`} />
               </NavLink>
             </div>
           </div>
@@ -96,6 +101,19 @@ function Sidebar() {
             >
               Textbook
             </NavLink>
+            {isDailyStatistics && isAuth && (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "sidebar__link sidebar__link_active"
+                    : "sidebar__link"
+                }
+                to="/main/personal"
+              >
+                Personal
+              </NavLink>
+            )}
+
             {/* TODO: uncomment for statistics */}
             {/* <NavLink
             className={({ isActive }) =>

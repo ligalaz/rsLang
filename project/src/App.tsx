@@ -15,11 +15,12 @@ import "./App.scss";
 import AudioCallPage from "./pages/auth/games/audiocall/audiocall";
 import GameStartScreen from "./pages/auth/games/game-start-screen.component";
 import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
-import TabletStat from "./pages/main/components/tablet-stat/tablet-stat";
+import Personal from "./pages/main/components/personal/personal";
+import { useMediaQuery } from "usehooks-ts";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
-
+  const isTablet = useMediaQuery("(max-width: 767px)");
   const auth: IAuth = useAppSelector(
     (state: RootState) => state.authState.auth
   ) as IAuth;
@@ -57,9 +58,14 @@ function App() {
           />
           <Route path="audiocall" element={<AudioCallPage />} />
           <Route path="sprint" element={<SprintGamePage />} />
-          <Route path="tablet-stat" element={<TabletStat />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
+            <Route
+              path="personal"
+              element={
+                isTablet ? <Personal /> : <Navigate to="/main" replace />
+              }
+            />
             <Route path="textbook/:group/:page" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
           </Route>
