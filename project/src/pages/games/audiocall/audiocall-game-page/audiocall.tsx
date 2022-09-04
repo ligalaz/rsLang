@@ -333,26 +333,24 @@ const AudioCallPage = (props?: unknown) => {
   }
 
   return (
-    <div className="audiocall-body">
-      <div
-        style={{ background: `rgba(255,255,255,${alpha})` }}
-        className="audiocall__row"
-      >
-        {!isGameStarted ? (
-          <div className="audiocall__row-header">
-            <GameStartScreen
-              mode={mode}
-              group={groupValue}
-              onGroupSelect={(group: number) => setGroup(group)}
-              page={pageValue}
-              onPageSelect={(page: number) => setPage(page)}
-              onTimerStart={() => getProperlyWords()}
-              onTimerFinish={() => dispatch(startGame({ dataBox: words }))}
-              game="audiocall"
-            />
-          </div>
-        ) : (
-          <>
+    <>
+      {!isGameStarted ? (
+        <GameStartScreen
+          mode={mode}
+          group={groupValue}
+          onGroupSelect={(group: number) => setGroup(group)}
+          page={pageValue}
+          onPageSelect={(page: number) => setPage(page)}
+          onTimerStart={() => getProperlyWords()}
+          onTimerFinish={() => dispatch(startGame({ dataBox: words }))}
+          game="audiocall"
+        />
+      ) : (
+        <div className="audiocall-body">
+          <div
+            style={{ background: `rgba(255,255,255,${alpha})` }}
+            className="audiocall__row"
+          >
             <div className="audiocall__row-view">
               <div className="audiocall__row-close">
                 <CloseBtnComponent />
@@ -428,11 +426,11 @@ const AudioCallPage = (props?: unknown) => {
                 )}
               </div>
             </div>
-          </>
-        )}
-        {isGameEnded ? <GameResultPage /> : null}
-      </div>
-    </div>
+            {isGameEnded ? <GameResultPage /> : null}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
