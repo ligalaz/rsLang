@@ -430,6 +430,7 @@ export function Icon({ type, width, height, onClick }: IconProps) {
             </g>
           </svg>
         );
+
       case "loading":
         return (
           <svg
@@ -615,6 +616,7 @@ export function Icon({ type, width, height, onClick }: IconProps) {
             </g>
           </svg>
         );
+
       case "button-loading":
         return (
           <svg
@@ -641,6 +643,7 @@ export function Icon({ type, width, height, onClick }: IconProps) {
             </path>
           </svg>
         );
+
       case "speaker":
         return (
           <svg
