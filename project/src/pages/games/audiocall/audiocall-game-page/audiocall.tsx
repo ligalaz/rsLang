@@ -24,7 +24,7 @@ import AudioCallRepeater from "../components/audiocall-repeater/audiocall-repeat
 import AudioCallView from "../components/audiocall-view/audiocall-view";
 import { IAuth } from "../../../../interfaces/auth";
 
-import { Word } from "../../../../interfaces/word";
+import { GetWordsRequest, Word } from "../../../../interfaces/word";
 import {
   useGetUserStatisticsMutation,
   useUpdateUserStatisticsMutation,
@@ -45,7 +45,9 @@ import cross from "../../../../assets/sound/cross.mp3";
 import { is } from "immer/dist/internal";
 import { useGetWordsMutation } from "../../../../services/words-service";
 import { GameStartScreen } from "../../../../components/game-start-screen/game-start-screen";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { notify } from "../../../../utils/notifications";
+import { toast } from "react-toastify";
 
 const AudioCallPage = (props?: unknown) => {
   const auth: IAuth = useAppSelector(
@@ -91,10 +93,10 @@ const AudioCallPage = (props?: unknown) => {
   const [pageValue, setPage] = useState<number>(null);
   const [mode, setMode] = useState<"textbook" | "main">("main");
 
+  const navigate = useNavigate();
+
   const nextWordButton = useRef(null);
   const dontKnowWordButton = useRef(null);
-  const groupBlock = useRef(null);
-  const pageBlock = useRef(null);
 
   useEffect(() => {
     if (auth?.userId) {
@@ -104,25 +106,6 @@ const AudioCallPage = (props?: unknown) => {
       });
     }
   }, [statistics]);
-
-  useEffect(() => {
-    if (auth?.userId) {
-      getAggregatedWords({
-        userId,
-        params: {
-          group: +groupValue,
-          page: +pageValue,
-          wordsPerPage: 20,
-        },
-      });
-      getUserStatistics(auth.userId);
-    } else {
-      getWords({
-        group: +groupValue,
-        page: +pageValue,
-      });
-    }
-  }, [groupValue, pageValue]);
 
   useEffect(() => {
     if (currentWord && currentStep < allGameWords) {
@@ -206,19 +189,24 @@ const AudioCallPage = (props?: unknown) => {
 
   function getProperlyWords(): void {
     if (auth?.userId) {
+      const request: GetWordsRequest = {};
+      if (request.group === 6) {
+        request.filter = '{"userWord.difficulty":"hard"}';
+        request.wordsPerPage = 3600;
+      } else {
+        request.group = groupValue;
+        request.page = pageValue;
+        request.wordsPerPage = 20;
+      }
       getAggregatedWords({
         userId,
-        params: {
-          group: +groupValue,
-          page: +pageValue,
-          wordsPerPage: 20,
-        },
+        params: request,
       });
       getUserStatistics(auth.userId);
     } else {
       getWords({
-        group: +groupValue,
-        page: +pageValue,
+        group: groupValue,
+        page: pageValue,
       });
     }
   }
@@ -367,6 +355,19 @@ const AudioCallPage = (props?: unknown) => {
     dispatch(changeAnswer({ isAnswer: true }));
   }
 
+  function onTimerFinish(): void {
+    if (groupValue === 6 && words.length < 10) {
+      if (words.length < 10 && group === 6) {
+        notify(
+          "Lack words count for game. Please add more difficult words",
+          toast.warning
+        );
+        navigate("/main", { replace: true });
+      }
+    }
+    dispatch(startGame({ dataBox: words }));
+  }
+
   return (
     <>
       {!isGameStarted ? (
@@ -377,7 +378,7 @@ const AudioCallPage = (props?: unknown) => {
           page={pageValue}
           onPageSelect={(page: number) => setPage(page)}
           onTimerStart={() => getProperlyWords()}
-          onTimerFinish={() => dispatch(startGame({ dataBox: words }))}
+          onTimerFinish={onTimerFinish}
           game="audiocall"
         />
       ) : (
