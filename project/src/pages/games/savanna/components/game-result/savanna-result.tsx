@@ -1,27 +1,30 @@
 import React from "react";
-import { useActions } from "../../../../hooks/actions";
-import { useAppSelector } from "../../../../store/store";
-import ResultBlock from "../components/result-block/result-block";
-import Title from "../components/title/title";
-import CloseBtn from "../../../../components/close-btn/close-btn";
-import "./game-result-page.scss";
+import CloseBtn from "../../../../../components/close-btn/close-btn";
+import ResultBlock from "../../../sprint/components/result-block/result-block";
+import Title from "../../../sprint/components/title/title";
+import { GameResult } from "../../savanna-game";
+import "./savanna-result.scss";
 
-const GameResultPage = (): JSX.Element => {
-  const { trueAnswers, falseAnswers, score } = useAppSelector(
-    (state) => state.sprintState
-  );
+interface SavannaResultProps {
+  result: GameResult;
+  onRestart: VoidFunction;
+  onNewGame: VoidFunction;
+}
 
-  const { resetGame, setGameStart } = useActions();
-
+const SavannaResult = ({
+  result,
+  onRestart,
+  onNewGame,
+}: SavannaResultProps): JSX.Element => {
   const results = [
     {
-      answers: Array.from(new Set(trueAnswers)),
+      answers: result.true || [],
       header: "I know :)",
       titleClassName: "results-popup__title title--true",
       titleChildClassName: "answers__count--true",
     },
     {
-      answers: Array.from(new Set(falseAnswers)),
+      answers: result.false || [],
       header: "I don't know :(",
       titleClassName: "results-popup__title title--false",
       titleChildClassName: "answers__count--false",
@@ -35,10 +38,6 @@ const GameResultPage = (): JSX.Element => {
         <div className="results-popup">
           <div className="results-popup__header">
             <Title className="results-popup__title">Results</Title>
-            <div>
-              Your score is
-              <span className="results-popup__score">{score}</span>
-            </div>
           </div>
           <div
             className={`results-popup__list ${"results-popup__list--scrollable"}`}
@@ -53,21 +52,10 @@ const GameResultPage = (): JSX.Element => {
           </div>
         </div>
         <div className="btn-container">
-          <button
-            onClick={async () => {
-              await resetGame();
-              setGameStart();
-            }}
-            className="btn btn--color_red"
-          >
+          <button onClick={onRestart} className="btn btn--color_red">
             Restart
           </button>
-          <button
-            onClick={() => {
-              resetGame();
-            }}
-            className="btn"
-          >
+          <button onClick={onNewGame} className="btn">
             New Game
           </button>
         </div>
@@ -76,4 +64,4 @@ const GameResultPage = (): JSX.Element => {
   );
 };
 
-export default GameResultPage;
+export default SavannaResult;

@@ -16,7 +16,9 @@ const GameHealth = ({ health }: GameHealthProps) => {
   return (
     <div className="game-health">
       {generateHealthArray().map((elem: number, index: number) => (
-        <Icon key={index} type={elem ? "heart" : "heart-empty"} />
+        <div key={index} className="game-health__icon">
+          <Icon type={elem ? "heart" : "heart-empty"} />
+        </div>
       ))}
     </div>
   );

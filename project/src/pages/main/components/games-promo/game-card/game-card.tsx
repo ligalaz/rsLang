@@ -16,7 +16,7 @@ const GameCard = (props: GameCardItem): JSX.Element => {
           <h4 className="game-card__title">{name}</h4>
           <p className="game-card__description">{description}</p>
         </div>
-        <Link className="game-card__start-btn" to={link} replace={true}>
+        <Link className="game-card__start-btn" to={"/" + link} replace>
           GO!
         </Link>
       </div>

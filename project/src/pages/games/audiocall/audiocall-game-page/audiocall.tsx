@@ -5,36 +5,46 @@ import { audioService } from "../../../../services/audio-service";
 
 import {
   changeAnswer,
+  settingsUp,
   setTrueRaw,
 } from "../../../../store/audiocall-settings-slice";
-import { endGame, gameStep } from "../../../../store/audiocall-slice";
+import {
+  endGame,
+  gameStep,
+  startGame,
+} from "../../../../store/audiocall-slice";
 import {
   AppDispatch,
   RootState,
   useAppSelector,
 } from "../../../../store/store";
 import { CallIcon } from "../../../../components/icon/call-icon";
-import OptionsComponent from "../components/audiocall-select/options-component";
 import CloseBtnComponent from "../components/audiocall-close-btn/close-btn-component";
 import AudioCallRepeater from "../components/audiocall-repeater/audiocall-repeater";
 import AudioCallView from "../components/audiocall-view/audiocall-view";
 import { IAuth } from "../../../../interfaces/auth";
 
 import { Word } from "../../../../interfaces/word";
-import { useUpdateUserStatisticsMutation } from "../../../../services/statistics-service";
+import {
+  useGetUserStatisticsMutation,
+  useUpdateUserStatisticsMutation,
+} from "../../../../services/statistics-service";
 import {
   useUpdateUserWordMutation,
   useCreateUserWordMutation,
 } from "../../../../services/user-words-service";
+import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
 import { IStatistic } from "../../../../interfaces/statistic";
 import { UserWordResponse } from "../../../../interfaces/user-word";
-import GameStartScreen from "../start-screen/game-start-screen.component";
 import GameResultPage from "../game-result-page/audiocall-result";
 import "./audiocall.scss";
 import tick from "../../../../assets/sound/tick.mp3";
 import cross from "../../../../assets/sound/cross.mp3";
 import { is } from "immer/dist/internal";
+import { useGetWordsMutation } from "../../../../services/words-service";
+import { GameStartScreen } from "../../../../components/game-start-screen/game-start-screen";
+import { useSearchParams } from "react-router-dom";
 
 const AudioCallPage = (props?: unknown) => {
   const auth: IAuth = useAppSelector(
@@ -48,10 +58,14 @@ const AudioCallPage = (props?: unknown) => {
   const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
 
-  const { maxGroup, maxPage, allGameWords, isAnswer, trueRow } = useAppSelector(
-    (state: RootState) => state.audioCallSettingsReducer,
-    shallowEqual
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { group, page, maxGroup, maxPage, allGameWords, isAnswer, trueRow } =
+    useAppSelector(
+      (state: RootState) => state.audioCallSettingsReducer,
+      shallowEqual
+    );
+
   const { currentWord, isGameStarted, gameBox, currentStep, isGameEnded } =
     useAppSelector((state: RootState) => state.audioCallReducer, shallowEqual);
 
@@ -68,6 +82,14 @@ const AudioCallPage = (props?: unknown) => {
   const [trueWordRow, setRow] = useState(0);
   const [alpha, setAlpha] = useState(0.8);
   const gameElements = useRef();
+
+  const [groupValue, setGroup] = useState<number>(null);
+  const [pageValue, setPage] = useState<number>(null);
+  const [mode, setMode] = useState<"textbook" | "main">("main");
+
+  const [getWords] = useGetWordsMutation();
+  const [getAggregatedWords] = useGetUserWordsMutation();
+  const [getUserStatistics] = useGetUserStatisticsMutation();
 
   const nextWordButton = useRef(null);
   const dontKnowWordButton = useRef(null);
@@ -115,6 +137,8 @@ const AudioCallPage = (props?: unknown) => {
         }
       };
     }
+
+    return () => (document.onkeydown = null);
   }, [currentWord]);
 
   useEffect(() => {
@@ -137,6 +161,37 @@ const AudioCallPage = (props?: unknown) => {
         })
       : null;
   }, [isAnswer]);
+
+  useEffect(() => {
+    const group = searchParams.get("group");
+    const page = searchParams.get("page");
+    if (group) {
+      setMode("textbook");
+      setGroup(parseInt(group));
+      if (page) {
+        setPage(parseInt(page));
+      }
+    }
+  }, [searchParams]);
+
+  function getProperlyWords(): void {
+    if (auth?.userId) {
+      getAggregatedWords({
+        userId,
+        params: {
+          group: +groupValue,
+          page: +pageValue,
+          wordsPerPage: 20,
+        },
+      });
+      getUserStatistics(auth.userId);
+    } else {
+      getWords({
+        group: +groupValue,
+        page: +pageValue,
+      });
+    }
+  }
 
   function checker(target: HTMLButtonElement) {
     const isAttemptCorrect: boolean = target.id === currentWord.id;
@@ -277,9 +332,6 @@ const AudioCallPage = (props?: unknown) => {
     dispatch(changeAnswer({ isAnswer: true }));
   }
 
-  console.log("statistics", statistics?.learnedWords);
-  console.log("statistics", statistics?.optional?.audioCall);
-
   return (
     <div className="audiocall-body">
       <div
@@ -288,7 +340,16 @@ const AudioCallPage = (props?: unknown) => {
       >
         {!isGameStarted ? (
           <div className="audiocall__row-header">
-            <GameStartScreen gameName={`audiocall`} words={words} />
+            <GameStartScreen
+              mode={mode}
+              group={groupValue}
+              onGroupSelect={(group: number) => setGroup(group)}
+              page={pageValue}
+              onPageSelect={(page: number) => setPage(page)}
+              onTimerStart={() => getProperlyWords()}
+              onTimerFinish={() => dispatch(startGame({ dataBox: words }))}
+              game="audiocall"
+            />
           </div>
         ) : (
           <>

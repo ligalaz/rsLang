@@ -9,7 +9,7 @@ import cross from "../../../../assets/sound/cross.mp3";
 import "../../../main/components/games-promo/game-card/sprint-card/sprint-card.scss";
 import SelectionOfParameters from "../components/selection-of-parameters/selection-of-parameters";
 import { SELECTION_DATA } from "../../../../config";
-import CloseBtn from "../components/close-btn/close-btn";
+import CloseBtn from "../../../../components/close-btn/close-btn";
 import AudioBtn from "../components/audio/audio-btn";
 import ProgressLabels from "../components/progress-labels/progress-labels";
 import GameResultPage from "../game-result-page/game-result-page";

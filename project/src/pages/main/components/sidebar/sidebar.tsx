@@ -18,7 +18,6 @@ function Sidebar() {
   );
   const dispatch = useAppDispatch();
 
-  console.log(getCurrentScreen(true));
   return (
     <>
       {!(statisticsFlag && getCurrentScreen(statisticsFlag) < 500) && (
