@@ -11,7 +11,7 @@ const GameResultPage = (): JSX.Element => {
     (state) => state.sprintState
   );
 
-  const { resetGame, setGameStart } = useActions();
+  const { resetGame, setGameStart, gameStep } = useActions();
 
   const results = [
     {
@@ -56,7 +56,8 @@ const GameResultPage = (): JSX.Element => {
           <button
             onClick={async () => {
               await resetGame();
-              setGameStart();
+              await setGameStart();
+              gameStep();
             }}
             className="btn btn--color_red"
           >

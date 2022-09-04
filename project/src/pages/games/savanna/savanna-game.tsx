@@ -16,11 +16,13 @@ import cross from "../../../assets/sound/cross.mp3";
 import GameHealth from "./components/game-health/game-health";
 import CloseBtn from "../../../components/close-btn/close-btn";
 import classNames from "classnames";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { GameStartScreen } from "../../../components/game-start-screen/game-start-screen";
 import SavannaResult from "./components/game-result/savanna-result";
 import { useEventListener } from "usehooks-ts";
 import "./savanna-game.scss";
+import { notify } from "../../../utils/notifications";
+import { toast } from "react-toastify";
 
 export interface GameResult {
   true?: Word[];
@@ -51,6 +53,8 @@ const SavannaGame = (): JSX.Element => {
   const [getAggregatedWords] = useGetUserWordsMutation();
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const navigate = useNavigate();
 
   const words: Word[] = useAppSelector(
     (state: RootState) => state.wordsState?.words || []
@@ -105,6 +109,13 @@ const SavannaGame = (): JSX.Element => {
         getProperlyWords();
         break;
       case "play":
+        if (words.length < 10 && group === 6) {
+          notify(
+            "Lack words count for game. Please add more difficult words",
+            toast.warning
+          );
+          navigate("/main", { replace: true });
+        }
         setHealth(5);
         gameWords.current = [...words];
         nextStep();
@@ -153,10 +164,11 @@ const SavannaGame = (): JSX.Element => {
         request.wordsPerPage = 600;
         break;
       case "textbook":
-        request.group = group;
         if (request.group === 6) {
           request.filter = '{"userWord.difficulty":"hard"}';
+          request.wordsPerPage = 3600;
         } else {
+          request.group = group;
           request.wordsPerPage = (request.page + 1) * 20;
         }
         break;
@@ -196,7 +208,6 @@ const SavannaGame = (): JSX.Element => {
         ...result,
         false: result.false ? [...result.false, currentWord] : [currentWord],
       });
-      console.log(result);
       setHealth((prev: number) => prev - 1);
       AudioService.play([cross], false);
     }
