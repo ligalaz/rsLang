@@ -1,7 +1,8 @@
 import React from "react";
-import { CallIcon } from "../../../../components/icon/call-icon";
-import { IWord } from "../../../../interfaces/word";
-import { audioService } from "../../../../services/audio-service";
+import { CallIcon } from "../../../../../components/icon/call-icon";
+import { IWord } from "../../../../../interfaces/word";
+import { audioService } from "../../../../../services/audio-service";
+import "./audiocall-repeater.scss";
 
 export interface IRepeater {
   isCall: boolean;

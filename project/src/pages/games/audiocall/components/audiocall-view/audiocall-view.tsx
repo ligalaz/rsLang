@@ -1,7 +1,7 @@
 import React from "react";
-import { API_BASE_URL } from "../../../../config";
-import { IWord } from "../../../../interfaces/word";
-import AudioCallRepeater from "./audiocall-repeater";
+import { API_BASE_URL } from "../../../../../config";
+import { IWord } from "../../../../../interfaces/word";
+import AudioCallRepeater from "../audiocall-repeater/audiocall-repeater";
 import "./audiocall-view.scss";
 
 export interface IAudioCallView {

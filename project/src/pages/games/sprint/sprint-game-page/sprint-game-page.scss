@@ -1,3 +1,5 @@
+@import '../../../../styles/constants';
+
 .container {
   min-height: 100vh;
 
@@ -7,9 +9,7 @@
   background-size: contain;
 
   @media (max-width: 87.5rem) {
-    .container {
-      background-size: contain;
-    }
+    background-size: contain;
   }
 }
 
@@ -36,7 +36,7 @@
     width: 97.5%;
     margin-bottom: 0.9rem;
 
-    border-bottom: 0.06rem solid var(--header-line-color);
+    border-bottom: 0.06rem solid $header-line-color;
   }
 
   &__score {
@@ -61,7 +61,7 @@
     text-align: center;
   
     &--english {
-      color: var(--gray-text-color);
+      color: $gray-text-color;
       text-transform: lowercase;
     }
   }
@@ -78,7 +78,7 @@
     align-self: flex-start;
     justify-content: center;
 
-    border-top: 0.06rem solid var(--header-line-color);
+    border-top: 0.06rem solid $header-line-color;
   }
 
   &__selects {
@@ -98,7 +98,7 @@
     width: 8.8rem;
     height: 8.8rem;
   
-    color: var(--btn-text-color);
+    color: $btn-text-color;
     font-size: 1.3rem;
     line-height: 1.5rem;
   
@@ -110,33 +110,33 @@
     transition: 0.5s;
   
     &--no {
-      background-color: var(--no-btn-color);
+      background-color: $main-red-color;
       border-radius: 50% 50% 0 50%;
     }
   
     &--yes {
-      background-color: var(--yes-btn-color);
+      background-color: $main-purple-color;
       border-radius: 50% 50% 50% 0;
     }
   
     &:hover {
-      background-color: var(--hover-btn-color);
+      background-color: $hover-btn-color;
     }
 
     &--disabled {
-      background-color: var(--gray-text-color);
+      background-color: $disabled-bg-color;
 
       cursor: not-allowed;
 
       &:hover {
-        background-color: var(--gray-text-color);
+        background-color: $disabled-bg-color;
       }
     }
   }
 }
 
 .circle__tick {
-  background-color: var(--yes-btn-color);
+  background-color: $main-purple-color;
 }
 
 .circle--animated {
@@ -173,7 +173,7 @@
 
   &:hover {
     &::before {
-      background: var(--hover-btn-color);
+      background: $hover-btn-color;
     }
   }
 
@@ -186,12 +186,12 @@
 
     &:hover {
       &::before {
-        background: var(--gray-text-color);
+        background: $disabled-bg-color;
       }
     }
 
     &::before {
-      background: var(--gray-text-color);
+      background: $disabled-bg-color;
     }
   }
 }

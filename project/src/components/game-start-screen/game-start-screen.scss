@@ -1,0 +1,207 @@
+@import "../../styles/responsive-media";
+
+$repeater-bg: #6550de;
+$cross-bg: #e5e5e5;
+$play-bg: #ffffff;
+$btn-play-border: #b2b2b2;
+$next-btn-bg: #f56748;
+$elem-btn: #6550de;
+$uknown-btn-hover: #f56748;
+$cross-hover: #f56748;
+$words-text: #b2b2b2;
+$words-hover-text: #000000;
+$words-error-text: red;
+$words-active-text: #000000;
+$words-uknown-text: #000000;
+$words-uknown-hover-text: #ffffff;
+$play-btn-text: #7d7d7d;
+
+.start-screen {
+  width: 100%;
+  height: 100%;
+  background: url("../../assets/img/game_start-screen.jpeg") 50% no-repeat;
+  background-size: cover;
+  background-repeat: repeat-x;
+  overflow: hidden;
+  margin: 0 auto;
+
+  @include tablet-upper() {
+    padding-top: 10px;
+  }
+
+  @include tablet-lowest() {
+    padding-top: 10px;
+    background: url("../../assets/img/game_start-screen_mobile.jpg") 50% 100% no-repeat;
+  }
+
+  &__close {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+
+    @include tablet-upper() {
+      top: 30px;
+      right: 30px;
+    }
+  }
+
+  &__wrapper {
+    margin: 100px auto 0;
+    max-width: 790px;
+    padding: 0 20px;
+
+    @include tablet-lowest() {
+      margin: 70px auto 0;
+    }
+  }
+
+  &__row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5%;
+
+    @include tablet-lowest() {
+      gap: 40px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &-text {
+      color: $words-active-text;
+      font-family: "Montserrat";
+
+      & h1 {
+        font-weight: 700;
+        font-size: 37px;
+        line-height: 45px;
+
+        @include tablet-lowest() {
+          font-size: 29.8502px;
+          line-height: 36px;
+        }
+      }
+
+      & p {
+        font-family: "Montserrat";
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+      }
+    }
+
+    .start-screen__row-action {
+      height: 185px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .row-counter {
+      width: 185px;
+      height: 185px;
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      -ms-border-radius: 50%;
+      -o-border-radius: 50%;
+      background: $elem-btn;
+
+      &:hover {
+        animation: btn-up-down 0.5s linear;
+        -webkit-animation: btn-up-down 0.5s linear;
+        background-color: #FEC246;
+        transition: background-color 0.2s;
+      }
+
+      & p {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 37px;
+        line-height: 110px;
+        text-align: center;
+        color: $words-uknown-hover-text;
+      }
+    }
+  }
+}
+
+.play-btn {
+  position: relative;
+  width: 247.88px;
+  height: 59.49px;
+  background: $play-bg;
+  border: 1px solid $btn-play-border;
+  border-radius: 75px;
+  margin-bottom: 125px;
+  -webkit-border-radius: 75px;
+  -moz-border-radius: 75px;
+  -ms-border-radius: 75px;
+  -o-border-radius: 75px;
+  margin-top: 125px;
+  font-family: "Roboto";
+  font-weight: bold;
+  line-height: 25px;
+  font-size: 22px;
+  color: #7d7d7d;
+  cursor: pointer;
+}
+
+.play-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.play-btn::before {
+  position: absolute;
+  content: "";
+  width: 48px;
+  height: 48px;
+  top: 5px;
+  left: 7px;
+  border-radius: 50%;
+  background: $elem-btn;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.settings-form {
+  margin-top: 10px;
+
+  @include tablet-lowest() {
+    margin-top: 20px;
+  }
+}
+
+#gamelevel {
+  margin-right: 25px;
+}
+
+label {
+  margin-right: 10px;
+}
+
+@keyframes btn-up-down {
+  from {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-5deg);
+  }
+  40% {
+    transform: rotate(5deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+  80% {
+    transform: rotate(5deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}

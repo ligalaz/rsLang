@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { shallowEqual } from "react-redux";
 import { useDispatch } from "react-redux";
 import { audioService } from "../../../../services/audio-service";
-import { useGetWordsMutation } from "../../../../services/words-service";
+
 import {
-  settingsUp,
   changeAnswer,
+  settingsUp,
   setTrueRaw,
 } from "../../../../store/audiocall-settings-slice";
 import {
@@ -19,14 +19,11 @@ import {
   useAppSelector,
 } from "../../../../store/store";
 import { CallIcon } from "../../../../components/icon/call-icon";
-import OptionsComponent from "./options-component";
-import CloseBtnComponent from "../close-btn-component";
-import AudioCallRepeater from "./audiocall-repeater";
-import AudioCallView from "./audiocall-view";
-import AudiocallResult from "./audiocall-result";
-import "./audiocall.scss";
+import CloseBtnComponent from "../components/audiocall-close-btn/close-btn-component";
+import AudioCallRepeater from "../components/audiocall-repeater/audiocall-repeater";
+import AudioCallView from "../components/audiocall-view/audiocall-view";
 import { IAuth } from "../../../../interfaces/auth";
-import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
+
 import { Word } from "../../../../interfaces/word";
 import {
   useGetUserStatisticsMutation,
@@ -36,10 +33,19 @@ import {
   useUpdateUserWordMutation,
   useCreateUserWordMutation,
 } from "../../../../services/user-words-service";
+import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
 import { Statistic } from "../../../../interfaces/statistic";
 import { updateUserStatistics as updateStoreStatistics } from "../../../../store/statistics-slice";
 import { UserWordResponse } from "../../../../interfaces/user-word";
+import GameResultPage from "../game-result-page/audiocall-result";
+import "./audiocall.scss";
+import tick from "../../../../assets/sound/tick.mp3";
+import cross from "../../../../assets/sound/cross.mp3";
+import { is } from "immer/dist/internal";
+import { useGetWordsMutation } from "../../../../services/words-service";
+import { GameStartScreen } from "../../../../components/game-start-screen/game-start-screen";
+import { useSearchParams } from "react-router-dom";
 
 const AudioCallPage = (props?: unknown) => {
   const auth: IAuth = useAppSelector(
@@ -56,11 +62,14 @@ const AudioCallPage = (props?: unknown) => {
   const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { group, page, maxGroup, maxPage, allGameWords, isAnswer, trueRow } =
     useAppSelector(
       (state: RootState) => state.audioCallSettingsReducer,
       shallowEqual
     );
+
   const { currentWord, isGameStarted, gameBox, currentStep, isGameEnded } =
     useAppSelector((state: RootState) => state.audioCallReducer, shallowEqual);
 
@@ -72,11 +81,15 @@ const AudioCallPage = (props?: unknown) => {
     (state: RootState) => state.statisticsState?.statistics
   );
 
-  const [groupValue, setGroup] = useState(String(group));
-  const [pageValue, setPage] = useState(String(page));
   const [trueGameAnswer, setTrue] = useState([]);
   const [falseGameAnswer, setFalse] = useState([]);
   const [trueWordRow, setRow] = useState(0);
+  const [alpha, setAlpha] = useState(0.8);
+  const gameElements = useRef();
+
+  const [groupValue, setGroup] = useState<number>(null);
+  const [pageValue, setPage] = useState<number>(null);
+  const [mode, setMode] = useState<"textbook" | "main">("main");
 
   const nextWordButton = useRef(null);
   const dontKnowWordButton = useRef(null);
@@ -121,58 +134,99 @@ const AudioCallPage = (props?: unknown) => {
         },
         false
       );
-      groupBlock.current.disabled = true;
-      pageBlock.current.disabled = true;
-    } else {
-      groupBlock.current.disabled = false;
-      pageBlock.current.disabled = false;
     }
+
     if (currentStep === allGameWords) {
       dispatch(endGame());
     }
+
+    if (currentWord) {
+      const answers = (gameElements.current as Element).children;
+      document.onkeydown = (event) => {
+        switch (event.code) {
+          case "Digit0":
+            skipWord();
+            break;
+          case "Digit1":
+            checker(answers[0] as HTMLButtonElement);
+            break;
+          case "Digit2":
+            checker(answers[1] as HTMLButtonElement);
+            break;
+          case "Digit3":
+            checker(answers[2] as HTMLButtonElement);
+            break;
+          case "Digit4":
+            checker(answers[3] as HTMLButtonElement);
+            break;
+          case "Digit5":
+            checker(answers[4] as HTMLButtonElement);
+            break;
+          default:
+            break;
+        }
+      };
+    }
+
+    return () => (document.onkeydown = null);
   }, [currentWord]);
 
   useEffect(() => {
-    const url = window.location.href;
-    const queries = url.slice(-5).match(/\d+/gi) || [];
-    if (queries.length) {
-      groupBlock.current.disabled = true;
-      pageBlock.current.disabled = true;
-      const [group, page] = queries;
-      setGroup(group);
-      setPage(page);
-      getWords({
-        group: +group,
-        page: +page,
-      });
-    }
-  }, []);
-
-  useEffect(() => {
+    setAlpha(0.8);
     setRow(0);
     setTrue([]);
     setFalse([]);
+    document.onkeydown = null;
   }, [isGameEnded]);
 
   useEffect(() => {
     if (isAnswer) {
       nextWordButton.current.focus();
     }
+    isAnswer
+      ? (document.onkeydown = (event) => {
+          if (event.code === "ArrowRight") {
+            resetBeforeNextRound();
+          }
+        })
+      : null;
   }, [isAnswer]);
 
-  function changeSelect(flag: boolean) {
-    if (flag) {
-      setGroup((event.target as HTMLSelectElement).value);
-    } else {
-      setPage((event.target as HTMLSelectElement).value);
+  useEffect(() => {
+    const group = searchParams.get("group");
+    const page = searchParams.get("page");
+    if (group) {
+      setMode("textbook");
+      setGroup(parseInt(group));
+      if (page) {
+        setPage(parseInt(page));
+      }
     }
-    dispatch(settingsUp({ page: +pageValue, group: +groupValue }));
+  }, [searchParams]);
+
+  function getProperlyWords(): void {
+    if (auth?.userId) {
+      getAggregatedWords({
+        userId,
+        params: {
+          group: +groupValue,
+          page: +pageValue,
+          wordsPerPage: 20,
+        },
+      });
+      getUserStatistics(auth.userId);
+    } else {
+      getWords({
+        group: +groupValue,
+        page: +pageValue,
+      });
+    }
   }
 
-  async function checkTrueAnswer(event: React.MouseEvent) {
-    const target = event.target as HTMLButtonElement;
+  function checker(target: HTMLButtonElement) {
     const isAttemptCorrect: boolean = target.id === currentWord.id;
     if (isAttemptCorrect) {
+      audioService({ audio: "" }, false, tick);
       target.classList.add("game-true");
       setTrue(trueGameAnswer.concat(currentWord));
       setRow(trueWordRow + 1);
@@ -180,18 +234,22 @@ const AudioCallPage = (props?: unknown) => {
         ? dispatch(setTrueRaw({ trueRow: trueWordRow + 1 }))
         : null;
     } else {
+      audioService({ audio: "" }, false, cross);
       target.classList.add("game-false");
       setFalse(falseGameAnswer.concat(currentWord));
       dispatch(setTrueRaw({ trueRow: trueWordRow }));
       setRow(0);
     }
-    await updateUserWordStatistic(isAttemptCorrect);
+    updateUserWordStatistic(isAttemptCorrect);
     dispatch(changeAnswer({ isAnswer: true }));
   }
 
-  async function updateUserWordStatistic(
-    isAttemptCorrect: boolean
-  ): Promise<void> {
+  function checkTrueAnswer(event: React.MouseEvent | React.KeyboardEvent) {
+    const target = event.target as HTMLButtonElement;
+    checker(target);
+  }
+
+  function updateUserWordStatistic(isAttemptCorrect: boolean): void {
     const request: UserWordResponse = {
       id: auth?.userId,
       wordId: currentWord.id,
@@ -284,6 +342,8 @@ const AudioCallPage = (props?: unknown) => {
       item.classList.remove("game-true");
       item.classList.remove("game-false");
     });
+    setAlpha(alpha - 0.1);
+
     dispatch(
       gameStep({
         dataBox: words,
@@ -295,146 +355,114 @@ const AudioCallPage = (props?: unknown) => {
   }
 
   function skipWord() {
+    audioService({ audio: "" }, false, cross);
     setFalse(falseGameAnswer.concat(currentWord));
+    updateUserWordStatistic(false);
     dispatch(setTrueRaw({ trueRow: trueWordRow }));
     updateUserWordStatistic(false);
     setRow(0);
-    dispatch(
-      gameStep({
-        dataBox: words,
-        trueAnswer: trueGameAnswer,
-        falseAnswer: falseGameAnswer,
-      })
-    );
+    dispatch(changeAnswer({ isAnswer: true }));
   }
 
   return (
     <div className="audiocall-body">
-      <div className="audiocall__row">
-        <div className="audiocall__row-header">
-          {isGameStarted ? (
-            <button
-              className="play-btn"
-              disabled
-              onClick={() => dispatch(startGame({ dataBox: words }))}
-            >
-              Play
-            </button>
-          ) : (
-            <button
-              className="play-btn"
-              onClick={() => {
-                dispatch(startGame({ dataBox: words }));
-              }}
-            >
-              Play
-            </button>
-          )}
-          <CloseBtnComponent className="audiocall__row-close" />
-        </div>
-        <div className="audiocall__row-view">
-          {!isGameStarted ? (
-            <AudioCallRepeater
-              className="audiocall__row-view-item word-repeater"
-              isCall={false}
+      <div
+        style={{ background: `rgba(255,255,255,${alpha})` }}
+        className="audiocall__row"
+      >
+        {!isGameStarted ? (
+          <div className="audiocall__row-header">
+            <GameStartScreen
+              mode={mode}
+              group={groupValue}
+              onGroupSelect={(group: number) => setGroup(group)}
+              page={pageValue}
+              onPageSelect={(page: number) => setPage(page)}
+              onTimerStart={() => getProperlyWords()}
+              onTimerFinish={() => dispatch(startGame({ dataBox: words }))}
+              game="audiocall"
             />
-          ) : !currentWord ? null : isAnswer ? (
-            <AudioCallView current={currentWord} />
-          ) : (
-            <AudioCallRepeater
-              className="audiocall__row-view-item word-repeater"
-              isCall={true}
-              current={currentWord}
-            />
-          )}
-        </div>
-        <div className="audiocall__row-control">
-          <form className="settings-form">
-            <label htmlFor="gamelevel">level</label>
-            <select
-              ref={groupBlock}
-              value={groupValue}
-              onChange={changeSelect.bind(this, true)}
-              id="gamelevel"
-              name="unittype"
-              required
-            >
-              <OptionsComponent counter={maxGroup} />
-            </select>
-            <label htmlFor="gamepage">page</label>
-            <select
-              ref={pageBlock}
-              value={pageValue}
-              onChange={changeSelect.bind(this, false)}
-              id="gamepage"
-              name="type"
-              required
-            >
-              <OptionsComponent counter={maxPage} />
-            </select>
-          </form>
-          <progress
-            style={{
-              width: "100%",
-              height: "20px",
-            }}
-            value={String(currentStep)}
-            max={String(allGameWords)}
-          ></progress>
-        </div>
-        <div className="audiocall__row-playground">
-          <div className="word-repeater__row">
-            {!isGameStarted
-              ? null
-              : !isAnswer
-              ? gameBox.map((item) => (
-                  <button
-                    onClick={checkTrueAnswer}
-                    className="game-element"
-                    id={item.id}
-                    key={item.id}
-                  >
-                    {item.wordTranslate}
-                  </button>
-                ))
-              : gameBox.map((item) => (
-                  <button
-                    disabled
-                    className="game-element"
-                    id={item.id}
-                    key={item.id}
-                  >
-                    {item.wordTranslate}
-                  </button>
-                ))}
           </div>
-        </div>
-        <div className="audiocall__row-toggle">
-          <div className="audiocall__btn-container">
-            {!isGameStarted ? (
-              <div className="btn-preload ">
-                Press the play button to start the game
+        ) : (
+          <>
+            <div className="audiocall__row-view">
+              <div className="audiocall__row-close">
+                <CloseBtnComponent />
               </div>
-            ) : isAnswer ? (
-              <button
-                className="audiocall__btn-container-item btn-next"
-                ref={nextWordButton}
-                onClick={() => resetBeforeNextRound()}
+              <div className="audiocall__row-repeater-view">
+                {isAnswer ? (
+                  <AudioCallView current={currentWord} />
+                ) : (
+                  <AudioCallRepeater
+                    className="audiocall__row-view-item word-repeater"
+                    isCall={true}
+                    current={currentWord}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="audiocall__row-control">
+              <progress
+                style={{
+                  width: "100%",
+                  height: "20px",
+                }}
+                value={String(currentStep)}
+                max={String(allGameWords)}
+              ></progress>
+            </div>
+            <div className="audiocall__row-playground">
+              <div
+                ref={gameElements}
+                className="audiocall__row-playground-word-repeater__row"
               >
-                <CallIcon fill="ffffff" className="vector" id="vector" />
-              </button>
-            ) : (
-              <button
-                className="audiocall__btn-container-item"
-                ref={dontKnowWordButton}
-                onClick={() => skipWord()}
-              >
-                {`I don't know`}
-              </button>
-            )}
-          </div>
-        </div>
-        {isGameEnded ? <AudiocallResult /> : null}
+                {!isAnswer
+                  ? gameBox.map((item, idx: number) => (
+                      <button
+                        onClick={checkTrueAnswer}
+                        className="game-element"
+                        id={item.id}
+                        key={item.id}
+                      >
+                        {item.wordTranslate}
+                      </button>
+                    ))
+                  : gameBox.map((item) => (
+                      <button
+                        disabled
+                        className="game-element"
+                        id={item.id}
+                        key={item.id}
+                      >
+                        {item.wordTranslate}
+                      </button>
+                    ))}
+              </div>
+            </div>
+            <div className="audiocall__row-toggle">
+              <div className="audiocall__btn-container">
+                {isGameEnded ? null : isAnswer ? (
+                  <button
+                    className="audiocall__btn-container-item btn-next"
+                    ref={nextWordButton}
+                    onClick={() => resetBeforeNextRound()}
+                  >
+                    <CallIcon fill="ffffff" className="vector" id="vector" />
+                  </button>
+                ) : (
+                  <button
+                    className="audiocall__btn-container-item"
+                    ref={dontKnowWordButton}
+                    onClick={() => skipWord()}
+                  >
+                    {`I don't know`}
+                  </button>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+        {isGameEnded ? <GameResultPage /> : null}
       </div>
     </div>
   );

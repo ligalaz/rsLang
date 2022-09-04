@@ -30,12 +30,12 @@ const RegistrationPage = () => {
           <Icon type="logo" />
         </NavLink>
       </div>
-      <div className="container auth__container">
+      <div className="auth__container">
         <div className="authorization-page">
           <div className="authorization-page__text">
             Start your study today!
           </div>
-          <h2 className="title authorization-page__title">
+          <h2 className="authorization-page__title">
             learning languages is easy!
           </h2>
           <section className="authorization">

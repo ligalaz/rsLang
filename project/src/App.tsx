@@ -11,12 +11,12 @@ import Home from "./pages/main/components/home/home";
 import { authService } from "./services/auth-service";
 import { AppDispatch, RootState, useAppSelector } from "./store/store";
 import { ToastContainer } from "react-toastify";
-import "./App.scss";
-import AudioCallPage from "./pages/auth/games/audiocall/audiocall";
-import GameStartScreen from "./pages/auth/games/game-start-screen.component";
+import AudioCallPage from "./pages/games/audiocall/audiocall-game-page/audiocall";
 import SprintGamePage from "./pages/games/sprint/sprint-game-page/sprint-game-page";
 import Personal from "./pages/main/components/personal/personal";
 import { useMediaQuery } from "usehooks-ts";
+import SavannaGame from "./pages/games/savanna/savanna-game";
+import "./App.scss";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -29,8 +29,6 @@ function App() {
       dispatch(authService.endpoints.token.initiate(auth.userId));
     }
   }, []);
-
-  const gameChoise = true;
 
   return (
     <BrowserRouter>
@@ -46,18 +44,10 @@ function App() {
             path="login"
             element={!auth ? <LoginPage /> : <Navigate to="main" replace />}
           />
-          <Route
-            path="game-screen"
-            element={
-              !gameChoise ? (
-                <GameStartScreen gameName="audiocall" />
-              ) : (
-                <GameStartScreen gameName="sprint" />
-              )
-            }
-          />
+
           <Route path="audiocall" element={<AudioCallPage />} />
           <Route path="sprint" element={<SprintGamePage />} />
+          <Route path="savanna" element={<SavannaGame />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
             <Route

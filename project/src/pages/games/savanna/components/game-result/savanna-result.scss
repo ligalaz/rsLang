@@ -1,0 +1,166 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  background-color: var(--overlay);
+
+  animation: visible 1s;
+
+  @keyframes visible {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  &--close-animated {
+    animation: hide 1s;
+
+    @keyframes hide {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  width: 62rem;
+  height: 50.2rem;
+  max-height: 50.2rem;
+
+  &__circle {
+    position: absolute;
+    top: 3.5rem;
+    right: 4.7rem;
+  }
+}
+
+.results-popup {
+  height: 45.5rem;
+  padding: 5.5rem 4.5rem 2.8rem;
+
+  color: var(--gray-text-color);
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.9rem;
+
+  background-color: var(--result-bg);
+  border-radius: 1.4rem;
+
+  box-shadow: 0.5rem 0.5rem 0.7rem rgba(0, 0, 0, 0.05);
+
+  &__header {
+    margin-bottom: 2.5rem;
+  }
+
+  &__title {
+    margin-bottom: 1.9rem;
+  }
+
+  &__score {
+    padding-left: 0.5rem;
+
+    color: var(--yes-btn-color);
+    font-weight: 700;
+  }
+
+  &__list {
+    height: 80%;
+
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 12px;
+      border-radius: 30px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #e7e7e7;
+      border-radius: 30px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--yes-btn-color); 
+      border-radius: 30px;
+    }
+
+    &--scrollable {
+      padding-right: 0.7rem;
+    }
+  }
+
+  &__answers {
+    margin-bottom: 4rem;
+  }
+
+  &__answers:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 31.9%;
+  height: 3.7rem;
+
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 2rem;
+
+  background-color: var(--yes-btn-color);
+  color: var(--btn-text-color);
+
+  border: none;
+  outline: none;
+
+  transition: 0.5s;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover-btn-color);
+  }
+
+  &--color_red {
+    background-color: var(--no-btn-color);
+  }
+}
+
+.title {
+  &--true {
+    color: var(--yes-btn-color);
+  }
+
+  &--false {
+    color: var(--no-btn-color);
+  }
+}
+
+.answers__count {
+  &--true {
+    background-color: var(--yes-btn-color);
+  }
+
+  &--false {
+    background-color: var(--no-btn-color);
+  }
+}

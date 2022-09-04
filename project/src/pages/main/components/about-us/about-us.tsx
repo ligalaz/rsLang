@@ -1,6 +1,49 @@
 import React from "react";
-import "./about-us.scss";
-import Icon from "../../../../components/icon/icon";
+import artem from "../../../../assets/img/avatar/artem-mikula.jpg";
+import evgeniia from "../../../../assets/img/avatar/evgeniia-zhadan.jpg";
+import alexey from "../../../../assets/img/avatar/alexey.jpg";
+import About from "./components/about/about";
+
+const ABOUT = [
+  {
+    id: 1,
+    name: "Artem Mikula",
+    job: "team lead, developer",
+    about: `Coordinated the work of the team, made the project basic settings, developed the application architecture,
+      authorization, set up work with the backend, implemented the games' start screen, the Audio game, audio service,
+      statistics graphs, was engaged in layout and adaptive`,
+    avatar: artem,
+    contacts: {
+      telegram: "MRNOAH",
+      linkedin: "feed/",
+      github: "ligalaz",
+    },
+  },
+  {
+    id: 2,
+    name: "Alexey",
+    job: "developer",
+    about: `Implemented the initial application page, configured routing, made a TextBook,
+      a game selector from the textbook page, word cards and logic for them, statistics, configured pagination,
+      set up work with backend, was engaged in layout and adaptive`,
+    avatar: alexey,
+    contacts: {
+      github: "intellectualDarknet",
+    },
+  },
+  {
+    id: 3,
+    name: "Evgeniia Zhadan",
+    job: "developer",
+    about: `Made the registration page layout, implemented the game selector from the start page, the Sprint game,
+      the game results screen, the team members description page, was engaged in layout and adaptive`,
+    avatar: evgeniia,
+    contacts: {
+      telegram: "zhadan93",
+      github: "zhadan93",
+    },
+  },
+];
 
 function AboutUs() {
   return (
@@ -11,33 +54,9 @@ function AboutUs() {
       </div>
       <div className="about">
         <div className="about__flex">
-          <div className="about__column">
-            <Icon type="icon" width={100} height={100} />
-            <div className="about__descr">
-              <div className="about__title">Alexey</div>
-              <div className="about__line"></div>
-              <div className="about__job">developer</div>
-              <div className="about__text">TextBook, routes</div>
-            </div>
-          </div>
-          <div className="about__column">
-            <Icon type="icon" width={100} height={100} />
-            <div className="about__descr">
-              <div className="about__title">Artem Mikula</div>
-              <div className="about__line"></div>
-              <div className="about__job">developer</div>
-              <div className="about__text">AudioGame</div>
-            </div>
-          </div>
-          <div className="about__column">
-            <Icon type="icon" width={100} height={100} />
-            <div className="about__descr">
-              <div className="about__title">Evgenia Zhadan</div>
-              <div className="about__line"></div>
-              <div className="about__job">developer</div>
-              <div className="about__text">Sprint</div>
-            </div>
-          </div>
+          {ABOUT.map((item) => (
+            <About key={item.id} aboutPerson={item} />
+          ))}
         </div>
       </div>
     </>

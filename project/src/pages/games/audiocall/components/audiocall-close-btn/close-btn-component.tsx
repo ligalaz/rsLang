@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { settingsDown } from "../../../store/audiocall-settings-slice";
-import { resetGame } from "../../../store/audiocall-slice";
-import { AppDispatch } from "../../../store/store";
+import { settingsDown } from "../../../../../store/audiocall-settings-slice";
+import { resetGame } from "../../../../../store/audiocall-slice";
+import { AppDispatch } from "../../../../../store/store";
 
 import "./close-btn.scss";
 
@@ -17,8 +17,8 @@ const CloseBtnComponent = ({ className }: ICloseProps) => {
   return (
     <button
       onClick={() => {
+        dispatch(resetGame());
         dispatch(settingsDown());
-        dispatch(resetGame);
         navigate("/main", { replace: true });
       }}
       className="__close-btn"
