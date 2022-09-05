@@ -35,8 +35,6 @@ const ChartControl = () => {
     }
   }, []);
 
-  console.log(words);
-
   const newWords = words
     ? words
         .filter((word) => word.userWord?.optional?.firstSeenDate !== undefined)
@@ -65,8 +63,6 @@ const ChartControl = () => {
           return acc;
         }, {})
       : {};
-  console.log(wordResult);
-  console.log(learnedResult);
 
   const wordTimestamp = Object.keys(wordResult).sort();
   const wordData = Object.values(wordResult);
@@ -94,7 +90,7 @@ const ChartControl = () => {
   return (
     <div>
       <div className="page">
-        <div className="page__descr">Statistics</div>
+        <div className="page__descr">Statistic</div>
         <div className="page__line"></div>
       </div>
       {isLoading ? (
