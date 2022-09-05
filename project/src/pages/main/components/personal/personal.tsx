@@ -60,6 +60,8 @@ function Personal() {
         group,
         page,
       });
+    } else {
+      setRouteParams(null);
     }
   }, [location.pathname]);
 

@@ -30,6 +30,8 @@ function Sidebar() {
         group,
         page,
       });
+    } else {
+      setRouteParams(null);
     }
   }, [location.pathname]);
 
