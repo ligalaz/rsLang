@@ -8,7 +8,6 @@
   &__wrapper {
     flex-grow: 1;
 
-
     @supports (overflow: overlay) {
       overflow: hidden overlay;
     }
@@ -51,8 +50,9 @@
 
   &__middle {
     padding: 74px 20px;
-    margin: 0 auto;
+    margin: 0 auto auto;
     max-width: 892px;
+    min-height: calc(100vh - 3.95rem);
 
     @include desktop-highest() {
       padding: 54px 20px;

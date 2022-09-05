@@ -1,0 +1,96 @@
+@import "../../../../styles/constants";
+@import "../../../../styles/responsive-media";
+
+.footer {
+  color: $gray-main-text-color;
+  padding: 0.9rem 0;
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 0.9rem;
+    column-gap: 1.5rem;
+    justify-content: space-between;
+    padding: 0 20px;
+
+    margin: 0 auto ;
+    max-width: 892px;
+
+    @include desktop-highest() {
+      padding: 0 20px;
+    }
+
+    @include desktop-lowest() {
+      padding: 0 40px;
+    }
+
+    @include desktop-lowest() {
+      padding: 0 40px;
+    }
+
+    @include tablet-middle() {
+      justify-content: center;
+    }
+
+    @include tablet-lower() {
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    @include mobile-inbetween() {
+      justify-content: center;
+    }
+  }
+
+  &__list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    column-gap: 0.6rem;
+
+    list-style: none;
+  }
+
+  &__contact-icon {
+    width: 1.9rem;
+    height: 1.9rem;
+
+    transition: 0.5s;
+
+    &--purple {
+      fill: $main-purple-color;
+    }
+
+    &--red {
+      fill: $main-red-color;
+    }
+
+    &--yellow {
+      fill: $hover-btn-color;
+    }
+
+    &--gray {
+      fill: $gray-main-text-color;
+    }
+
+    &:hover {
+      fill: $footer-hover-icon;
+
+      cursor: pointer;
+    }
+  }
+}
+
+.rss-logo {
+  width: 5.3rem;
+  height: 1.9rem;
+
+  transition: 0.5s;
+
+  fill: $gray-main-text-color;
+
+  &:hover {
+    fill: $footer-hover-icon;
+  }
+}
