@@ -179,7 +179,7 @@ function Personal() {
                       ? `/savanna?group=${routeParams.group}&page=${routeParams.page}`
                       : `/savanna?group=${routeParams.group}`
                   }
-                  className="personal__game personal__game2"
+                  className="personal__game personal__game3"
                   type="button"
                 >
                   Savanna

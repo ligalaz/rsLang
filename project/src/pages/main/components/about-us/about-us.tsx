@@ -47,11 +47,9 @@ const ABOUT = [
 
 function AboutUs() {
   return (
-    <>
-      <div className="page">
-        <div className="page__descr">About us</div>
-        <div className="page__line"></div>
-      </div>
+    <div className="page">
+      <div className="page__descr">About us</div>
+      <div className="page__line"></div>
       <div className="about">
         <div className="about__flex">
           {ABOUT.map((item) => (
@@ -59,7 +57,7 @@ function AboutUs() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

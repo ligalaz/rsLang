@@ -1,4 +1,5 @@
 @import '../../../../styles/_responsive-media.scss';
+@import "../../../../styles/constants";
 
 .personal {
   background: #FAFAFA;
@@ -56,7 +57,7 @@
   &__img {
     width:171px;
     height:171px;
-    background-color: orange;
+    background-color: $savanna;
     border-radius: 50%;
   }
 
@@ -244,8 +245,6 @@
     }
   }
 
-  
-
   &__info {
     width: 200px;
 
@@ -308,6 +307,12 @@
     flex: 0 1 44%;
     margin: 10px 0;
 
+    transition: 0.5s;
+
+    &:hover {
+      background: $hover-btn-color;
+    }
+
     @include desktop-highest() {
       font-size: 16px;
       flex: 0 1 48%;
@@ -328,6 +333,10 @@
 
   &__game2 {
     background: #F56748;
+  }
+
+  &__game3 {
+    background: $savanna;
   }
 
   &__statistics {

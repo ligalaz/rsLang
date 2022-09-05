@@ -32,7 +32,7 @@ const About = ({ aboutPerson }: AboutDetails) => {
       </div>
       <div className="about__descr">
         <div className="about__title">
-          {name}
+          <div className="about__name">{name}</div>
           <div className="about__contacts">
             {Object.entries(contacts).map(([key, value]) => (
               <a
@@ -45,7 +45,7 @@ const About = ({ aboutPerson }: AboutDetails) => {
                 rel="noreferrer"
                 target="_blank"
               >
-                <ContactsIcon id={key} />
+                <ContactsIcon id={key} className="contact-icon" />
               </a>
             ))}
           </div>

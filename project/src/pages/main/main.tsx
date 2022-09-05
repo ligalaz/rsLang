@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar/sidebar";
 import Greetings from "./components/greetings/gretings";
 import Personal from "./components/personal/personal";
+import Footer from "./components/footer/footer";
 import { Outlet, useLocation } from "react-router";
 
 const MainPage = () => {
@@ -20,6 +21,7 @@ const MainPage = () => {
           <Greetings />
           <Outlet />
         </div>
+        <Footer />
       </div>
       <div className="main-four__personal">
         <Personal />
