@@ -86,7 +86,7 @@ const RegistrationPage = () => {
               <button
                 className="round-btn form__round-btn"
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || (!name && !email && !password)}
               >
                 {isLoading ? <Icon type="button-loading"></Icon> : "OK"}
               </button>

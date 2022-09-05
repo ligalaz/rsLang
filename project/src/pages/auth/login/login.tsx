@@ -36,6 +36,7 @@ const LoginPage = () => {
             <button
               className="authorization__btn authorization__btn--active"
               type="button"
+              disabled={!email && !password}
             >
               Sign in
             </button>
@@ -72,7 +73,7 @@ const LoginPage = () => {
               <button
                 className="round-btn form__round-btn"
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || (!email && !password)}
               >
                 {isLoading ? <Icon type="button-loading"></Icon> : "OK"}
               </button>
