@@ -151,6 +151,10 @@
     @include desktop-lowest() {
       transform: translate(10px, -42px);
     }
+
+    @include tablet-lower() {
+      transform: translate(10px, -15px);
+    }
   }
 
   &__link {
@@ -166,8 +170,16 @@
       font-size: 24px;
     }
 
+    @include tablet-lower() {
+      font-size: 20px;
+    }
+
     &:not(:last-child) {
       margin-bottom: 60px;
+      
+      @include tablet-lower() {
+        margin-bottom: 40px;
+      }
     }
 
     &:hover {

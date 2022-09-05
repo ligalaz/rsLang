@@ -94,7 +94,7 @@ function Textbook() {
       // eslint-disable-next-line no-empty
     } catch (e) {}
   }
-
+  console.log("words", words.length);
   function gatherPopup(elem: number) {
     return (
       <>
@@ -111,7 +111,6 @@ function Textbook() {
       </>
     );
   }
-
   return (
     <>
       {popUp && gatherPopup(idPopUp)}
@@ -158,7 +157,7 @@ function Textbook() {
         <>
           <div className="textbook">
             <div className="textbook__wrapper">
-              {words.length &&
+              {words.length ? (
                 words.map((a, i) => (
                   <Card
                     key={a.id}
@@ -168,11 +167,16 @@ function Textbook() {
                     removeWord={() => updateDifficultWord(a)}
                     togglePopup={() => togglePopup(i)}
                   />
-                ))}
+                ))
+              ) : (
+                <div className="textbook__hardWords">
+                  Добавьте сложные слова!
+                </div>
+              )}
             </div>
           </div>
           <div className="global__info">
-            {+group - 6 && (
+            {+group != 6 && (
               <PaginatedItems itemsPerPage={1} setPage={setPage} />
             )}
           </div>

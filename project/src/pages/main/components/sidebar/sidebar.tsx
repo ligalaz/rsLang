@@ -33,6 +33,8 @@ function Sidebar() {
         params.page = pathes[4];
       }
       setRouteParams(params);
+    } else {
+      setRouteParams(null);
     }
   }, [location.pathname]);
 
@@ -113,7 +115,7 @@ function Sidebar() {
             <NavLink
               onClick={() => setMobileMenuFlag(false)}
               className={({ isActive }) =>
-                isActive
+                location.pathname.includes("textbook")
                   ? "sidebar__link sidebar__link_active"
                   : "sidebar__link"
               }
@@ -185,16 +187,17 @@ function Sidebar() {
 
           <div className="sidebar__footer">
             {isAuth ? (
-              <div
+              <NavLink
                 onClick={() => {
                   dispatch(logout());
                   setMobileMenuFlag(false);
                 }}
-                className="sidebar__link sidebar__footer-flex "
+                className="sidebar__link sidebar__footer-flex"
+                to="/main"
               >
                 <Icon type={"log-out"} />
                 <span className="sidebar__link-text">Log Out</span>
-              </div>
+              </NavLink>
             ) : (
               <NavLink
                 className="sidebar__link sidebar__footer-flex"

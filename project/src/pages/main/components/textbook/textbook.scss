@@ -103,10 +103,37 @@
   }
 }
 
-.textbook__loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 400px;
+
+
+.textbook {
+  margin-top: 25px;
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+  }
+
+  &__hardWords {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: black;
+    padding: 20px;
+    background: white;
+    border: 1px solid #B2B2B2;
+    margin-top: 50px;
+    
+    @include tablet-lower() {
+      font-size: 20px;
+    }
+
+    @include tablet-lowest() {
+      font-size: 20px;
+    }
+
+  }
 }
+
 

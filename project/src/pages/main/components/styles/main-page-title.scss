@@ -3,15 +3,13 @@
   top: 0px;
   z-index: 3;
   background-color: #ffffff;
-  padding: 20px 0;
-  margin-bottom: 50px;
+  padding: 20px 0 0;
 
   @include desktop-lowest() {
     position: initial;
   }
 
   @include tablet-lower() {
-    margin-bottom: 30px;
   }
 
   &_with-border {
