@@ -21,13 +21,11 @@
     justify-content: center;
 
     @include tablet-upper() {
-      height: auto;
-      padding-bottom: 70px;
+      padding: 70px 0;
     }
 
     @include tablet-lowest() {
       justify-content: flex-start;
-      height: auto;
     }
 
     &-header {

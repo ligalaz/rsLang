@@ -89,8 +89,8 @@ const AudioCallPage = (props?: unknown) => {
   const [alpha, setAlpha] = useState(0.8);
   const gameElements = useRef();
 
-  const [groupValue, setGroup] = useState<number>(null);
-  const [pageValue, setPage] = useState<number>(null);
+  const [groupValue, setGroup] = useState<number>(0);
+  const [pageValue, setPage] = useState<number>(0);
   const [mode, setMode] = useState<"textbook" | "main">("main");
 
   const navigate = useNavigate();
@@ -189,15 +189,7 @@ const AudioCallPage = (props?: unknown) => {
 
   function getProperlyWords(): void {
     if (auth?.userId) {
-      const request: GetWordsRequest = {};
-      if (request.group === 6) {
-        request.filter = '{"userWord.difficulty":"hard"}';
-        request.wordsPerPage = 3600;
-      } else {
-        request.group = groupValue;
-        request.page = pageValue;
-        request.wordsPerPage = 20;
-      }
+      const request: GetWordsRequest = prepareRequest();
       getAggregatedWords({
         userId,
         params: request,
@@ -209,6 +201,30 @@ const AudioCallPage = (props?: unknown) => {
         page: pageValue,
       });
     }
+  }
+
+  function prepareRequest(): GetWordsRequest {
+    const request: GetWordsRequest = {};
+    switch (mode) {
+      case "main":
+        request.group = groupValue;
+        request.page = pageValue;
+        request.wordsPerPage = 20;
+        break;
+      case "textbook":
+        if (request.group === 6) {
+          request.filter = '{"userWord.difficulty":"hard"}';
+          request.wordsPerPage = 3600;
+        } else {
+          request.group = groupValue;
+          request.wordsPerPage = 600;
+          request.filter = `{"$and":[{"userWord.difficulty": { "$ne": "learned"}},{"page": { "$lte": ${pageValue}}}]}`;
+        }
+        break;
+      default:
+        break;
+    }
+    return request;
   }
 
   function checker(target: HTMLButtonElement) {
@@ -357,13 +373,17 @@ const AudioCallPage = (props?: unknown) => {
 
   function onTimerFinish(): void {
     if (groupValue === 6 && words.length < 10) {
-      if (words.length < 10 && group === 6) {
-        notify(
-          "Lack words count for game. Please add more difficult words",
-          toast.warning
-        );
-        navigate("/main", { replace: true });
-      }
+      notify(
+        "Lack words count for game. Please add more difficult words",
+        toast.warning
+      );
+      navigate("/main", { replace: true });
+    } else if (words.length < 10) {
+      notify(
+        "Lack words count for game. Please change page or group or open game via main page.",
+        toast.warning
+      );
+      navigate("/main", { replace: true });
     }
     dispatch(startGame({ dataBox: words }));
   }
@@ -383,14 +403,13 @@ const AudioCallPage = (props?: unknown) => {
         />
       ) : (
         <div className="audiocall-body">
+          <CloseBtnComponent />
           <div
             style={{ background: `rgba(255,255,255,${alpha})` }}
             className="audiocall__row"
           >
             <div className="audiocall__row-view">
-              <div className="audiocall__row-close">
-                <CloseBtnComponent />
-              </div>
+              <div className="audiocall__row-close"></div>
               <div className="audiocall__row-repeater-view">
                 {isAnswer ? (
                   <AudioCallView current={currentWord} />

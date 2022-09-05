@@ -25,16 +25,11 @@ function Sidebar() {
 
   useEffect(() => {
     if (location.pathname.includes("textbook")) {
-      const pathes: string[] = location.pathname.split("/");
-      const params: ITextbookRouteParams = {
-        group: pathes[3],
-      };
-      if (pathes.length === 5) {
-        params.page = pathes[4];
-      }
-      setRouteParams(params);
-    } else {
-      setRouteParams(null);
+      const [group, page]: string[] = location.pathname.split("/").slice(-2);
+      setRouteParams({
+        group,
+        page,
+      });
     }
   }, [location.pathname]);
 
