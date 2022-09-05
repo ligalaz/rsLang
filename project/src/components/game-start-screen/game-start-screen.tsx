@@ -81,6 +81,49 @@ export function GameStartScreen({
               Tired of studying the textbook? Make learning more fun by testing
               your skills in interesting games.
             </p>
+            {mode === "main" && (
+              <div className="start-screen__row-form">
+                <form className="settings-form">
+                  <label htmlFor="gamelevel" className="settings-form__label">
+                    level
+                  </label>
+                  <select
+                    className={`settings-form__selection ${
+                      timer && "settings-form__selection--disabled"
+                    }`}
+                    disabled={timer && true}
+                    value={group ?? 0}
+                    onChange={changeSelect}
+                    id="gamelevel"
+                    required
+                  >
+                    <OptionsComponent counter={6} />
+                  </select>
+                  {game === "audiocall" && (
+                    <>
+                      <label
+                        htmlFor="gamepage"
+                        className="settings-form__label"
+                      >
+                        page
+                      </label>
+                      <select
+                        className={`settings-form__selection ${
+                          timer && "settings-form__selection--disabled"
+                        }`}
+                        disabled={timer && true}
+                        value={page ?? 0}
+                        onChange={changeSelect}
+                        id="gamepage"
+                        required
+                      >
+                        <OptionsComponent counter={30} />
+                      </select>
+                    </>
+                  )}
+                </form>
+              </div>
+            )}
           </div>
           <div className="start-screen__row-action">
             <div
@@ -91,34 +134,6 @@ export function GameStartScreen({
             </div>
           </div>
         </div>
-        {mode === "main" && (
-          <div className="start-screen__row-form">
-            <form className="settings-form">
-              <label htmlFor="gamelevel">level</label>
-              <select
-                value={group ?? 0}
-                onChange={changeSelect}
-                id="gamelevel"
-                required
-              >
-                <OptionsComponent counter={6} />
-              </select>
-              {game === "audiocall" && (
-                <>
-                  <label htmlFor="gamepage">page</label>
-                  <select
-                    value={page ?? 0}
-                    onChange={changeSelect}
-                    id="gamepage"
-                    required
-                  >
-                    <OptionsComponent counter={30} />
-                  </select>
-                </>
-              )}
-            </form>
-          </div>
-        )}
       </div>
     </div>
   );
