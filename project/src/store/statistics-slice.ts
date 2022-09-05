@@ -23,6 +23,9 @@ export const statisticsSlice = createSlice({
     updateUserStatistics: (state, action: PayloadAction<Statistic>) => {
       state.statistics = action.payload;
     },
+    reset: () => {
+      return { ...initialState };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -65,4 +68,4 @@ export const statisticsSlice = createSlice({
 
 export default statisticsSlice.reducer;
 
-export const { updateUserStatistics } = statisticsSlice.actions;
+export const { updateUserStatistics, reset } = statisticsSlice.actions;

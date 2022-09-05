@@ -282,6 +282,7 @@ const SprintGamePage = (): JSX.Element => {
     const request: GetWordsRequest = prepareRequest();
     if (auth) {
       getAggregatedWords({ userId: auth.userId, params: request });
+      getUserStatistics(auth.userId);
     } else {
       getWords(request);
     }

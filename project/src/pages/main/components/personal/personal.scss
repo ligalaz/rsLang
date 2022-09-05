@@ -27,6 +27,19 @@
     box-sizing: border-box;
     justify-content: space-between;
 
+    @supports (overflow: overlay) {
+      overflow: hidden overlay;
+    }
+    
+    @supports not (overflow: overlay) {
+      overflow: hidden auto;
+    }
+
+    scrollbar-width: thin;
+    scrollbar-color: #e6e8eb #c1c7cd;
+    color: transparentize(#c1c7cd, 1);
+    transition: color .4s ease-in-out;
+
     @include desktop-highest() {
       padding: 54px 40px;
       width: 365px;
@@ -64,8 +77,10 @@
   &__title {
     font-family: Montserrat;
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 20px;
     text-align: center;
+    color: #000;
+    margin-left: 10px;
 
     @include desktop-lower() {
       font-size: 28px;
@@ -224,26 +239,25 @@
     }
   }
 
-  &__info {
-    width: 165px;
+  &__logo-skilled {
+    border-radius: 50%;
+    background-image: url("../../../../assets/img/clever.png");
+    background-size: cover;
+  }
 
-    @include tablet-lower() {
-      width: 150px;
-    }
+  &__info, &__logo-skilled {
+    width: 120px;
+    height: 120px;
+  }
 
-    @include desktop-lowest() {
-      width: 130px;
-    }
-
-    @include mobile-inbetween() {
-      width: 28%;
-      min-width: 130px;
-      margin: 0 auto;
-    }
-  
+  &__upper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
   }
 
   &__games {
+    color: #000;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -269,10 +283,10 @@
     font-size: 19px;
     line-height: 23px;
     color: #fff;
-    padding: 12px;
+    padding: 10px;
     text-align: center;
     flex: 0 1 44%;
-    margin-top: 10px;
+    margin-top: 5px;
 
     transition: 0.5s;
 
