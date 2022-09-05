@@ -349,6 +349,7 @@ const AudioCallPage = (props?: unknown) => {
       item.disabled = false;
       item.classList.remove("game-true");
       item.classList.remove("game-false");
+      item.classList.remove("game-visible");
     });
     setAlpha(alpha - 0.1);
 
@@ -369,6 +370,10 @@ const AudioCallPage = (props?: unknown) => {
     updateUserWordStatistic(false);
     setRow(0);
     dispatch(changeAnswer({ isAnswer: true }));
+    const answers = (gameElements.current as Element).children;
+    Array.from(answers)
+      .find((item) => item.id === currentWord.id)
+      .classList.add("game-visible");
   }
 
   function onTimerFinish(): void {

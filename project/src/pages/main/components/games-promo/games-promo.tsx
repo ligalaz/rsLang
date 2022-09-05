@@ -10,19 +10,22 @@ const games = [
     name: "audio call",
     link: "audiocall",
     promo: <AudioCallCard />,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    description:
+      "You hear a word and see 5 possible translations. Your task is to choose the correct translation.",
   },
   {
     name: "sprint",
     link: "sprint",
     promo: <SprintCard />,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    description:
+      "Speed ​​game. You have 1 minute to guess the word and score the maximum points.",
   },
   {
     name: "savanna",
     link: "savanna",
     promo: <SavannaCard />,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    description:
+      "Words in a foreign language are falling, and you need to click on the correct translation of the translation. Don't forget about hearts.",
   },
 ];
 

@@ -142,6 +142,10 @@
   position: relative;
   color: $words-error-text !important;
 }
+.game-visible {
+  position: relative;
+  color: $words-active-text !important;
+}
 
 .game-true::before,
 .game-false::before {

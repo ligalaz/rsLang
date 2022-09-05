@@ -109,11 +109,6 @@ const ChartControl = () => {
                   ? `Your data isn't enough to see new words chart per day. Please, make more activities in our application. At moment you have ${newWords.length} new words. `
                   : `Your data isn't enough to see new words chart per day. Please, make more activities in our application. `}
               </p>
-              <p className="charts-item__text">
-                To display charts of long-term statistics, you need to log into
-                the application for several days or use the default user when
-                authorizing: <i>Login: a@a.com, password: 11111111</i>
-              </p>
             </div>
           </div>
           <div className="charts-container">
@@ -125,6 +120,11 @@ const ChartControl = () => {
               </p>
             </div>
           </div>
+          <p className="charts-free__item charts-item__text">
+            To display charts of long-term statistics, you need to log into the
+            application for several days or use the default user when
+            authorizing: <i>Login: a@a.com, password: 11111111</i>
+          </p>
         </div>
       ) : (
         <>

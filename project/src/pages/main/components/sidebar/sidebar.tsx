@@ -33,6 +33,14 @@ function Sidebar() {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 1281) {
+        setMobileMenuFlag(false);
+      }
+    });
+  }, []);
+
   return (
     <>
       <NavLink

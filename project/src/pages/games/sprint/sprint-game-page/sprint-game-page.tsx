@@ -328,69 +328,72 @@ const SprintGamePage = (): JSX.Element => {
           game="sprint"
         />
       )}
-      <div className="container">
-        <header className="header">
-          <CloseBtn isDisabled={isGameEnded} />
-        </header>
-        <main className="main">
-          <section className="sprint-game">
-            <div className="sprint-game__header">
-              <span className="sprint-game__score">{score}</span>
-              <ProgressLabels />
-            </div>
-            <div className="sprint-game__selects">
-              <AudioBtn
-                className={`sprint-game__audio ${
-                  !sound && "circle__audio--inactive"
-                }`}
-                isDisabled={isDisabledBtn}
-                setSound={() => setSound(!sound)}
-              />
-            </div>
-            {isDisabledThroughoutGame && (
-              <Timer
-                timerDetails={timerSettings}
-                endTimer={() => setGameEnd()}
-                isStarted={isGameStarted}
-              />
-            )}
-            {isLoadingData && <div>...Loading</div>}
-            {!isLoadingData && isDisabledThroughoutGame && (
-              <div className="sprint-game__text">
-                {currentWord.wordTranslate}
-                <span className="sprint-game__text--english">
-                  {currentWord.word}
-                </span>
+      {isGameStarted && !isGameEnded && (
+        <div className="container">
+          <header className="header">
+            <CloseBtn isDisabled={isGameEnded} />
+          </header>
+          <main className="main">
+            <section className="sprint-game">
+              <div className="sprint-game__header">
+                <span className="sprint-game__score">{score}</span>
+                <ProgressLabels />
               </div>
-            )}
-            <div className="sprint-game__btn-container">
-              <button
-                disabled={isDisabledBtn}
-                onClick={() => handleGameStep(false)}
-                className={`sprint-game__btn sprint-game__btn--no ${
-                  isDisabledBtn && "sprint-game__btn--disabled"
-                }`}
-              >
-                Incorrect
-              </button>
-              <div className="sprint-game__answer-indicator">
-                <div
-                  className={`circle sprint-game__circle ${indicatorClassName}`}
+              <div className="sprint-game__selects">
+                <AudioBtn
+                  className={`sprint-game__audio ${
+                    !sound && "circle__audio--inactive"
+                  }`}
+                  isDisabled={isDisabledBtn}
+                  setSound={() => setSound(!sound)}
                 />
               </div>
-              <button
-                disabled={isDisabledBtn}
-                onClick={() => handleGameStep(true)}
-                className={`sprint-game__btn sprint-game__btn--yes ${
-                  isDisabledBtn && "sprint-game__btn--disabled"
-                }`}
-              >
-                Correct
-              </button>
-            </div>
-          </section>
-        </main>
-      </div>
+              {isDisabledThroughoutGame && (
+                <Timer
+                  timerDetails={timerSettings}
+                  endTimer={() => setGameEnd()}
+                  isStarted={isGameStarted}
+                />
+              )}
+              {isLoadingData && <div>...Loading</div>}
+              {!isLoadingData && isDisabledThroughoutGame && (
+                <div className="sprint-game__text">
+                  {currentWord.wordTranslate}
+                  <span className="sprint-game__text--english">
+                    {currentWord.word}
+                  </span>
+                </div>
+              )}
+              <div className="sprint-game__btn-container">
+                <button
+                  disabled={isDisabledBtn}
+                  onClick={() => handleGameStep(false)}
+                  className={`sprint-game__btn sprint-game__btn--no ${
+                    isDisabledBtn && "sprint-game__btn--disabled"
+                  }`}
+                >
+                  Incorrect
+                </button>
+                <div className="sprint-game__answer-indicator">
+                  <div
+                    className={`circle sprint-game__circle ${indicatorClassName}`}
+                  />
+                </div>
+                <button
+                  disabled={isDisabledBtn}
+                  onClick={() => handleGameStep(true)}
+                  className={`sprint-game__btn sprint-game__btn--yes ${
+                    isDisabledBtn && "sprint-game__btn--disabled"
+                  }`}
+                >
+                  Correct
+                </button>
+              </div>
+            </section>
+          </main>
+        </div>
+      )}
+
       {isGameEnded && <GameResultPage />}
     </>
   );

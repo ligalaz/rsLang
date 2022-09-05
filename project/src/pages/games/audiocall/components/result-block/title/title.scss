@@ -10,6 +10,10 @@
   line-height: 2.2rem;
   font-weight: 700;
 
+  @include mobile-inbetween() {
+    font-size: 1.6rem;
+  }
+
   border-bottom: 0.06rem solid var(--header-line-color);
 
   @include tablet-lowest() {

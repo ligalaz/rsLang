@@ -1,16 +1,12 @@
 @import '../../../../styles/constants';
+@import '../../../../styles/responsive-media';
 
 .container {
-  min-height: 100vh;
-
-  background-image: url("../../../../assets/img/sprint-bg.jpg");
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: contain;
-
-  @media (max-width: 87.5rem) {
-    background-size: contain;
-  }
+  background: url("../../../../assets/img/audiocall-bg.jpg");
+  background-position: 50% 100%;
+  background-repeat: repeat;
+  height: 100%;
+  width: 100%;
 }
 
 .main {
@@ -78,6 +74,10 @@
     align-self: flex-start;
     justify-content: center;
 
+    @include mobile-inbetween() {
+      width: 60px;
+    }
+
     border-top: 0.06rem solid $header-line-color;
   }
 
@@ -97,6 +97,11 @@
   &__btn {
     width: 8.8rem;
     height: 8.8rem;
+
+    @include mobile-inbetween() {
+      width: 7.8rem;
+      height: 7.8rem;
+    }
   
     color: $btn-text-color;
     font-size: 1.3rem;

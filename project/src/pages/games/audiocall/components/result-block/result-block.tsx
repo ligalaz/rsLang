@@ -43,7 +43,7 @@ const ResultBlock = ({
               isCall={true}
               current={word}
             />
-            <div>{word.word}</div>
+            <div className="answer__word">{word.word}</div>
           </div>
           <div className="answer__transcription">{word.transcription}</div>
           <div className="answer__translation">{word.wordTranslate}</div>
