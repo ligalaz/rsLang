@@ -5,6 +5,7 @@
 
   &__column {
     display: flex;
+    margin-top: 2.4rem;
     margin-bottom: 0.9rem;
 
     @include tablet-lower() {
@@ -16,7 +17,9 @@
   
   &__title {
     display: flex;
+   flex-wrap: wrap;
     column-gap: 0.3rem;
+    align-items: baseline;
     margin-top: 1.04rem;
     margin-bottom: 0.6rem;
 
@@ -24,7 +27,7 @@
     font-size: 1.5rem;
     line-height: 1.8rem;
     color: #000000;
-    text-align: center;
+    text-align: start;
 
     @include tablet-lower() {
       flex-direction: column;
