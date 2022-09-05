@@ -89,8 +89,8 @@ const AudioCallPage = (props?: unknown) => {
   const [alpha, setAlpha] = useState(0.8);
   const gameElements = useRef();
 
-  const [groupValue, setGroup] = useState<number>(null);
-  const [pageValue, setPage] = useState<number>(null);
+  const [groupValue, setGroup] = useState<number>(0);
+  const [pageValue, setPage] = useState<number>(0);
   const [mode, setMode] = useState<"textbook" | "main">("main");
 
   const navigate = useNavigate();

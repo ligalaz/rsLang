@@ -13,12 +13,24 @@
     font-size: 14px;
   }
 
+  @include mobile-upper() {
+    font-size: 13px;
+  }
+
+  @include mobile-inbetween {
+    font-size: 12px;
+  }
+
   padding-bottom: 0.6rem;
 
   &__word-container {
     display: flex;
     align-items: center;
     column-gap: 1.55rem;
+
+    @include tablet-lower() {
+      column-gap: 10px;
+    }
   }
 
   &__transcription {
@@ -34,6 +46,11 @@
 .circle__audio--small {
   width: 2.6rem;
   height: 2.6rem;
+
+  @include mobile-inbetween() {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .answers__count {

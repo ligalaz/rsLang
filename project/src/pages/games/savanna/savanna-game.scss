@@ -1,4 +1,6 @@
 @import '../../../styles/constants';
+@import '../../../styles/responsive-media';
+
 
 .savanna-game {
   background: url('../../../assets/img/background.jpg');
@@ -54,6 +56,10 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 25px 50px 0;
+
+    @include mobile-inbetween() {
+      padding: 25px 30px 0;
+    }
   }
 
   &__answer {
@@ -62,6 +68,14 @@
     color: #7D7D7D;
     padding: 5px;
     cursor: pointer;
+
+    @include tablet-lower() {
+      font-size: 30px;
+    }
+
+    @include mobile-inbetween() {
+      font-size: 25px;
+    }
 
     &_correct, &:hover {
       color: #6550DE;

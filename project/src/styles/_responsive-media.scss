@@ -65,6 +65,12 @@
   }
 }
 
+@mixin mobile-upper {
+  @media (max-width: $mobile-upper) {
+    @content;
+  }
+}
+
 @mixin mobile-inbetween {
   @media (max-width: $mobile-inbetween) {
     @content;
