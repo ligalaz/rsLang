@@ -18,6 +18,7 @@ import { useMediaQuery } from "usehooks-ts";
 import SavannaGame from "./pages/games/savanna/savanna-game";
 import "./App.scss";
 import ChartControl from "./pages/main/components/charts/chart-control";
+import Promo from "./pages/main/components/promo/promo";
 import GameResultPage from "./pages/games/audiocall/game-result-page/audiocall-result";
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
               }
             />
             <Route path="textbook/:group/:page" element={<Textbook />} />
+            <Route path="promo" element={<Promo />} />
             <Route path="about-us" element={<AboutUs />} />
             <Route
               path="statistics"
