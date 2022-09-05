@@ -9,6 +9,8 @@ import ChartComponent, {
   IChartValues,
 } from "./charts-component/chart-component";
 
+import "./chart.scss";
+
 type resultOptions = {
   [key: string]: number;
 };
@@ -65,6 +67,7 @@ const ChartControl = () => {
       : {};
 
   const wordTimestamp = Object.keys(wordResult).sort();
+
   const wordData = Object.values(wordResult);
   const learnedTimestamp = Object.keys(learnedResult);
   const learnedData = Object.values(learnedResult).map((item, idx, arr) =>
@@ -96,6 +99,32 @@ const ChartControl = () => {
       {isLoading ? (
         <div className="textbook__loading">
           <Icon type="loading" />
+        </div>
+      ) : wordTimestamp.length < 2 && learnedTimestamp.length < 2 ? (
+        <div className="charts">
+          <div className="charts-container">
+            <div className="charts-item">
+              <p className="charts-item__text">
+                {newWords.length
+                  ? `Your data isn't enough to see new words chart per day. Please, make more activities in our application. At moment you have ${newWords.length} new words. `
+                  : `Your data isn't enough to see new words chart per day. Please, make more activities in our application. `}
+              </p>
+              <p className="charts-item__text">
+                To display charts of long-term statistics, you need to log into
+                the application for several days or use the default user when
+                authorizing: <i>Login: a@a.com, password: 11111111</i>
+              </p>
+            </div>
+          </div>
+          <div className="charts-container">
+            <div className="charts-item">
+              <p className="charts-item__text">
+                {learned.length
+                  ? `Your data isn't enough to see learned words chart per day. Please, make more activities in our application. At moment you have ${learned.length} learned words. `
+                  : `Your data isn't enough to see learned words chart per day. Please, make more activities in our application. `}
+              </p>
+            </div>
+          </div>
         </div>
       ) : (
         <>
