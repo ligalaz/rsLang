@@ -75,6 +75,10 @@ function Personal() {
   return (
     <>
       <div className="personal">
+        <div className="page personal__page">
+          <div className="page__descr">Personal</div>
+          <div className="page__line"></div>
+        </div>
         <div className="personal__wrapper">
           <div className="personal__upper">
             <div className="personal__info">
@@ -84,13 +88,15 @@ function Personal() {
           </div>
           {auth && (
             <div className="personal__center">
-              <div className="personal__center-title">Daily statistics</div>
               <div className="personal__center-content">
+                <div className="personal__center-title">
+                  Games daily statistics
+                </div>
                 <div className="personal__games">
                   <div className="personal__column">
                     <div className="personal__game-hidden">game</div>
                     <div className="personal__descr">In a row</div>
-                    <div className="personal__descr">accuracy</div>
+                    <div className="personal__descr">Accuracy</div>
                     <div className="personal__descr">New words</div>
                   </div>
 
@@ -129,9 +135,11 @@ function Personal() {
                     <div className="personal__all">{savannaWords.length}</div>
                   </div>
                 </div>
+                <div className="personal__center-title">
+                  Words daily statistics
+                </div>
                 <div className="personal__statistics">
                   <div className="personal__statistics-descr">
-                    <div className="personal__game-hidden">game</div>
                     <div className="personal__statistics-learned">Learnt</div>
                     <div className="personal__statistics-percentage">
                       Accuracy
@@ -140,7 +148,6 @@ function Personal() {
                   </div>
 
                   <div className="personal__statistics-descr personal__statistics-descr2">
-                    <div className="personal__game-hidden">game</div>
                     <div className="personal__statistics-learned">
                       {learnedWords.length}
                     </div>
