@@ -183,6 +183,7 @@ function Sidebar() {
                     ? "sidebar__link sidebar__link_active"
                     : "sidebar__link"
                 }
+                onClick={() => setMobileMenuFlag(false)}
                 to="/main/statistics"
               >
                 Statistics
