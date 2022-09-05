@@ -18,6 +18,7 @@ import { useMediaQuery } from "usehooks-ts";
 import SavannaGame from "./pages/games/savanna/savanna-game";
 import "./App.scss";
 import ChartControl from "./pages/main/components/charts/chart-control";
+import GameResultPage from "./pages/games/audiocall/game-result-page/audiocall-result";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -49,6 +50,7 @@ function App() {
           <Route path="audiocall" element={<AudioCallPage />} />
           <Route path="sprint" element={<SprintGamePage />} />
           <Route path="savanna" element={<SavannaGame />} />
+          <Route path="overlay" element={<GameResultPage />} />
           <Route path="main/*" element={<MainPage />}>
             <Route index element={<Home />} />
             <Route
