@@ -11,17 +11,27 @@ import { logout } from "../../../../store/auth-slice";
 import { useMediaQuery } from "usehooks-ts";
 import classNames from "classnames";
 import { ITextbookRouteParams } from "../personal/personal";
+import { Word } from "../../../../interfaces/word";
+import { reset } from "../../../../store/statistics-slice";
 
 function Sidebar() {
   const [mobileMenuFlag, setMobileMenuFlag] = useState(false);
-  const screen = useMediaQuery("(max-width: 500px)");
-  const isDailyStatistics = useMediaQuery("(max-width: 767px)");
+  const isMobile = useMediaQuery("(max-width: 500px)");
+  const isTablet = useMediaQuery("(max-width: 767px)");
   const isAuth: boolean = useAppSelector(
     (state: RootState) => !!state.authState.auth
   );
   const dispatch = useAppDispatch();
 
   const [routeParams, setRouteParams] = useState<ITextbookRouteParams>(null);
+
+  const gameWords: Word[] = useAppSelector(
+    (state: RootState) => state.wordsState.words || []
+  );
+
+  const isGameButtonsAvailable = !gameWords.every((word: Word) =>
+    ["learned", "hard"].includes(word?.userWord?.difficulty)
+  );
 
   useEffect(() => {
     if (location.pathname.includes("textbook")) {
@@ -42,11 +52,10 @@ function Sidebar() {
       }
     });
   }, []);
-
   return (
     <>
       <NavLink
-        style={{ opacity: `${!(mobileMenuFlag && screen) ? "1" : "0"}` }}
+        style={{ opacity: `${!(mobileMenuFlag && isMobile) ? "1" : "0"}` }}
         onClick={() => setMobileMenuFlag(false)}
         className="logo-link"
         to="/main"
@@ -78,7 +87,7 @@ function Sidebar() {
           <div className="sidebar__upper">
             <div className="sidebar__logo">
               <NavLink to="/main" onClick={() => setMobileMenuFlag(false)}>
-                <Icon type={`${screen ? "logo-white" : "logo"}`} />
+                <Icon type={`${isMobile ? "logo-white" : "logo"}`} />
               </NavLink>
             </div>
           </div>
@@ -128,7 +137,7 @@ function Sidebar() {
             >
               Textbook
             </NavLink>
-            {isDailyStatistics && isAuth && (
+            {isTablet && isAuth && (
               <NavLink
                 onClick={() => setMobileMenuFlag(false)}
                 className={({ isActive }) =>
@@ -141,7 +150,7 @@ function Sidebar() {
                 Personal
               </NavLink>
             )}
-            {isDailyStatistics && routeParams && (
+            {isGameButtonsAvailable && isTablet && routeParams && (
               <>
                 <NavLink
                   to={
@@ -196,6 +205,7 @@ function Sidebar() {
               <NavLink
                 onClick={() => {
                   dispatch(logout());
+                  dispatch(reset());
                   setMobileMenuFlag(false);
                 }}
                 className="sidebar__link sidebar__footer-flex"

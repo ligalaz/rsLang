@@ -72,6 +72,15 @@ function Personal() {
     }
   }, []);
 
+  const gameWords: Word[] = useAppSelector(
+    (state: RootState) => state.wordsState.words || []
+  );
+
+  const isGameButtonsUnavailable =
+    gameWords.every((word: Word) =>
+      ["learned", "hard"].includes(word?.userWord?.difficulty)
+    ) && gameWords.length !== 0;
+
   return (
     <>
       <div className="personal">
@@ -82,7 +91,11 @@ function Personal() {
         <div className="personal__wrapper">
           <div className="personal__upper">
             <div className="personal__info">
-              <Icon type="icon" />
+              {isGameButtonsUnavailable && routeParams ? (
+                <div className="personal__logo-skilled" />
+              ) : (
+                <Icon type="icon" />
+              )}
             </div>
             <div className="personal__title">{auth?.name ?? "Student1"}</div>
           </div>
@@ -174,7 +187,7 @@ function Personal() {
                 </div>
               </>
             )}
-            {routeParams && (
+            {!isGameButtonsUnavailable && routeParams && (
               <div className="personal__buttons">
                 <Link
                   style={{ textDecoration: "none" }}
