@@ -36,7 +36,7 @@ const ABOUT = [
     name: "Evgeniia Zhadan",
     job: "developer",
     about: `Made the registration page layout, implemented the game selector from the start page, the Sprint game,
-      the game results screen, the team members description page, was engaged in layout and adaptive`,
+      the game results screen, the team members description page, was engaged in layout and adaptive, created promo video`,
     avatar: evgeniia,
     contacts: {
       telegram: "zhadan93",

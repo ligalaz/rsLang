@@ -1,0 +1,46 @@
+@import '../../../../styles/constants';
+@import '../../../../styles/responsive-media';
+
+.promo {
+  color: $gray-main-text-color;
+  font-size: 1.06rem;
+  line-height: 1.3rem;
+
+  &--purple {
+    color: $main-purple-color;
+    font-weight: 700;
+  }
+
+  &--red {
+    color: $main-red-color;
+    font-weight: 700;
+  }
+
+  &__item {
+    color: $main-purple-color;
+  }
+
+  &__item-text {
+    color: $gray-main-text-color;
+  }
+
+  @include tablet-lower() {
+    font-size: 0.9rem;
+    line-height: 1.07rem;
+
+    &__page-line {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__video {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__test-user {
+    margin-bottom: 1rem;
+  }
+}
+
+
