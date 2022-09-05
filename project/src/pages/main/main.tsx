@@ -4,7 +4,6 @@ import Sidebar from "./components/sidebar/sidebar";
 import Greetings from "./components/greetings/gretings";
 import Personal from "./components/personal/personal";
 import { Outlet, useLocation } from "react-router";
-import ChartControl from "./components/charts/chart-control";
 
 const MainPage = () => {
   const location = useLocation();
@@ -20,7 +19,6 @@ const MainPage = () => {
         <div className="main-four__middle">
           <Greetings />
           <Outlet />
-          <ChartControl />
         </div>
       </div>
       <div className="main-four__personal">

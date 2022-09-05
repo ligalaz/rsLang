@@ -1,64 +1,120 @@
 import React, { useEffect } from "react";
+import Icon from "../../../../components/icon/icon";
 import { IAuth } from "../../../../interfaces/auth";
-import { Statistic } from "../../../../interfaces/statistic";
-import { useGetNewUserWordsMutation } from "../../../../services/statistics-service";
+import { useGetUserWordsMutation } from "../../../../services/aggregated-words-service";
+
 import { RootState, useAppSelector } from "../../../../store/store";
 import { createDate } from "../../../../utils/data-parse";
 import ChartComponent, {
   IChartValues,
 } from "./charts-component/chart-component";
 
+type resultOptions = {
+  [key: string]: number;
+};
+
 const ChartControl = () => {
   const auth: IAuth = useAppSelector(
     (state: RootState) => state.authState?.auth
   );
-
-  const statistics: Statistic = useAppSelector(
-    (state: RootState) => state.statisticsState.statistics
+  const words = useAppSelector(
+    (state: RootState) => state.wordsState.words || []
   );
-
-  const words = useAppSelector((state: RootState) => state.wordsState.words);
-  console.log(words);
-
+  const [getUserWords, { isLoading }] = useGetUserWordsMutation();
   const userId = auth?.userId;
-
-  const [getUserStatistics] = useGetNewUserWordsMutation();
-  const [getNewUserWords] = useGetNewUserWordsMutation();
 
   useEffect(() => {
     if (auth) {
-      getUserStatistics(userId);
-      getNewUserWords(userId);
+      getUserWords({
+        userId,
+        params: {
+          filter: `{"$or":[{"userWord.optional.learnedDate": { "$exists": true }},{"userWord.optional.firstSeenDate": { "$exists": true }}]} `,
+          wordsPerPage: 3600,
+        },
+      });
     }
   }, []);
 
-  const timestamps = [
-    16622034500, 16822898500, 17023762500, 17324626500, 17525490500,
-    17926354500, 18527218500, 18628082500, 18828946500,
-  ];
+  console.log(words);
 
-  const allWordsForPeriod = [10, 20, 30, 35, 37, 40, 60, 75, 90];
-  const newWordsPerDay = [10, 5, 15, 4, 10, 50, 16, 17, 10];
+  const newWords = words
+    ? words
+        .filter((word) => word.userWord?.optional?.firstSeenDate !== undefined)
+        .map((word) => word.userWord?.optional?.firstSeenDate)
+        .sort()
+    : [];
+
+  const learned = words
+    ? words
+        .filter((word) => word.userWord?.difficulty === `learned`)
+        .map((word) => word.userWord?.optional?.learnedDate)
+        .sort()
+    : [];
+
+  const wordResult: resultOptions =
+    newWords !== null
+      ? newWords.reduce(function (acc: resultOptions, el: string) {
+          acc[el] = (acc[el] || 0) + 1;
+          return acc;
+        }, {})
+      : {};
+  const learnedResult: resultOptions =
+    learned !== null
+      ? learned.reduce(function (acc: resultOptions, el: string) {
+          acc[el] = (acc[el] || 0) + 1;
+          return acc;
+        }, {})
+      : {};
+  console.log(wordResult);
+  console.log(learnedResult);
+
+  const wordTimestamp = Object.keys(wordResult).sort();
+  const wordData = Object.values(wordResult);
+  const learnedTimestamp = Object.keys(learnedResult);
+  const learnedData = Object.values(learnedResult).map((item, idx, arr) =>
+    idx - 1 >= 0 ? (item += arr[idx - 1]) : item
+  );
 
   const newWordsData: IChartValues[] = [];
-  const allWordsData: IChartValues[] = [];
+  const learnedWordsData: IChartValues[] = [];
 
-  timestamps.forEach((item, idx) => {
+  wordTimestamp.forEach((item, idx) => {
     newWordsData.push({
       timestamp: createDate(item),
-      data: newWordsPerDay[idx],
+      data: wordData[idx],
     });
-    allWordsData.push({
+  });
+  learnedTimestamp.forEach((item, idx) => {
+    learnedWordsData.push({
       timestamp: createDate(item),
-      data: allWordsForPeriod[idx],
+      data: learnedData[idx],
     });
   });
 
   return (
     <div>
-      <h1 style={{ textAlign: `center` }}>Long term statistics </h1>
-      <ChartComponent color="#f56748" name="New Words" data={newWordsData} />
-      <ChartComponent color="#6550de" name="All Words" data={allWordsData} />
+      <div className="page">
+        <div className="page__descr">Statistics</div>
+        <div className="page__line"></div>
+      </div>
+      {isLoading ? (
+        <div className="textbook__loading">
+          <Icon type="loading" />
+        </div>
+      ) : (
+        <>
+          <ChartComponent
+            name="New Words"
+            color="#6550de"
+            data={newWordsData}
+          />
+          <ChartComponent
+            name="Learned Words"
+            color="#FEC246"
+            data={learnedWordsData}
+          />
+        </>
+      )}
     </div>
   );
 };

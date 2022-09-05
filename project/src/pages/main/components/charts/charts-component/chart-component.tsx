@@ -1,7 +1,4 @@
-import { ProxyType } from "immer/dist/internal";
 import React from "react";
-import "./chart.scss";
-
 import {
   ResponsiveContainer,
   LineChart,
@@ -12,7 +9,6 @@ import {
   Tooltip,
   Label,
 } from "recharts";
-import "./chart.scss";
 
 export interface IChartValues {
   timestamp: string;
@@ -21,18 +17,23 @@ export interface IChartValues {
 
 export interface IChartProps {
   data: Array<IChartValues>;
-  name: string;
   color: string;
+  name: string;
 }
 
 const ChartComponent = (props: IChartProps) => {
   return (
     <>
-      <h1 style={{ color: `${props.color}` }}>{props.name}</h1>
       <ResponsiveContainer width="100%" aspect={3}>
         <LineChart style={{ cursor: `pointer` }} data={props.data}>
           <XAxis dataKey="timestamp" />
-          <Line stroke={props.color} dataKey="data" activeDot={{ r: 10 }} />
+          <Line
+            name={props.name}
+            stroke={props.color}
+            dataKey="data"
+            activeDot={{ r: 10 }}
+            strokeWidth={4}
+          />
           <CartesianGrid stroke="#ccc" />
           <YAxis />
 
@@ -40,7 +41,7 @@ const ChartComponent = (props: IChartProps) => {
             wrapperStyle={{ color: `green` }}
             contentStyle={{ color: `red` }}
             itemStyle={{ fontFamily: `Roboto` }}
-            labelStyle={{ fontFamily: `Roboto` }}
+            labelStyle={{ color: `${props.color}` }}
           />
         </LineChart>
       </ResponsiveContainer>

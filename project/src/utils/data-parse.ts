@@ -1,4 +1,4 @@
-export function createDate(timestamp: number) {
+export function createDate(timestamp: string) {
   const months = [
     "Jan",
     "Feb",

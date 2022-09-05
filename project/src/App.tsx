@@ -17,6 +17,7 @@ import Personal from "./pages/main/components/personal/personal";
 import { useMediaQuery } from "usehooks-ts";
 import SavannaGame from "./pages/games/savanna/savanna-game";
 import "./App.scss";
+import ChartControl from "./pages/main/components/charts/chart-control";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -58,6 +59,12 @@ function App() {
             />
             <Route path="textbook/:group/:page" element={<Textbook />} />
             <Route path="about-us" element={<AboutUs />} />
+            <Route
+              path="statistics"
+              element={
+                auth ? <ChartControl /> : <Navigate to="/main" replace />
+              }
+            />
           </Route>
           <Route path="*" element={<Navigate to="main" />} />
         </Routes>
