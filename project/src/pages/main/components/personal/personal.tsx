@@ -34,11 +34,20 @@ function Personal() {
     (state: RootState) => state.statisticsState?.newWords || []
   );
   const today = getStartOfDayDate();
-  const audioWords = words.filter((a: Word) => a.userWord?.optional?.audioCall);
-  const sprintWords = words.filter((a: Word) => a.userWord?.optional?.sprint);
-  const savannaWords = words.filter((a: Word) => a.userWord?.optional?.savanna);
   const learnedWords = words.filter(
     (a: Word) => a.userWord?.optional?.learnedDate === today
+  );
+  const newWords = words.filter(
+    (a: Word) => a.userWord?.optional?.firstSeenDate === today
+  );
+  const audioWords = newWords.filter(
+    (a: Word) => a.userWord?.optional?.audioCall
+  );
+  const sprintWords = newWords.filter(
+    (a: Word) => a.userWord?.optional?.sprint
+  );
+  const savannaWords = newWords.filter(
+    (a: Word) => a.userWord?.optional?.savanna
   );
   const [getNewUserWords] = useGetNewUserWordsMutation();
   const [getUserStatistics] = useGetUserStatisticsMutation();
@@ -139,7 +148,7 @@ function Personal() {
                       {statistics?.gamesPercent || 0}%
                     </div>
                     <div className="personal__statistics-all">
-                      {words.length}
+                      {newWords.length}
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import { UserWordOptions } from "../interfaces/user-word";
 import { Word } from "../interfaces/word";
 import { statisticsService } from "../services/statistics-service";
 import { userWordsService } from "../services/user-words-service";
+import { getStartOfDayDate } from "../utils/get-start-of-day-date";
 
 interface IStatisticState {
   statistics: Statistic;
@@ -54,6 +55,8 @@ export const statisticsSlice = createSlice({
             word.userWord.optional = UserWordOptions.fromServer(
               payload.optional
             );
+          } else if (payload.optional?.learnedDate === getStartOfDayDate()) {
+            state.newWords.push(Word.fromUserWordResponse(payload));
           }
         }
       );

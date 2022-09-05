@@ -13,7 +13,7 @@ import { IAuth } from "../../../../interfaces/auth";
 import classNames from "classnames";
 import { useUpdateUserStatisticsMutation } from "../../../../services/statistics-service";
 import { getStartOfDayDate } from "../../../../utils/get-start-of-day-date";
-import { IStatistic } from "../../../../interfaces/statistic";
+import { IStatistic, Statistic } from "../../../../interfaces/statistic";
 import { AudioService } from "../../../../utils/audio-service";
 import { updateUserStatistics as updateStoreStatistics } from "../../../../store/statistics-slice";
 import { useDispatch } from "react-redux";
@@ -35,17 +35,20 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
     (state: RootState) => state.statisticsState?.statistics
   );
 
-  const isAuth = !!auth;
-
   const dispatch: AppDispatch = useDispatch();
 
   const [updateUserWord] = useUpdateUserWordMutation();
   const [createUserWord] = useCreateUserWordMutation();
-  const [updateUserStatistics, { data }] = useUpdateUserStatisticsMutation();
-  
+  const [updateUserStatistics] = useUpdateUserStatisticsMutation();
+
   useEffect(() => {
-    dispatch(updateStoreStatistics())
-  }, [data]);
+    if (auth?.userId) {
+      updateUserStatistics({
+        userId: auth?.userId,
+        request: { ...statistics },
+      });
+    }
+  }, [statistics]);
 
   useEffect(() => {
     if (!info.userWord && auth) {
@@ -73,10 +76,14 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           optional: info.userWord?.optional?.toDto(),
         });
         if (isLearned) {
-          updateUserStatistics({ userId: auth.userId, request: {
-            learnedWords: statistics?.learnedWords - 1,
-            optional: statistics?.optional || {}
-          }})
+          dispatch(
+            updateStoreStatistics(
+              Statistic.fromDto({
+                learnedWords: statistics?.learnedWords - 1,
+                optional: statistics?.optional || {},
+              })
+            )
+          );
         }
       }
     // eslint-disable-next-line no-empty
@@ -84,19 +91,26 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
   }
 
   async function markAsLearned(): Promise<void> {
-    await updateUserWord({
-      id: auth.userId,
-      wordId: info.id,
-      difficulty: "learned",
-      optional: {
-        ...info.userWord?.optional?.toDto(),
-        learnedDate: getStartOfDayDate(),
-      },
-    });
-    updateUserStatistics({ userId: auth.userId, request: {
-      learnedWords: (statistics?.learnedWords || 0) + 1,
-      optional: statistics?.optional || {}
-    }})
+    try {
+      await updateUserWord({
+        id: auth.userId,
+        wordId: info.id,
+        difficulty: "learned",
+        optional: {
+          ...info.userWord?.optional?.toDto(),
+          learnedDate: getStartOfDayDate(),
+        },
+      });
+      dispatch(
+        updateStoreStatistics(
+          Statistic.fromDto({
+            learnedWords: (statistics?.learnedWords || 0) + 1,
+            optional: statistics?.optional || {}
+          })
+        )
+      );
+    // eslint-disable-next-line no-empty
+    } catch(e) {}
   }
 
   return (
@@ -204,10 +218,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           Next
         </button>
 
-       
       </div>
-
-      <></>
     </>
   );
 }
