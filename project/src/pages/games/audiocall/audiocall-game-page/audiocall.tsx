@@ -89,8 +89,8 @@ const AudioCallPage = (props?: unknown) => {
   const [alpha, setAlpha] = useState(0.8);
   const gameElements = useRef();
 
-  const [groupValue, setGroup] = useState<number>(null);
-  const [pageValue, setPage] = useState<number>(null);
+  const [groupValue, setGroup] = useState<number>(0);
+  const [pageValue, setPage] = useState<number>(0);
   const [mode, setMode] = useState<"textbook" | "main">("main");
 
   const navigate = useNavigate();
@@ -333,6 +333,7 @@ const AudioCallPage = (props?: unknown) => {
       item.disabled = false;
       item.classList.remove("game-true");
       item.classList.remove("game-false");
+      item.classList.remove("game-visible");
     });
     setAlpha(alpha - 0.1);
 
@@ -353,6 +354,10 @@ const AudioCallPage = (props?: unknown) => {
     updateUserWordStatistic(false);
     setRow(0);
     dispatch(changeAnswer({ isAnswer: true }));
+    const answers = (gameElements.current as Element).children;
+    Array.from(answers)
+      .find((item) => item.id === currentWord.id)
+      .classList.add("game-visible");
   }
 
   function onTimerFinish(): void {
