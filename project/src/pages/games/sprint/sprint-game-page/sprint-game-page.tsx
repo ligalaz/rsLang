@@ -124,7 +124,7 @@ const SprintGamePage = (): JSX.Element => {
       statistics?.optional?.sprint?.[getStartOfDayDate()]?.guesses || 0;
     const shouldWordMarkAsLearned: boolean =
       isAttemptCorrect &&
-      ((gameData.at(-1).userWord?.difficulty === "seen" && wordStrick == 1) ||
+      ((gameData.at(-1).userWord?.difficulty === "seen" && wordStrick == 2) ||
         (gameData.at(-1).userWord?.difficulty === "hard" && wordStrick == 4));
     const shouldWorkRemoveFromLearned: boolean =
       !isAttemptCorrect && gameData.at(-1).userWord?.difficulty === "learned";

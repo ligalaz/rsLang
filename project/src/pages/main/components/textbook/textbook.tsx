@@ -58,6 +58,7 @@ function Textbook() {
               }
             : {
                 filter: '{"userWord.difficulty":"hard"}',
+                wordsPerPage: 3600,
               },
       });
     } else {
@@ -110,7 +111,7 @@ function Textbook() {
       </>
     );
   }
-  console.log(screen);
+
   return (
     <>
       {popUp && gatherPopup(idPopUp)}

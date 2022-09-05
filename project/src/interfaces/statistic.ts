@@ -7,6 +7,7 @@ export interface IStatistic {
 interface IOptional {
   audioCall?: ICall;
   sprint?: ICall;
+  savanna?: ICall;
 }
 interface ICall {
   seria?: number;
@@ -60,11 +61,28 @@ export class Statistic {
       : 0;
   }
 
+  public get savannaAttempts(): number {
+    return this.optional?.savanna?.[getStartOfDayDate()]?.attempts || 0;
+  }
+
+  public get savannaGuesses(): number {
+    return this.optional?.savanna?.[getStartOfDayDate()]?.guesses || 0;
+  }
+
+  public get savannaPercent(): number {
+    return this.savannaAttempts
+      ? Math.ceil((this.savannaGuesses * 100) / this.savannaAttempts)
+      : 0;
+  }
+
   public get gamesPercent(): number {
-    return this.sprintAttempts + this.audioCallAttempts
+    return this.sprintAttempts + this.audioCallAttempts + this.savannaAttempts
       ? Math.ceil(
-          ((this.sprintGuesses + this.audioCallGuesses) * 100) /
-            (this.sprintAttempts + this.audioCallAttempts)
+          ((this.sprintGuesses + this.audioCallGuesses + this.savannaGuesses) *
+            100) /
+            (this.sprintAttempts +
+              this.audioCallAttempts +
+              this.savannaAttempts)
         )
       : 0;
   }
