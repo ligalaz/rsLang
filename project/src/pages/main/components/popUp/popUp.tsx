@@ -108,7 +108,7 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           normal: info?.userWord?.difficulty === "learned",
         })}
       > 
-         <button
+        <button
           disabled={!number}
           onClick={() => clickPage(-1)}
           className="popup__arrow popup__arrow-prev"
@@ -136,16 +136,14 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
               </div>
               <div className="popup__statistics">
               {(info.userWord?.optional?.audioCall ||
-                info.userWord?.optional?.sprint) && "[" + 
+                info.userWord?.optional?.sprint || info.userWord?.optional?.savanna) && "[" + 
                 ((info.userWord?.optional?.audioCall?.guesses ?? 0) +
-                (info.userWord?.optional?.sprint?.guesses ?? 0)) +
+                (info.userWord?.optional?.sprint?.guesses ?? 0) + (info.userWord?.optional?.savanna?.guesses ?? 0)) +
                 "/" +
-                ((info.userWord?.optional?.audioCall?.attempts ?? 0) +
+                ((info.userWord?.optional?.audioCall?.attempts ?? 0) + (info.userWord?.optional?.savanna?.attempts ?? 0) +
                 (info.userWord?.optional?.sprint?.attempts ?? 0)) + "]"}
               </div>
               </div>
-
-              
             
             <div className="popup__top-right">
               <div
