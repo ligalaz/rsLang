@@ -24,7 +24,7 @@ const ABOUT = [
     name: "Alexey",
     job: "developer",
     about: `Implemented the initial application page, configured routing, made a TextBook,
-      a game selector from the textbook page, word cards and logic for them, statistics, configured pagination,
+      a game selector from the textbook page, word cards and logic for them, statistics, configured pagination,the Savanna game,
       set up work with backend, was engaged in layout and adaptive`,
     avatar: alexey,
     contacts: {
