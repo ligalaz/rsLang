@@ -28,14 +28,12 @@ const ChartControl = () => {
       getUserWords({
         userId,
         params: {
-          filter: `{"$or":[{"userWord.optional.learnedDate": { "$exists": true }},{"userWord.optional.firstSeenDate": { "$exists": true }}]} `,
+          filter: `{"$or":[{"userWord.optional.learnedDate": { "$exists": true }},{"userWord.optional.firstSeenDate": { "$exists": true }}]}`,
           wordsPerPage: 3600,
         },
       });
     }
   }, []);
-
-  console.log(words);
 
   const newWords = words
     ? words
@@ -65,8 +63,6 @@ const ChartControl = () => {
           return acc;
         }, {})
       : {};
-  console.log(wordResult);
-  console.log(learnedResult);
 
   const wordTimestamp = Object.keys(wordResult).sort();
   const wordData = Object.values(wordResult);

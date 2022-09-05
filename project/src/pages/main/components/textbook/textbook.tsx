@@ -94,7 +94,7 @@ function Textbook() {
       // eslint-disable-next-line no-empty
     } catch (e) {}
   }
-  console.log("words", words.length);
+
   function gatherPopup(elem: number) {
     return (
       <>

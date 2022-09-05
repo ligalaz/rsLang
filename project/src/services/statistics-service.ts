@@ -49,7 +49,7 @@ export const statisticsService = createApi({
         url: `${ServerRoutes.users}/${id}${ServerRoutes.aggregatedWords}`,
         method: HTTPMethods.GET,
         params: {
-          filter: `{"userWord.optional.firstSeenDate": "${getStartOfDayDate()}"}`,
+          filter: `{"$or":[{"userWord.optional.firstSeenDate": "${getStartOfDayDate()}"},{"userWord.optional.learnedDate": "${getStartOfDayDate()}"}]}`,
           wordsPerPage: 3600,
         },
       }),
