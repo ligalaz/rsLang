@@ -10,6 +10,11 @@ interface IAudioCall {
   guesses: number;
 }
 
+interface ISavanna {
+  attempts: number;
+  guesses: number;
+}
+
 interface ISprint {
   attempts: number;
   guesses: number;
@@ -53,6 +58,7 @@ export interface IUserWordOptions {
   firstSeenDate?: string;
   strick?: number;
   audioCall?: IAudioCall;
+  savanna?: ISavanna;
   sprint?: ISprint;
 }
 
@@ -60,6 +66,7 @@ export class UserWordOptions {
   learnedDate?: string;
   firstSeenDate?: string;
   audioCall?: IAudioCall;
+  savanna?: ISavanna;
   strick: number;
   sprint?: ISprint;
 
@@ -72,6 +79,7 @@ export class UserWordOptions {
     instance.learnedDate = dto.learnedDate;
     instance.firstSeenDate = dto.firstSeenDate;
     instance.audioCall = dto.audioCall;
+    instance.savanna = dto.savanna;
     instance.sprint = dto.sprint;
     instance.strick = dto.strick;
 

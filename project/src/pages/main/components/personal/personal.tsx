@@ -36,6 +36,7 @@ function Personal() {
   const today = getStartOfDayDate();
   const audioWords = words.filter((a: Word) => a.userWord?.optional?.audioCall);
   const sprintWords = words.filter((a: Word) => a.userWord?.optional?.sprint);
+  const savannaWords = words.filter((a: Word) => a.userWord?.optional?.savanna);
   const learnedWords = words.filter(
     (a: Word) => a.userWord?.optional?.learnedDate === today
   );
@@ -105,6 +106,18 @@ function Personal() {
                       {statistics?.sprintPercent || 0}%
                     </div>
                     <div className="personal__all">{sprintWords.length}</div>
+                  </div>
+
+                  <div className="personal__column personal__column-info">
+                    <div className="personal__game-title">Savanna</div>
+                    <div className="personal__strick">
+                      {statistics?.optional?.savanna?.maxSeria ?? 0}
+                    </div>
+
+                    <div className="personal__percent">
+                      {statistics?.savannaPercent || 0}%
+                    </div>
+                    <div className="personal__all">{savannaWords.length}</div>
                   </div>
                 </div>
                 <div className="personal__statistics">

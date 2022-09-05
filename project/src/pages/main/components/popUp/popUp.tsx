@@ -79,9 +79,8 @@ function PopUp({ info, togglePopup, clickPage, number }: IPopUp) {
           }})
         }
       }
-    } catch(e) {
-      console.log(e);
-    }
+    // eslint-disable-next-line no-empty
+    } catch(e) {}
   }
 
   async function markAsLearned(): Promise<void> {

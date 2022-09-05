@@ -256,7 +256,7 @@ const AudioCallPage = (props?: unknown) => {
         statistics?.optional?.audioCall?.[getStartOfDayDate()]?.guesses || 0;
       const shouldWordMarkAsLearned: boolean =
         isAttemptCorrect &&
-        ((currentWord.userWord?.difficulty === "seen" && wordStrick == 1) ||
+        ((currentWord.userWord?.difficulty === "seen" && wordStrick == 2) ||
           (currentWord.userWord?.difficulty === "hard" && wordStrick == 4));
       const shouldWorkRemoveFromLearned: boolean =
         !isAttemptCorrect && currentWord.userWord?.difficulty === "learned";
