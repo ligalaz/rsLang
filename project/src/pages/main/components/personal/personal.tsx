@@ -16,7 +16,7 @@ import { Word } from "../../../../interfaces/word";
 
 export interface ITextbookRouteParams {
   page?: string;
-  group: string;
+  group?: string;
 }
 
 function Personal() {
@@ -49,19 +49,17 @@ function Personal() {
   const savannaWords = newWords.filter(
     (a: Word) => a.userWord?.optional?.savanna
   );
+
   const [getNewUserWords] = useGetNewUserWordsMutation();
   const [getUserStatistics] = useGetUserStatisticsMutation();
 
   useEffect(() => {
     if (location.pathname.includes("textbook")) {
-      const pathes: string[] = location.pathname.split("/");
-      const params: ITextbookRouteParams = {
-        group: pathes[3],
-      };
-      if (pathes.length === 5) {
-        params.page = pathes[4];
-      }
-      setRouteParams(params);
+      const [group, page]: string[] = location.pathname.split("/").slice(-2);
+      setRouteParams({
+        group,
+        page,
+      });
     }
   }, [location.pathname]);
 

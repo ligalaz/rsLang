@@ -27,7 +27,7 @@ const Timer = ({
       if (timer) {
         const timerId = setTimeout(() => {
           setTimer((current: number) => current - 1);
-          setValue((current: number) => current - 1.68);
+          setValue(Math.floor(((timer - 1) / initial) * 100));
         }, delay);
         return () => clearTimeout(timerId);
       } else {

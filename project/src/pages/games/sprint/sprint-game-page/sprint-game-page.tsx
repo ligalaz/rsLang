@@ -249,6 +249,12 @@ const SprintGamePage = (): JSX.Element => {
             toast.warning
           );
           navigate("/main", { replace: true });
+        } else if (words.length < 20) {
+          notify(
+            "Lack words count for game. Please change page or group or open game via main page.",
+            toast.warning
+          );
+          navigate("/main", { replace: true });
         }
         if (words.length < 120) {
           setTimerSettings({
@@ -294,7 +300,8 @@ const SprintGamePage = (): JSX.Element => {
           request.wordsPerPage = 3600;
         } else {
           request.group = +level;
-          request.wordsPerPage = (+page + 1) * 20;
+          request.wordsPerPage = 600;
+          request.filter = `{"$and":[{"userWord.difficulty": { "$ne": "learned"}},{"page": { "$lte": ${page}}}]}`;
         }
         break;
       default:
@@ -365,7 +372,7 @@ const SprintGamePage = (): JSX.Element => {
                     isDisabledBtn && "sprint-game__btn--disabled"
                   }`}
                 >
-                  неверно
+                  Incorrect
                 </button>
                 <div className="sprint-game__answer-indicator">
                   <div
@@ -379,7 +386,7 @@ const SprintGamePage = (): JSX.Element => {
                     isDisabledBtn && "sprint-game__btn--disabled"
                   }`}
                 >
-                  верно
+                  Correct
                 </button>
               </div>
             </section>

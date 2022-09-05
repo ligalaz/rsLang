@@ -138,13 +138,16 @@ const SavannaGame = (): JSX.Element => {
 
   useEffect(() => {
     switch (gameMode) {
-      case "start":
-        getProperlyWords();
-        break;
       case "play":
         if (words.length < 10 && group === 6) {
           notify(
             "Lack words count for game. Please add more difficult words",
+            toast.warning
+          );
+          navigate("/main", { replace: true });
+        } else if (words.length < 10) {
+          notify(
+            "Lack words count for game. Please change page or group or open game via main page.",
             toast.warning
           );
           navigate("/main", { replace: true });
@@ -203,7 +206,8 @@ const SavannaGame = (): JSX.Element => {
           request.wordsPerPage = 3600;
         } else {
           request.group = group;
-          request.wordsPerPage = (request.page + 1) * 20;
+          request.wordsPerPage = 600;
+          request.filter = `{"$and":[{"userWord.difficulty": { "$ne": "learned"}},{"page": { "$lte": ${page}}}]}`;
         }
         break;
       default:
