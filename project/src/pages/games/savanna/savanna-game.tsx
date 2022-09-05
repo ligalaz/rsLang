@@ -262,10 +262,8 @@ const SavannaGame = (): JSX.Element => {
 
       if (!currentWord.userWord) {
         createUserWord(request);
-        console.log("request create", request);
       } else {
         updateUserWord(request);
-        console.log("request update", request);
       }
 
       dispatch(
@@ -329,7 +327,6 @@ const SavannaGame = (): JSX.Element => {
       setHealth((prev: number) => prev - 1);
       AudioService.play([cross], false);
     }
-    console.log("current words", currentWord);
   }
 
   useEventListener("keydown", handleKeyboardEvent, documentRef);

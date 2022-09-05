@@ -63,10 +63,6 @@ function Personal() {
     }
   }, []);
 
-  console.log(words);
-  console.log("audioWords", audioWords);
-  console.log("savanna", savannaWords);
-
   return (
     <>
       <div className="personal">
