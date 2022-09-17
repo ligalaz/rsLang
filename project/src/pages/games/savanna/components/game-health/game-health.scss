@@ -1,0 +1,7 @@
+.game-health {
+  display: flex;
+
+  &__icon:not(:last-child) {
+    margin-right: 6px;
+  }
+}

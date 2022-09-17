@@ -1,0 +1,80 @@
+@import '../../../../../../styles/constants';
+
+.sprint {
+  column-gap: 0.79rem;
+
+  background-color: #2c9aff;
+
+  &__delim {
+    width: 1.09rem;
+
+    border-bottom: 0.06rem solid $promo-game-decor-color;
+  }
+}
+
+.circle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.14rem;
+  height: 3.14rem;
+
+  border-radius: 50%;
+
+  &__cross {
+    background-color: #f56748;
+  
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 2.17rem;
+      height: 0.28rem;
+  
+      background: $promo-game-decor-color;
+      border-radius: 3.44rem;
+    }
+  
+    &::before {
+      transform: rotate(45deg);
+    }
+  
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+  
+  &__tick {
+    background-color: #fec246;
+  
+    &::before,
+    &::after {
+      position: absolute;
+      display: block;
+  
+      background-color: $promo-game-decor-color;
+      content: "";
+  
+      border-radius: 3.44rem;
+    }
+    
+    &::before {
+        left: 0.9rem;
+        top: 45%;
+        height: 1.09rem;
+        width: 0.28rem;
+  
+        transform: rotate(-45deg);
+    }
+    
+    &::after {
+        height: 0.28rem;
+        width: 1.8rem;
+  
+        transform: translateX(0.4rem) rotate(-45deg);
+    }
+  }
+}
+

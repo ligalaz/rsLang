@@ -1,0 +1,36 @@
+@import '../../../../styles/_responsive-media.scss';
+
+.greetings {
+
+  &__text {
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    line-height: 3.5rem;
+    transform: translate(10px,-55px);
+    font-weight: 700;
+
+    @include tablet-lower() {
+      font-size: 26px;
+    }
+
+    @include mobile-lower() {
+      font-size: 24px;
+    }
+  }
+
+  &__container {
+    overflow-x: hidden;
+  }
+
+  &__descr {
+    font-size: 1.5rem;
+    color: #7D7D7D;
+    text-align: right;
+  }
+
+  @include tablet-lower() {
+    height: 234px;
+  }
+
+  
+}

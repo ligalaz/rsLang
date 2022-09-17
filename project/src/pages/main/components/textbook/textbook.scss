@@ -1,0 +1,139 @@
+@import '../../../../styles/_responsive-media.scss';
+
+.filter {
+  min-width: 100vh;
+  min-height: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: blur(4px);
+  z-index: 1;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(41,41,41,0.6);
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    position:relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1350px;
+
+    @include desktop-middle() {
+      max-width: 1225px;
+    }
+  
+    @include desktop-lower() {
+      max-width: 1100px;
+    }
+  
+    @include desktop-lowest() {
+      max-width: 950px;
+    }
+
+    @include desktop-under() {
+      max-width: 82%;
+    }
+
+    @include tablet-lowest() {
+      max-width: calc(100vw - 84px);
+    }
+  }
+
+}
+
+.chapter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+
+  @include mobile-inbetween() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+ 
+  
+  &__link {
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #7D7D7D;
+    padding: 5px 10px;
+
+    @include desktop-lowest {
+      flex: 0 1 16%;
+      font-size: 20px;
+    }
+
+    @include desktop-under() {
+      flex: 0 1 33%;
+    }
+    
+
+    @include mobile-inbetween() {
+      flex: 0 1 50%;
+      padding: 10px;
+    }
+
+    &_active {
+      color: #000000;
+    }
+
+    &:hover {
+      color: #000000;
+    }
+  }
+  &__link6 {
+    flex: 0 1 100%;
+  }
+}
+
+
+
+.textbook {
+  margin-top: 25px;
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+  }
+
+  &__hardWords {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: black;
+    padding: 20px;
+    background: white;
+    border: 1px solid #B2B2B2;
+    margin-top: 50px;
+    
+    @include tablet-lower() {
+      font-size: 20px;
+    }
+
+    @include tablet-lowest() {
+      font-size: 20px;
+    }
+
+  }
+}
+
+

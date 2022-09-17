@@ -1,0 +1,76 @@
+@import "../../audiocall-variables.scss";
+@import "../../../../../styles/responsive-media";
+
+.__close-btn {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+
+  @include tablet-upper() {
+    top: 30px;
+    right: 30px;
+  }
+
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background: $cross-bg;
+  border: none;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+
+  &:hover {
+    background: $cross-hover;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+
+    & .first-item {
+      background: $cross-bg;
+    }
+
+    & .second-item {
+      background: $cross-bg;
+    }
+  }
+
+  &-item {
+    top: 27.5px;
+    left: 12.5px;
+    position: absolute;
+    width: 35px;
+    height: 5px;
+    background: $elem-btn;
+    border-radius: 55px;
+  }
+  & .first-item {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+  }
+  & .second-item {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+  }
+}

@@ -1,0 +1,372 @@
+@import '../../../../styles/_responsive-media.scss';
+
+.popup {
+  padding: 45px 60px;
+  min-height: 154px;
+  margin-bottom: 40px;
+  background-color: white;
+  border-radius: 15px;
+  min-height: 675px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.05);
+  color: #000000;
+
+  @include desktop-lower() {
+    padding: 30px 45px;
+  }
+
+  @include desktop-lowest() {
+    padding: 25px 25px;
+  }
+
+  @include desktop-bottom() {
+    min-height: 56.5vw;
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    @include tablet-middle() {
+      flex-direction: column-reverse;
+      align-items: center;
+    }
+  }
+
+  &__top-left {
+    display: flex;
+
+    @include tablet-middle() {
+      flex-direction: column-reverse;
+      padding: 5px;
+    }
+  }
+
+
+  &__statistics {
+    font-weight: 700;
+    color: #000000;
+    font-size: 44px;
+    line-height: 54px;
+
+    @include desktop-bottom() {
+      font-size: 38px;
+      line-height: 46px;
+    }
+
+    @include desktop-under() {
+      font-size: 32px;
+      line-height: 46px;
+    }
+
+    @include tablet-middle() {
+      text-align: center;
+      font-size: 29px;
+      line-height: 42px;
+    }
+
+    @include tablet-lower() {
+      font-size: 29px;
+      line-height: 35px;
+    }
+  }
+
+  &__image {
+    width: 210px;
+    height: 210px;
+    background-size: cover;
+    border-radius: 50%;
+    margin-bottom: 5px;
+
+    @include desktop-under() {
+      width: 190px;
+      height: 190px;
+    }
+
+    @include tablet-upper() {
+      width: 170px;
+      height: 170px;
+    }
+
+    @include tablet-middle() {
+      width: 160px;
+      height: 160px;
+    }
+
+    @include tablet-lowest() {
+      width: 135px;
+      height: 135px;
+    }
+
+    @include mobile-inbetween() {
+      width: 120px;
+      height: 120px;
+    }
+    
+  }
+
+  &__separator {
+    margin-top: 10px;
+    height: 1px;
+    width: 100%;
+    border-top: 1px solid #B2B2B2;
+    padding-bottom: 10px;
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 50px;
+
+    @include tablet-middle() {
+      flex-direction: column-reverse;
+      margin-right: 0px;
+    }
+   
+  }
+
+  &__bottom-left {
+    margin-top: 5px;
+    width: calc(100% - 160px);
+    flex-shrink: 0;
+
+    @include tablet-middle() {
+      width: 100%;
+    }
+  }
+
+  &__mb-50 {
+    margin-bottom: 50px;
+
+    @include tablet-middle() {
+      margin-bottom: 25px;
+    }
+
+    @include mobile-inbetween() {
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+  }
+
+  &__sound {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6550DE;
+    position: absolute;
+    top: 45px;
+    left: 60px;
+    cursor: pointer;
+
+    @include tablet-lower() {
+      top: 20px;
+      left: 24px;
+    }
+
+    @include mobile-lower() {
+      top: 11px;
+      left: 11px;
+    }
+
+    & path {
+      fill: #ffffff;
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+    color: #000000;
+    font-size: 44px;
+    line-height: 54px;
+    margin-right: 10px;
+
+    @include desktop-bottom() {
+      font-size: 38px;
+      line-height: 46px;
+    }
+
+    @include desktop-under() {
+      font-size: 32px;
+      line-height: 46px;
+    }
+
+    @include tablet-middle() {
+      font-size: 29px;
+      line-height: 42px;
+    }
+
+    @include tablet-lower() {
+      font-size: 29px;
+      line-height: 35px;
+    }
+  }
+
+  &__subtitle {
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 31px;
+    color: #B2B2B2;
+
+    @include desktop-under() {
+      font-size: 22px;
+      line-height: 27px;
+    }
+
+    @include tablet-middle() {
+      font-size: 20px;
+      line-height: 25px;
+    }
+    
+    @include tablet-lower() {
+      font-size: 19px;
+      line-height: 24px;
+    }
+
+    @include tablet-lowest() {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    @include mobile-inbetween() {
+      font-size: 16px;
+      line-height: 21px;
+    }
+
+    & > b {
+      color: #000000;
+    }
+  }
+
+  &__text {
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 21px;
+    color: #B2B2B2;
+
+    @include tablet-middle() {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    @include tablet-lowest() {
+      font-size: 15px;
+      line-height: 18px;
+    }
+
+    & > i {
+      color: #000000;
+    }
+   
+    &-last {
+
+      @include mobile-inbetween() {
+        margin-top: 5px;
+      }
+    }
+  }
+
+  &__container {
+    width: 100%;
+    margin-left: 60px;
+
+    @include tablet-middle() {
+      margin: 0 15px;
+    }
+
+    @include mobile-inbetween() {
+      margin: 0px;
+    }
+  }
+  
+  &__button {
+    flex: 0 1 22%;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white;
+    height: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 0;
+    cursor: pointer;
+
+    @include tablet-middle() {
+      flex: 0 1 48%;
+    }
+
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
+
+    &-next,&-prev {
+      background-color: #F56748;
+
+      @include tablet-middle() {
+        display: none;
+      }
+    }
+
+    &-unknown {
+      background-color: #B2B2B2;
+    }
+
+    &-known {
+      background-color: #6550DE;
+    }
+
+    &-hard {
+      background-color: #6550DE;
+    }
+
+    &:disabled {
+      background-color: #B2B2B2;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    user-select:none;
+  }
+
+  &__transcription {
+
+    @include tablet-middle() {
+      text-align: center;
+      padding: 5px;
+      font-size: 22px;
+    }
+  }
+
+  &__arrow {
+    display: none;
+    position: absolute;
+    font-size: 46px;
+    color:#F56748;
+    top:0px;
+
+    @include tablet-middle() {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      height:80px;
+      top: calc(50% - 25px);
+    }
+
+    &-prev {
+      left: -40px;
+    }
+
+    &-next {
+      right: -40px;
+    }
+  }
+}

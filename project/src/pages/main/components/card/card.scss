@@ -1,0 +1,225 @@
+@import "../../../../styles/responsive-media";
+
+.card {
+  margin-bottom: 15px;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    top: 41px;
+    right:-0.5rem;
+    height: 28px;
+    width: 28px;
+    color: #fff;
+    transform : rotate(45deg);
+    content: '';
+    background-color: #F3F3F3;
+  }
+  
+  &::after{
+    position: absolute;
+    top: 20px;
+    right: -14px;
+    padding: 0.5rem;
+    width: 7rem;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    text-align: center;
+    font-weight: 500;
+    background-color: #F3F3F3;
+  }
+
+  &_learned {
+    &::after {
+      content: 'Learned';
+      color: #fff;
+      background-color: #6550DE;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.2);
+    }
+
+    &::before {
+      content: '';
+      background-color: #6550DE;
+    }
+  }
+
+  &_hard {
+    &::after {
+      content: 'Difficult';
+      color: #fff;
+      background-color: #F56748;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.2);
+    }
+
+    &::before {
+      content: '';
+      background-color: #F56748;
+    }
+  }
+
+  &_seen {
+    &::after {
+      content: 'Seen';
+      color: #7D7D7D;
+      background-color: #F3F3F3;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.05);
+    }
+
+    &::before {
+      content: '';
+      background-color: #F3F3F3;
+    }
+  }
+
+  &_new {
+    &::after {
+      content: 'New';
+      color: #fff;
+      background-color: #FEC246;
+      box-shadow: 4px 4px 15px rgba(26, 35, 126, 0.05);
+    }
+
+    &::before {
+      content: '';
+      background-color: #FEC246;
+    }
+  }
+
+  &_no-badge {
+    &::before, &::after {
+      content: none;
+    }
+  }
+
+  &__flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    min-height: 154px;
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #B2B2B2;
+    border-radius: 4px;
+
+    @include mobile-inbetween() {
+      flex-direction: column;
+      padding: 20px 0px;
+      border-radius: 15px;
+    }
+
+   
+  }
+
+  &__word {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 11px;
+    color: #000000;
+
+    @include mobile-inbetween() {
+      text-align: center;
+    }
+  }
+
+  &__img-container {
+    display: flex;
+    min-width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+  }
+
+  &__img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+  }
+
+  &__center {
+    margin-top: 15px;
+    margin-left: 60px;
+    margin-right: 25px;
+    flex-grow: 1;
+    align-self: self-start;
+
+    @include desktop-bottom() {
+      margin-left: 50px;
+    }
+
+    @include tablet-upper() {
+      margin-left: 30px;
+    }
+
+    @include mobile-inbetween() {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: #000000;
+    margin-bottom: 11px;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    color: #7D7D7D;
+
+    @include mobile-inbetween() {
+      text-align: center;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    align-self: self-end;
+
+    @include mobile-inbetween() {
+      flex-direction: row;
+      align-self: auto;
+      width: 50%;
+      margin-top: 10px;
+      margin-bottom: -10px;
+      justify-content: space-between;
+    }
+
+    @include mobile-lower() {
+      // width 120px or 170px are good
+      width: 160px;
+    }
+
+    &_no-badge {
+      align-self: self-start;
+
+      @include mobile-inbetween() {
+        align-self: auto;
+      }
+    }
+
+    & > *:not(:last-child) {
+      margin-bottom: 9px;
+    }
+  }
+
+  &__control-option {
+    cursor: pointer;
+
+    &:hover path {
+      fill: #6550DE;
+    }
+  }
+}
+
+.normal {
+  background-color: #E3DEFF;
+}
+
+.hard {
+  background-color: #FFCFCF;
+}

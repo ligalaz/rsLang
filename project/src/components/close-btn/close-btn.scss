@@ -1,0 +1,55 @@
+@import '../../styles/constants';
+
+.circle__cross {
+  
+  &--closed {
+    width: 3.7rem;
+    height: 3.7rem;
+
+    background-color: $close-btn-color;
+
+    transition: 0.5s;
+
+    cursor: pointer;
+
+    &::after,
+    &::before {
+      background-color: $main-purple-color;
+
+      transition: 0.5s;
+
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: $main-purple-color;
+
+      &::after,
+      &::before {
+        background-color: $close-btn-color;
+      }
+    }
+  }
+}
+
+.circle--disabled {
+  background-color: $disabled-bg-color;
+
+  cursor: not-allowed;
+
+  &::after,
+  &::before {
+    background-color: $btn-text-color;
+  }
+
+  &:hover {
+    background-color: $disabled-bg-color;
+
+    &::after,
+    &::before {
+      background-color: $btn-text-color;
+
+      cursor: not-allowed;
+    }
+  }
+}

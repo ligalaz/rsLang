@@ -1,0 +1,84 @@
+@import "./breakpoints";
+
+@mixin desktop-highest {
+  @media (max-width: $desktop-highest) {
+    @content;
+  }
+}
+
+@mixin desktop-middle {
+  @media (max-width: $desktop-middle) {
+    @content;
+  }
+}
+@mixin desktop-lower {
+  @media (max-width: $desktop-lower) {
+    @content;
+  }
+}
+
+@mixin desktop-lowest {
+  @media (max-width: $desktop-lowest) {
+    @content;
+  }
+}
+
+@mixin desktop-bottom {
+  @media (max-width: $desktop-bottom) {
+    @content;
+  }
+}
+
+@mixin desktop-under {
+  @media (max-width: $desktop-under) {
+    @content;
+  }
+}
+
+@mixin tablet-upper {
+  @media (max-width: $tablet-upper) {
+    @content;
+  }
+}
+
+@mixin tablet-middle {
+  @media (max-width: $tablet-middle) {
+    @content;
+  }
+}
+
+@mixin tablet-lower {
+  @media (max-width: $tablet-lower) {
+    @content;
+  }
+}
+
+@mixin tablet-lowest {
+  @media (max-width: $tablet-lowest) {
+    @content;
+  }
+}
+
+@mixin mobile-upper {
+  @media (max-width: $mobile-upper) {
+    @content;
+  }
+}
+
+@mixin mobile-upper {
+  @media (max-width: $mobile-upper) {
+    @content;
+  }
+}
+
+@mixin mobile-inbetween {
+  @media (max-width: $mobile-inbetween) {
+    @content;
+  }
+}
+
+@mixin mobile-lower {
+  @media (max-width: $mobile-lower) {
+    @content;
+  }
+}

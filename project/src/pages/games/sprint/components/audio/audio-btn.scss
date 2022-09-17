@@ -1,0 +1,43 @@
+@import '../../../../../styles/constants';
+
+.circle__audio {
+  background-color: $main-purple-color;
+
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  &--inactive {
+    background-color: $main-red-color;
+
+    &::before {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 2.17rem;
+      height: 0.2rem;
+  
+      background: $promo-game-decor-color;
+      border-radius: 3.44rem;
+    }
+  
+    &::before {
+      transform: rotate(-45deg);
+    }
+  
+  }
+
+  &:hover {
+    background-color: $hover-btn-color;
+  }
+  
+  &--disabled {
+    background-color: $disabled-bg-color;
+
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: $disabled-bg-color;
+    }
+  }
+}

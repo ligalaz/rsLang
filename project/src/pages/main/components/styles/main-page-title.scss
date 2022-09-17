@@ -1,0 +1,39 @@
+.page {
+  position: sticky;
+  top: 0px;
+  z-index: 3;
+  background-color: #ffffff;
+  padding: 20px 0 0;
+
+  @include desktop-lowest() {
+    position: initial;
+  }
+
+  @include tablet-lower() {
+  }
+
+  &_with-border {
+    padding: 20px;
+    border: 1px solid #B2B2B2;
+    border-radius: 4px;
+
+  }
+
+  &__descr {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7D7D7D;
+    margin-bottom: 5px;
+    text-align: right;
+
+    @include mobile-upper() {
+      text-align: center;
+    }
+  }
+  
+  &__line {
+    border-bottom: 1px solid #B2B2B2;
+    margin-bottom: 20px;
+  }
+
+}

@@ -1,0 +1,392 @@
+@import '../../../../styles/_responsive-media.scss';
+@import "../../../../styles/constants";
+
+.personal {
+  background: #FAFAFA;
+  flex-shrink: 0;
+  transition: all 0.5s ease-in-out;
+  height: 100%;
+
+  @include tablet-lower() {
+    background: none;
+    width: 100%;
+    height: auto;
+  }
+
+  &__game-hidden {
+    visibility: hidden;
+  }
+
+  &__wrapper {
+    min-width: 452px;
+    padding: 60px 54px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-between;
+
+    @supports (overflow: overlay) {
+      overflow: hidden overlay;
+    }
+    
+    @supports not (overflow: overlay) {
+      overflow: hidden auto;
+    }
+
+    scrollbar-width: thin;
+    scrollbar-color: #e6e8eb #c1c7cd;
+    color: transparentize(#c1c7cd, 1);
+    transition: color .4s ease-in-out;
+
+    @include desktop-highest() {
+      padding: 54px 40px;
+      width: 365px;
+      min-width: auto;
+    }
+
+    @include desktop-middle() {
+      padding: 54px 40px;
+      width: 320px;
+      min-width: auto;
+    }
+
+    @include desktop-lowest() {
+      padding: 149px 40px 40px;
+    }
+
+    @include tablet-middle() {
+      padding: 149px 30px 30px;
+      width: 290px;
+    }
+
+    @include tablet-lower() {
+      padding: 0;
+      width: 100%;
+    }  
+  }
+
+  &__img {
+    width:171px;
+    height:171px;
+    background-color: $savanna;
+    border-radius: 50%;
+  }
+
+  &__title {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    color: #000;
+    margin-left: 10px;
+
+    @include desktop-lower() {
+      font-size: 28px;
+    }
+
+    @include tablet-lower() {
+      font-size: 25px;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 25px;
+    }
+
+    @include tablet-lowest() {
+      font-size: 22px;
+    }
+
+  }
+  &__city {
+    font-family: Montserrat;
+    font-size: 1.1rem;
+    color: #b2b2b2;
+    text-align: center;
+  }
+
+  &__descr {
+    font-family: Montserrat;
+    font-weight: 500;
+    color: #b2b2b2;
+  }
+
+  &__progress {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__center {
+    width: 100%;
+
+    &-title {
+      font-family: Montserrat;
+      font-weight: 700;
+      color: #7d7d7d;
+      font-size: 20px;
+      border-bottom: 1px solid #b2b2b2;
+
+      @include desktop-lowest() {
+        font-size: 20px;
+      }
+
+      @media (max-width: 650px) {
+        font-size: 20px;
+      }
+
+      @include mobile-upper() {
+        font-size: 17px;
+      }
+    }
+
+    &-content {
+      @media (max-width: 650px) {
+        padding: 5px 0;
+      }
+    }
+  }
+
+  &__counter {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 1.8rem
+  }
+
+  &__success {
+    font-family: Montserrat;
+    font-weight: 700;
+    color: #7d7d7d;
+    border-bottom: 1px solid #b2b2b2;
+    font-size: 20px;
+
+    @include desktop-lowest() {
+      font-size: 20px;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 20px;
+    }
+
+    @include mobile-upper() {
+      font-size: 17px;
+    }
+  }
+
+  &__column {
+    font-size: 15px;
+
+    @include tablet-lower() {
+      font-size: 20px;
+      color: #7d7d7d;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 17px;
+    }
+
+    @include mobile-upper() {
+      font-size: 15px;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+    }
+
+    @media (max-width: 350px) {
+      font-size: 12px;
+    }
+  }
+
+  &__column > * {
+    padding: 5px 0px;
+  }
+
+  &__column-info {
+    text-align: center;
+  } 
+
+  &__words-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__counter {
+    text-align: center;
+  }
+
+  &__diagram {
+    width: 50%;
+    margin: 15px auto;
+
+    @include tablet-lower() {
+      width: 250px;
+      margin: 15px auto 0px;
+    }
+
+    @media (max-width: 650px) {
+      width: 225px;
+    }
+
+    @include tablet-lowest() {
+      width: 200px;
+    }  
+
+    @include mobile-upper() {
+      width: 175px;
+    }
+  }
+
+  &__logo-skilled {
+    border-radius: 50%;
+    background-image: url("../../../../assets/img/clever.png");
+    background-size: cover;
+  }
+
+  &__info, &__logo-skilled {
+    width: 120px;
+    height: 120px;
+  }
+
+  &__upper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  &__games {
+    color: #000;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 16px;
+    padding: 10px 0 5px;
+
+
+    @include tablet-lower() {
+      padding: 15px 0;
+    }
+
+    @media (max-width: 650px) {
+      padding: 0px;
+    }
+
+    @media (max-width: 550px) {
+    }
+  }
+
+  &__game {
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 23px;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    flex: 0 1 44%;
+    margin-top: 5px;
+
+    transition: 0.5s;
+
+    &:hover {
+      background: $hover-btn-color;
+    }
+
+    @include desktop-highest() {
+      font-size: 16px;
+      flex: 0 1 48%;
+    }
+
+    @include desktop-middle() {
+      font-size: 15px;
+    }
+  }
+
+  &__row {
+    display: flex;
+  }
+
+  &__game1 {
+    background: #6550DE;
+  }
+
+  &__game2 {
+    background: #F56748;
+  }
+
+  &__game3 {
+    background: $savanna;
+  }
+
+  &__statistics {
+    font-size: 15px;;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    margin: 10px 0;
+
+    @include tablet-lower() {
+      font-size: 20px;
+    }
+
+    @media (max-width: 650px) {
+      font-size: 18px;
+      padding: 0;
+    }
+
+    @media (max-width: 550px) {
+      font-size: 15px;
+      flex: 65%;
+    }
+
+    @media (max-width: 450px) {
+      flex: 60%;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 13px;
+      flex: 51%;
+    }
+
+    @media (max-width: 350px) {
+      font-size: 12px;
+    }    
+    
+    &-descr > * {
+      font-family: 'Montserrat';
+      font-weight: 500;
+      padding: 5px 0;
+      color: #b2b2b2;
+    }
+
+    &-descr2 {
+      text-align: center;
+      margin-right: 15px;
+
+      & > * {
+        color: #000;
+        font-weight: 400;
+      }
+    }
+  }
+
+  &__page {
+    display: none;
+
+    @include tablet-lower() {
+      display: block;
+    }
+  }
+
+  &__buttons {
+    border-top: 1px solid #b2b2b2;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+}

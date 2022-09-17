@@ -1,0 +1,206 @@
+@import "../../../../styles/responsive-media";
+@import "../audiocall-variables.scss";
+
+.audiocall-body {
+  width: 100%;
+  height: 100%;
+  background: url("../../../../assets/img/audiocall-bg.jpg") 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+
+  @include tablet-lowest() {
+    overflow-y: auto;
+  }
+
+  & .audiocall__row {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include tablet-upper() {
+      padding: 70px 0;
+    }
+
+    @include tablet-lowest() {
+      justify-content: flex-start;
+    }
+
+    &-header {
+      column-gap: 20px;
+      display: flex;
+    }
+
+    &-view {
+      padding-top: 20px;
+
+      & .audiocall__row-repeater-view {
+        height: 350px;
+      }
+    }
+    &-close {
+      position: relative;
+      left: 91.6%;
+
+      @include tablet-upper() {
+        top: 60px;
+        left: 85%;
+      }
+
+      @include tablet-lowest() {
+        left: 77%;
+      }
+    }
+    &-control {
+      width: 65%;
+      align-self: center;
+
+      @include tablet-upper() {
+        width: 80%;
+      }
+
+      @include tablet-lowest() {
+        width: 80%;
+      }
+
+      #gamelevel {
+        margin-right: 25px;
+      }
+
+      label {
+        margin-right: 10px;
+      }
+
+      progress {
+        margin-bottom: 16px;
+      }
+
+      & .row-view__settings-form {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
+    }
+    &-playground {
+      width: 65%;
+      align-self: center;
+
+      @include tablet-upper() {
+        width: 95%;
+      }
+
+      &-word-repeater__row {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+        @include tablet-lowest() {
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          gap: 13px;
+        }
+
+        & .game-element {
+          font-family: "Montserrat";
+          font-size: 25px;
+          font-weight: 700;
+          color: $words-text;
+          margin-bottom: 50px;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          padding: 10px;
+          transition: 0.5s ease-in-out;
+
+          @include tablet-upper() {
+            margin-bottom: 30px;
+            font-size: 22px;
+          }
+
+          @include tablet-lowest() {
+            margin-bottom: 3px;
+          }
+
+          &:hover {
+            color: $words-hover-text;
+          }
+        }
+      }
+    }
+  }
+}
+
+.game-true {
+  position: relative;
+  color: $words-active-text !important;
+}
+.game-false {
+  position: relative;
+  color: $words-error-text !important;
+}
+.game-visible {
+  position: relative;
+  color: $words-active-text !important;
+}
+
+.game-true::before,
+.game-false::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 17px;
+  left: -10px;
+  background: url("../../../../assets/labels/checkmark.png");
+}
+.game-false::before {
+  width: 16px;
+  height: 16px;
+  background: url("../../../../assets/labels/checkmark_remove.png");
+}
+
+.audiocall__btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-item {
+    width: 113px;
+    height: 113px;
+    border-radius: 50%;
+    width: 113px;
+    height: 113px;
+    border-radius: 50%;
+    border: 1px solid $next-btn-bg;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    background: transparent;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    color: $words-uknown-text;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      background: $uknown-btn-hover;
+      color: $words-uknown-hover-text;
+      transition: 0.3s ease-in-out;
+      -webkit-transition: 0.3s ease-in-out;
+      -moz-transition: 0.3s ease-in-out;
+      -ms-transition: 0.3s ease-in-out;
+      -o-transition: 0.3s ease-in-out;
+    }
+  }
+}
+.btn-next {
+  background: $next-btn-bg;
+}

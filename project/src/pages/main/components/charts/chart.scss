@@ -1,0 +1,28 @@
+.charts {
+  width: 100%;
+
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+
+  &-container {
+    display: flex;
+    border: 1px solid #7d7d7d;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+
+    & .charts-item__text {
+      text-align: center;
+      padding: 0 20px;
+      color: #7d7d7d;
+    }
+  }
+}
+
+.charts-free__item {
+  text-align: center;
+  padding: 0 20px;
+  color: #7d7d7d;
+}

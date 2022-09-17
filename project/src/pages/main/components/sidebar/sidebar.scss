@@ -1,0 +1,242 @@
+@import '../../../../styles/_responsive-media.scss';
+
+.logo-link {
+  display: none;
+
+  @include desktop-lowest() {
+    display: block;
+    position: absolute;
+    z-index: 25;
+    top: 24px;
+    left: 25px;
+    // opacity: 0;
+    transition: 0.5s all ease-in;
+  }
+}
+
+.burger-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 8;
+  background-color: var(--overlay);
+  animation: visible 1s;
+}
+.hat {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left:0px;
+  padding: 20px 25px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  z-index: 9;
+  border-bottom: 1px solid #ccc;
+  min-height: 115px;
+    
+  @include desktop-lowest() {
+    display: flex;
+  }
+
+  &__burger {
+    display: none;
+    align-items: center;
+    position: absolute;
+    top: 42px;
+    right: 47px;
+    z-index: 15;
+    transition: 0.5s ease;
+    width: 30px;
+    height: 30px;
+
+    @include desktop-lowest() {
+      display: block;
+    }
+  
+    &-rotate {
+      transform: rotate(90deg);
+    }
+  
+    &-line {
+      width: 100%;
+      height: 4px;
+      background-color: #e74c3c;
+    }
+  }
+}
+
+.sidebar {
+  background-color: #F3F3F3;
+  flex-shrink: 0;
+
+  @include desktop-lowest() {
+    background-color: #404497;
+  }
+
+  @include desktop-lowest() {
+    transition: right 0.5s;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: -320px;
+    min-height: 100vh
+  }
+
+  &__appear {
+    right: 0px;
+  }
+
+  &__flex {
+    min-width: 150px;
+    padding: 60px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    @include desktop-highest() {
+      padding: 54px;
+    }
+
+    @include desktop-lower() {
+      padding: 54px 35px;
+    }
+    
+    @include desktop-lowest() {
+      min-height: 100vh;
+      min-width: 320px;
+    }
+
+
+    @include tablet-middle() {
+      min-height: 100vh;
+      min-width: 290px;
+    }
+
+    @include mobile-inbetween() {
+      padding: 24px 35px;
+      min-height: 100vh;
+      min-width: 320px;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+
+    @include desktop-lowest() {
+      visibility: hidden;
+    }
+
+    @include mobile-inbetween() {
+      visibility: visible;
+      transform: translate(-35px, 0px);
+    }
+  }
+
+  &__links {
+    max-width: 120px;
+    display: flex;
+    flex-direction: column;
+
+    @include desktop-lowest() {
+      transform: translate(10px, -42px);
+    }
+
+    @include tablet-lower() {
+      transform: translate(10px, -15px);
+    }
+  }
+
+  &__link {
+    font-weight: 700;
+    color: #7d7d7d;
+    font-size: 1.1rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+    @include desktop-lowest() {
+      color: #FFFFFF;
+      font-size: 24px;
+    }
+
+    @include tablet-lower() {
+      font-size: 20px;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 60px;
+      
+      @include tablet-lower() {
+        margin-bottom: 40px;
+      }
+    }
+
+    &:hover {
+      color: black;
+
+      @include desktop-lowest() {
+        color: #FEC246;
+      }
+    }
+    
+    & path{
+      @include desktop-lowest() {
+        fill: white;
+      }
+    }
+
+    &_active {
+      color: black;
+
+      &::before {
+        content: '';
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: black;
+        position: absolute;
+        transform: translate(-30px, 5px);
+      }
+
+      @include desktop-lowest() {
+        color: #FEC246;
+        
+        &::before {
+          background-color: #FEC246;
+          transform: translate(-30px, 11px);
+        }
+      }
+    }
+  }
+
+  &__link-text {
+    margin-left: 30px;
+  }
+
+  &__footer-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+
+  &__game {
+    width: 40%;
+  }
+  
+}

@@ -1,0 +1,15 @@
+@import '../../../../../styles/constants';
+
+.results-title {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  padding-bottom: 0.7rem;
+
+  color: $results-title-color;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  font-weight: 700;
+
+  border-bottom: 0.06rem solid $header-line-color;
+}

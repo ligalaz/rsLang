@@ -1,0 +1,18 @@
+@import '../../../../../styles/constants';
+
+.progress {
+  display: flex;
+  column-gap: 0.6rem;
+
+  &__item {
+    width: 1.7rem;
+    height: 1.7rem;
+  
+    background-color: $disabled-bg-color;
+    border-radius: 50%;
+  
+    &--active {
+      background-color: $main-purple-color;
+    }
+  }
+}
